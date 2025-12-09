@@ -1,0 +1,49 @@
+CakeFlip: Xtreme Baking
+
+todo next: 
+-----------------
+
+- road texture so we can see speed. just yellow lines tiling texture ez pz
+- E interact to pickup ingredients and activate elevator!!! that's the key
+- signs for w / space (ollie) and bring egg to oven? pictures? idk
+- do a trick (z/x/c)
+- levels for all of those
+- 3d models:
+	ramp
+	elevator
+	cake
+	flour bag
+
+generics:
+=========
+perhaps procedural levels eventually?
+start with hand crafted puzzle levels for now
+
+Player competes to skateboard around and pick up baking ingredients
+Missing ingredients means you lose score
+doing cool tricks can gain score
+Missing time limit means you get points deducted / added for speedy etc
+
+“Score x points in y seconds to pass the level”
+Missing some points or going slowly means you score less stars. 
+Get all 3 stars to feel cool. Get 1 to pass the level
+
+Points for doing tricks
+Points for collecting ingredients
+Big points for delivering ingredients to the oven and completing a cake while doing a flip
+
+
+level roadmap:
+=========================
+Level 1: learning to move
+-Drive forward to the finish. ez pz.
+Level 2: kickflip / intro to ollie
+-Do a trick in the spectator area (but really anywhere, you will score points. But more for doing in front of spectators)
+Level 3: learning to cake
+-pick up eggs and deliver to oven
+-wait for cake
+-deliver to finish
+Level 4+: ingredients and special tricks
+-Combos and recipes become increasingly convoluted
+-Etc etc
+-z/x/c for tricks
