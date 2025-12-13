@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private GameObject incrementalScoreText;
 
     public bool levelComplete = false;
+    private float textOffsetAmount = 0f;
+    private float textResetTimer = 0f;
 
     private string[] adjectiveList =
     {
@@ -101,6 +103,14 @@ public class PlayerController : MonoBehaviour
         //portal sequence where we go through an abandoned warehouse in search of the real cake idk
         transform.SetPositionAndRotation(new(transform.position.x, transform.position.y, 0), transform.rotation);
 
+        //time if we need to reset the text offset
+        textResetTimer += Time.deltaTime;
+        if (textResetTimer > 3f)
+        {
+            textOffsetAmount = 0f;
+            textResetTimer = 0f;
+        }
+
     }
 
     public void AddPoints(int amount)
@@ -113,7 +123,14 @@ public class PlayerController : MonoBehaviour
         newScoreText.GetComponent<TMP_Text>().SetText($"+{amount}! {GetRandomAdjective()}!");
 
         //randomly position the text so it looks cooler
-        newScoreText.transform.position += new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+        float x = 10.0f + textOffsetAmount;
+        newScoreText.transform.position += new Vector3(Random.Range(-1f * x, x), -x, 0f);
+        textOffsetAmount += 20f;
+        if (textOffsetAmount > 200f)
+        {
+            textOffsetAmount = 0f;
+            textResetTimer = 0f;
+        }
 
         IEnumerator FadeNewScore()
         {
