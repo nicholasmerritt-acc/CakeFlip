@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: de798ef6360d5034ab03fb4207303665,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6256394
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de798ef6360d5034ab03fb4207303665,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.19
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de798ef6360d5034ab03fb4207303665,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.099782944
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de798ef6360d5034ab03fb4207303665,
         type: 3}
@@ -84,6 +84,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3381113706984841477}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: de798ef6360d5034ab03fb4207303665,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7654254803916405462}
   m_SourcePrefab: {fileID: 100100000, guid: de798ef6360d5034ab03fb4207303665, type: 3}
 --- !u!1 &8055278831951231954 stripped
 GameObject:
@@ -151,6 +155,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081d5c91231f3b847ba711bc2f99bd98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
-  jumping: 0
-  jumpForce: 10
+  respawnPosition: {fileID: 0}
+  points: 0
+--- !u!95 &7654254803916405462
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8055278831951231954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 334b80811e9d2644e9924d1cdf402eee, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

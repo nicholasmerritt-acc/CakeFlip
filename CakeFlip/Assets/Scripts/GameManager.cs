@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
 
     public string nextLevelName = "Level1";
 
-    //number of points the player has for the current level
-    public int points = 0;
     private static GameManager instance;
 
     void Awake()

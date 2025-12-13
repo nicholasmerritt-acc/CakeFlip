@@ -6,6 +6,8 @@ TagManager:
   tags:
   - LevelCompleteText
   - PointsNeededText
+  - CurrentScoreText
+  - IncrementalScoreText
   layers:
   - Default
   - TransparentFX

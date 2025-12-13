@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,12 +17,15 @@ public class LevelComplete : MonoBehaviour
         pointsNeededText = GameObject.FindGameObjectWithTag("PointsNeededText");
         levelCompleteText.SetActive(false);
         pointsNeededText.SetActive(false);
+
+        DisplayPointsNeededString();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")) {
-            if (GameManager.Instance.points >= pointsNeeded)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player.points >= pointsNeeded)
             {
                 Debug.Log("you win yay! advancing to " + nextLevelName);
                 levelCompleteText.SetActive(true);
@@ -31,11 +35,24 @@ public class LevelComplete : MonoBehaviour
             }
             else
             {
-                Debug.Log($"score {pointsNeeded} points to pass this level!");
-                pointsNeededText.SetActive(true);
-                Invoke(nameof(HidePointsNeeded), 5.0f);
+                DisplayPointsNeededString();
             }
         }
+    }
+
+    void DisplayPointsNeededString()
+    {
+        string scoreString = $"score {pointsNeeded} points to pass this level!";
+        Debug.Log(scoreString);
+
+        if (pointsNeeded <= 0)
+        {
+            return;
+        }
+
+        pointsNeededText.SetActive(true);
+        pointsNeededText.GetComponent<TMP_Text>().SetText(scoreString);
+        Invoke(nameof(HidePointsNeeded), 3.0f);
     }
 
     private void LoadNextScene()

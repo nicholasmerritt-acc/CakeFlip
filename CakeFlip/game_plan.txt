@@ -4,15 +4,11 @@ todo next:
 -----------------
 
 - road texture so we can see speed. just yellow lines tiling texture ez pz
-- E interact to pickup ingredients and activate elevator!!! that's the key
-- signs for w / space (ollie) and bring egg to oven? pictures? idk
-- do a trick (z/x/c)
-- levels for all of those
-- 3d models:
-	ramp
-	elevator
-	cake
-	flour bag
+
+NICE TO HAVES
+cool sk8board textures
+trick animations fade into each other? transitions? idk it's kinda fine
+skateboard select
 
 generics:
 =========
