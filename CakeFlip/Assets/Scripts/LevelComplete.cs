@@ -28,6 +28,7 @@ public class LevelComplete : MonoBehaviour
             if (player.points >= pointsNeeded)
             {
                 Debug.Log("you win yay! advancing to " + nextLevelName);
+                player.levelComplete = true;
                 levelCompleteText.SetActive(true);
                 pointsNeededText.SetActive(false);
                 GameManager.SetNextLevel(nextLevelName);

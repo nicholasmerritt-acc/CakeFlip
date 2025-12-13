@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private float moveSpeed = 50;
+    private float moveSpeed = 45;
     private bool jumping = false;
-    private float jumpForce = 30;
+    private float jumpForce = 27;
 
     public Transform respawnPosition;
     private int yBoundary = -30;
@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 
     private GameObject currentScoreText;
     private GameObject incrementalScoreText;
+
+    public bool levelComplete = false;
 
     private string[] adjectiveList =
     {
@@ -57,11 +59,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (Grounded())
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 jumping = true;
             }
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 myRigidbody.linearVelocity = Vector3.zero; //super hard stop
                 //myRigidbody.AddForce(-myRigidbody.linearVelocity); 
@@ -72,27 +74,32 @@ public class PlayerController : MonoBehaviour
             myRigidbody.AddForce(horizontalInput * moveSpeed * Vector3.right);
         } else
         {
-            //can only do tricks in midair!
+            int pointsToAdd = 0;
+            //can only do tricks in midair! keep doing tricks after victory screen but don't add the score
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 myAnimator.SetTrigger("frontflipTrigger");
-                AddPoints(200);
+                pointsToAdd = 200;
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
                 myAnimator.SetTrigger("sideflipTrigger");
-                AddPoints(100);
+                pointsToAdd = 100;
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
                 myAnimator.SetTrigger("backflipTrigger");
-                AddPoints(300);
+                pointsToAdd = 300;
+            }
+            if (pointsToAdd > 0)
+            {
+                AddPoints(pointsToAdd);
             }
         }
 
-            //zero out the z since this is a "2D" game. might change this in a bonus level or something?
-            //portal sequence where we go through an abandoned warehouse in search of the real cake idk
-            transform.SetPositionAndRotation(new(transform.position.x, transform.position.y, 0), transform.rotation);
+        //zero out the z since this is a "2D" game. might change this in a bonus level or something?
+        //portal sequence where we go through an abandoned warehouse in search of the real cake idk
+        transform.SetPositionAndRotation(new(transform.position.x, transform.position.y, 0), transform.rotation);
 
     }
 
@@ -103,8 +110,10 @@ public class PlayerController : MonoBehaviour
         currentScoreText.GetComponent<TMP_Text>().SetText($"{points}");
         GameObject newScoreText = Instantiate(incrementalScoreText, incrementalScoreText.transform.parent);
         newScoreText.SetActive(true);
-        //TODO change position randomly since text is overlapping
         newScoreText.GetComponent<TMP_Text>().SetText($"+{amount}! {GetRandomAdjective()}!");
+
+        //randomly position the text so it looks cooler
+        newScoreText.transform.position += new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
 
         IEnumerator FadeNewScore()
         {
