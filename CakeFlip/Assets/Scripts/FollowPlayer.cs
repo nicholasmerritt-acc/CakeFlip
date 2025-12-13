@@ -31,6 +31,7 @@ public class FollowPlayer : MonoBehaviour
         transform.position = player.transform.position + offset;
     }
 
+    //TODO the zoom is a lil wonky. change it to not go so far down when it goes out
     public void ZoomIn()
     {
         offset.z = Mathf.Min(zoomInBoundary, offset.z + zoomIncrement);

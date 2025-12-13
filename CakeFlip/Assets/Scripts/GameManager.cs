@@ -3,30 +3,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     //singleton. there can be only one
-    public static GameManager Instance
-    {
-        get
-        {
-            //if (instance == null)
-            //{
-            //    GameObject newGameManager = new("GameManager_Created");
-            //    instance = newGameManager.AddComponent<GameManager>();
-            //    DontDestroyOnLoad(newGameManager);
-            //    return instance;
-            //} else
-            //{
-            //    return instance;
-            //}
-
-            return instance;
-        }
-
-        private set => instance = value;
-    }
+    public static GameManager Instance { get; private set; }
 
     public string nextLevelName = "Level1";
-
-    private static GameManager instance;
 
     void Awake()
     {

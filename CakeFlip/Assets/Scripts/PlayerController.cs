@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
         currentScoreText.GetComponent<TMP_Text>().SetText($"{points}");
         GameObject newScoreText = Instantiate(incrementalScoreText, incrementalScoreText.transform.parent);
         newScoreText.SetActive(true);
+        //TODO change position randomly since text is overlapping
         newScoreText.GetComponent<TMP_Text>().SetText($"+{amount}! {GetRandomAdjective()}!");
 
         IEnumerator FadeNewScore()
