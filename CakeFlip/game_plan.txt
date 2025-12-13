@@ -2,10 +2,7 @@ CakeFlip: Xtreme Baking
 
 todo next: 
 -----------------
-
-- road texture so we can see speed. just yellow lines tiling texture ez pz
-
-NICE TO HAVES
+more levels
 cool sk8board textures
 trick animations fade into each other? transitions? idk it's kinda fine
 skateboard select
@@ -41,5 +38,3 @@ Level 3: learning to cake
 -deliver to finish
 Level 4+: ingredients and special tricks
 -Combos and recipes become increasingly convoluted
--Etc etc
--z/x/c for tricks
