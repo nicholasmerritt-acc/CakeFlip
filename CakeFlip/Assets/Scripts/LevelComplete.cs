@@ -4,31 +4,47 @@ using UnityEngine.SceneManagement;
 public class LevelComplete : MonoBehaviour
 {
     public string nextLevelName;
-    public float loadLevelDelay = 2f;
+    private float loadLevelDelay = 2f;
+    public int pointsNeeded = 0;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private GameObject levelCompleteText;
+    private GameObject pointsNeededText;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        levelCompleteText = GameObject.FindGameObjectWithTag("LevelCompleteText");
+        pointsNeededText = GameObject.FindGameObjectWithTag("PointsNeededText");
+        levelCompleteText.SetActive(false);
+        pointsNeededText.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")) {
-            Debug.Log("you win yay! advancing to " + nextLevelName);
-            GameManager.SetNextLevel(nextLevelName);
-            Invoke(nameof(LoadNextScene), loadLevelDelay);
+            if (GameManager.Instance.points >= pointsNeeded)
+            {
+                Debug.Log("you win yay! advancing to " + nextLevelName);
+                levelCompleteText.SetActive(true);
+                pointsNeededText.SetActive(false);
+                GameManager.SetNextLevel(nextLevelName);
+                Invoke(nameof(LoadNextScene), loadLevelDelay);
+            }
+            else
+            {
+                Debug.Log($"score {pointsNeeded} points to pass this level!");
+                pointsNeededText.SetActive(true);
+                Invoke(nameof(HidePointsNeeded), 5.0f);
+            }
         }
     }
 
     private void LoadNextScene()
     {
         SceneManager.LoadScene(nextLevelName);
+    }
+
+    private void HidePointsNeeded()
+    {
+        pointsNeededText.SetActive(false);
     }
 }

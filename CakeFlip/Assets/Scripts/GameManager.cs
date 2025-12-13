@@ -1,36 +1,57 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //singleton. there can be only one
+    public static GameManager Instance
+    {
+        get
+        {
+            //if (instance == null)
+            //{
+            //    GameObject newGameManager = new("GameManager_Created");
+            //    instance = newGameManager.AddComponent<GameManager>();
+            //    DontDestroyOnLoad(newGameManager);
+            //    return instance;
+            //} else
+            //{
+            //    return instance;
+            //}
 
-    public static GameManager instance;
+            return instance;
+        }
+
+        private set => instance = value;
+    }
+
     public string nextLevelName = "Level1";
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    //number of points the player has for the current level
+    public int points = 0;
+    private static GameManager instance;
+
+    void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// save which level we are on, so if we quit to main menu we can go back to where we left off
+    /// </summary>
+    /// <param name="nextLevelName">name of the scene unity is to load as the next level</param>
     public static void SetNextLevel(string nextLevelName)
     {
-        if (instance != null)
+        if (Instance != null)
         {
-            instance.nextLevelName = nextLevelName;
+            Instance.nextLevelName = nextLevelName;
         }
     }
 }
