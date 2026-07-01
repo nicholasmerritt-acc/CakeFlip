@@ -859,14 +859,14 @@ GameObject:
   - component: {fileID: 1959655938}
   - component: {fileID: 1959655937}
   - component: {fileID: 1959655940}
-  - component: {fileID: 1959655939}
+  - component: {fileID: 1959655941}
   m_Layer: 0
   m_Name: SettingsDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1959655936
 RectTransform:
   m_ObjectHideFlags: 0
@@ -921,19 +921,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959655935}
   m_CullTransparentMesh: 1
---- !u!114 &1959655939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959655935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3dbbbd4da4df15419d98bc95de99696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settingsDisplay: {fileID: 1959655935}
 --- !u!114 &1959655940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -951,9 +938,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1959655939}
-          m_TargetAssemblyTypeName: SettingsButton, Assembly-CSharp
-          m_MethodName: OnSettingsButtonClick
+        - m_Target: {fileID: 1959655941}
+          m_TargetAssemblyTypeName: OnClickDisappear, Assembly-CSharp
+          m_MethodName: Disappear
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -963,6 +950,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1959655941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959655935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f9a49d7e2878b47a49e0a1da08fbbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2086316935
 GameObject:
   m_ObjectHideFlags: 0

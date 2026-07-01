@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    [Header("Player")]
+    [SerializeField] private Transform target;
+
+
+    [Header("Tweakable Values")]
+    [SerializeField] private float yaw = 0f;
+    [SerializeField] private float pitch = 15f;
+    [SerializeField] private float maxPitch;
+    [SerializeField] private float minPitch;
+    [SerializeField] private float sensitivityX = 3f;
+    [SerializeField] private float sensitivityY = 3f;
+    [SerializeField] private float distance = 3f;
+    [SerializeField] private Vector3 offset = new Vector3(0f, .5f, 0f);
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        yaw += Input.GetAxisRaw("Mouse X") * sensitivityX;
+        pitch -= Input.GetAxisRaw("Mouse Y") * sensitivityY;
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+
+        Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 focalPoint = target.transform.position + offset;
+
+        // P - f*r*d?
+        transform.position = focalPoint - targetRotation * Vector3.forward * distance;
+        transform.rotation = targetRotation;
+    }
+}

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
     private float moveSpeed = 45;
     private bool jumping = false;
     private float jumpForce = 27;
