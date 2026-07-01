@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minPitch;
     [SerializeField] private float sensitivityX = 3f;
     [SerializeField] private float sensitivityY = 3f;
-    [SerializeField] private float distance = 3f;
+    [SerializeField] private float cameraOffsetDistance = 3f;
     [SerializeField] private Vector3 offset = new Vector3(0f, .5f, 0f);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,8 +24,17 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        if (Input.GetButtonDown("ZoomIn"))
+        {
+            ZoomIn();
+        }
+        else if (Input.GetButtonDown("ZoomOut"))
+        {
+            ZoomOut();
+        }
+
         yaw += Input.GetAxisRaw("Mouse X") * sensitivityX;
         pitch -= Input.GetAxisRaw("Mouse Y") * sensitivityY;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
@@ -34,7 +43,16 @@ public class CameraController : MonoBehaviour
         Vector3 focalPoint = target.transform.position + offset;
 
         // P - f*r*d?
-        transform.position = focalPoint - targetRotation * Vector3.forward * distance;
+        transform.position = focalPoint - targetRotation * Vector3.forward * cameraOffsetDistance;
         transform.rotation = targetRotation;
+    }
+
+    public void ZoomIn()
+    {
+        cameraOffsetDistance -= 1;
+    }
+    public void ZoomOut()
+    {
+        cameraOffsetDistance += 1;
     }
 }

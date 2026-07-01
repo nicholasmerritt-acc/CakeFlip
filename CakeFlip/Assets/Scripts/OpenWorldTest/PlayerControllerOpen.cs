@@ -3,14 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControllerOpen : MonoBehaviour
 {
-    bool hasJumped = false;
-    private float jumpForce = 27f;
+    [Header("Tweakables")]
+    private bool hasJumped = false;
+    [SerializeField] private float jumpForce = 27f;
+    [SerializeField] private float yaw = 0f;
+    [SerializeField] private float pitch = 15f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotateSpeed = 5f;
+    [SerializeField] private Vector3 respawnPosition;
+    [SerializeField] private int yBoundary = -30;
 
-    public Transform respawnPosition;
-    private int yBoundary = -30;
+    [Header("Quaternion Debugging")]
+    [SerializeField] private Vector3 current;
+    [SerializeField] private Vector3 bigTarget;
+    [SerializeField] private Vector3 tinyTarget;
 
-    private Rigidbody myRigidbody;
-    private Animator myAnimator;
+    [Header("References")]
+    [SerializeField] private Rigidbody myRigidbody;
+    [SerializeField] private Animator myAnimator;
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private CharacterController cc;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,6 +30,9 @@ public class PlayerControllerOpen : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody>();
         myAnimator = GetComponent<Animator>();
+        respawnPosition = transform.position;
+        cameraTransform = Camera.main.transform;
+        cc = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -33,11 +48,6 @@ public class PlayerControllerOpen : MonoBehaviour
             Respawn();
             return;
         }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            hasJumped = true;
-        }
         else if (Input.GetButtonDown("Stop"))
         {
             myRigidbody.linearVelocity = Vector3.zero; //super hard stop
@@ -45,7 +55,14 @@ public class PlayerControllerOpen : MonoBehaviour
                                                        //myRigidbody.AddForce(-myRigidbody.linearVelocity); 
         }
 
-        if (!Grounded())
+        if (Grounded())
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                hasJumped = true;
+            }
+        }
+        else
         {
             int pointsToAdd = 0;
             //can only do tricks in midair! keep doing tricks after victory screen but don't add the score
@@ -72,9 +89,41 @@ public class PlayerControllerOpen : MonoBehaviour
         }
 
         float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        float moveZ = Input.GetAxisRaw("Vertical");
+
+        Vector3 cameraForward = cameraTransform.forward;
+        Vector3 cameraRight = cameraTransform.right;
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        Vector3 cameraRelativeMoveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
+        //cameraRelativeMoveDirection.Normalize();
+        if (cameraRelativeMoveDirection.sqrMagnitude > .001f)
+        {
+            //get target rotation
+            Quaternion targetRotation = Quaternion.LookRotation(cameraRelativeMoveDirection);
+            current = transform.rotation.eulerAngles;
+            bigTarget = targetRotation.eulerAngles;
+            Quaternion slerpTarget = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+            tinyTarget = slerpTarget.eulerAngles;
+            //slerp
+            transform.rotation = slerpTarget;
+        }
+
+        //yaw += Input.GetAxisRaw("Mouse X") * 5f;
+        //pitch -= Input.GetAxisRaw("Mouse Y") * 5f;
+        //Quaternion newRotation = Quaternion.Euler(pitch, yaw, 0f);
+        //transform.rotation = newRotation;
+
+        //Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
+        Vector3 moveMe = cameraRelativeMoveDirection * moveSpeed * Time.deltaTime;
 
 
+        //transform.Translate(moveMe);
+        cc.Move(moveMe);
     }
 
     private void FixedUpdate()
@@ -93,7 +142,7 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private void Respawn()
     {
-        transform.SetPositionAndRotation(respawnPosition.position, Quaternion.identity);
+        transform.SetPositionAndRotation(respawnPosition, Quaternion.identity);
         myRigidbody.linearVelocity = Vector3.zero;
         myRigidbody.angularVelocity = Vector3.zero;
     }
