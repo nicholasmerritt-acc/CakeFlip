@@ -28,7 +28,7 @@ public class PlayerControllerOpen : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        myRigidbody = GetComponent<Rigidbody>();
+        myRigidbody = GetComponentInChildren<Rigidbody>();
         myAnimator = GetComponent<Animator>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
