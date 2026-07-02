@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 78f495768faf9d849b2fd3483a059186,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -218.427
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 78f495768faf9d849b2fd3483a059186,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 33.010048
+      value: 0.00000011920929
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 78f495768faf9d849b2fd3483a059186,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -81.6555
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 78f495768faf9d849b2fd3483a059186,
         type: 3}
@@ -123,8 +123,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.39999998, y: 0.5938421, z: 1.9605877}
-  m_Center: {x: 0, y: 0.30106696, z: -0.1559881}
+  m_Size: {x: 0.47153443, y: 0.7060195, z: 0.70970607}
+  m_Center: {x: 0.035767227, y: 0.35715568, z: -0.0111118555}
 --- !u!82 &6965911572290220089
 AudioSource:
   m_ObjectHideFlags: 0
@@ -146,7 +146,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2.0156546
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

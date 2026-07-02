@@ -1,19 +1,21 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerControllerOpen : MonoBehaviour
 {
     [Header("Tweakables")]
-    private bool hasJumped = false;
-    [SerializeField] private float jumpForce = 27f;
     [SerializeField] private float yaw = 0f;
     [SerializeField] private float pitch = 15f;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 5f;
-    [SerializeField] private Vector3 respawnPosition;
-    [SerializeField] private int yBoundary = -30;
+    [SerializeField] private Vector3 moveMe;
+    [SerializeField] private bool stopping;
 
-    [Header("Quaternion Debugging")]
+    [Header("")]
+    private bool hasJumped = false;
+    [SerializeField] private bool grounded;
+    [SerializeField] private float jumpForce = 27f;
+
+    [Header("Debugging")]
     [SerializeField] private Vector3 current;
     [SerializeField] private Vector3 bigTarget;
     [SerializeField] private Vector3 tinyTarget;
@@ -22,17 +24,18 @@ public class PlayerControllerOpen : MonoBehaviour
     [SerializeField] private Rigidbody myRigidbody;
     [SerializeField] private Animator myAnimator;
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private CharacterController cc;
 
+    [Header("")]
+    [SerializeField] private Vector3 respawnPosition;
+    [SerializeField] private int yBoundary = -30;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        myRigidbody = GetComponentInChildren<Rigidbody>();
-        myAnimator = GetComponent<Animator>();
+        myRigidbody = GetComponent<Rigidbody>();
+        myAnimator = GetComponentInChildren<Animator>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
-        cc = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -42,17 +45,18 @@ public class PlayerControllerOpen : MonoBehaviour
         //{
         //    SceneManager.LoadScene("MainMenu");
         //}
-        
+
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
+
         if (Input.GetKeyDown(KeyCode.R) || transform.position.y < yBoundary)
         {
             Respawn();
             return;
         }
-        else if (Input.GetButtonDown("Stop"))
+        else if (moveZ < 0)
         {
-            myRigidbody.linearVelocity = Vector3.zero; //super hard stop
-            myRigidbody.angularVelocity = Vector3.zero;
-                                                       //myRigidbody.AddForce(-myRigidbody.linearVelocity); 
+            stopping = true;
         }
 
         if (Grounded())
@@ -88,9 +92,6 @@ public class PlayerControllerOpen : MonoBehaviour
             }
         }
 
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
         cameraForward.y = 0;
@@ -100,17 +101,19 @@ public class PlayerControllerOpen : MonoBehaviour
         cameraRight.Normalize();
 
         Vector3 cameraRelativeMoveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
-        //cameraRelativeMoveDirection.Normalize();
-        if (cameraRelativeMoveDirection.sqrMagnitude > .001f)
+
+        if (cameraRelativeMoveDirection.sqrMagnitude > .001f && !stopping)
         {
             //get target rotation
             Quaternion targetRotation = Quaternion.LookRotation(cameraRelativeMoveDirection);
-            current = transform.rotation.eulerAngles;
-            bigTarget = targetRotation.eulerAngles;
             Quaternion slerpTarget = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            tinyTarget = slerpTarget.eulerAngles;
             //slerp
             transform.rotation = slerpTarget;
+
+            //debug
+            current = transform.rotation.eulerAngles;
+            bigTarget = targetRotation.eulerAngles;
+            tinyTarget = slerpTarget.eulerAngles;
         }
 
         //yaw += Input.GetAxisRaw("Mouse X") * 5f;
@@ -119,11 +122,11 @@ public class PlayerControllerOpen : MonoBehaviour
         //transform.rotation = newRotation;
 
         //Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
-        Vector3 moveMe = cameraRelativeMoveDirection * moveSpeed * Time.deltaTime;
+        moveMe = cameraRelativeMoveDirection * moveSpeed;
 
 
         //transform.Translate(moveMe);
-        cc.Move(moveMe);
+        //cc.Move(moveMe);
     }
 
     private void FixedUpdate()
@@ -133,11 +136,35 @@ public class PlayerControllerOpen : MonoBehaviour
             myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             hasJumped = false;
         }
+
+        if (stopping)
+        {
+            myRigidbody.linearVelocity = Vector3.zero; //super hard stop
+            myRigidbody.angularVelocity = Vector3.zero;
+            //myRigidbody.AddForce(-myRigidbody.linearVelocity); ???
+            stopping = false;
+        }
+        else
+        {
+
+            myRigidbody.AddForce(moveMe, ForceMode.Force);
+        }
+
     }
 
     private bool Grounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, 0.1f);
+        grounded = transform.position.y < 1f;
+        return grounded;
+
+        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, LayerMask.NameToLayer("Player"));
+        Debug.DrawRay(transform.position, Vector3.down);
+        if (grounded && !hit.collider.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("hit " + hit.collider.gameObject.name);
+            grounded = false;
+        }
+        return grounded;
     }
 
     private void Respawn()
@@ -145,5 +172,10 @@ public class PlayerControllerOpen : MonoBehaviour
         transform.SetPositionAndRotation(respawnPosition, Quaternion.identity);
         myRigidbody.linearVelocity = Vector3.zero;
         myRigidbody.angularVelocity = Vector3.zero;
+    }
+
+    public void AddPoints(int points)
+    {
+        Debug.Log("got {points}");
     }
 }
