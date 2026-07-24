@@ -10,10 +10,11 @@ public class PlayerControllerOpen : MonoBehaviour
     [SerializeField] private Vector3 moveMe;
     [SerializeField] private bool stopping;
 
-    [Header("")]
+    [Header("Jumping")]
     private bool hasJumped = false;
     [SerializeField] private bool grounded;
     [SerializeField] private float jumpForce = 27f;
+    [SerializeField] private LayerMask mask;
 
     [Header("Debugging")]
     [SerializeField] private Vector3 current;
@@ -85,6 +86,11 @@ public class PlayerControllerOpen : MonoBehaviour
                 myAnimator.SetTrigger("backflipTrigger");
                 pointsToAdd = 300;
             }
+            else if (Input.GetKeyDown(KeyCode.V))
+            {
+                myAnimator.SetTrigger("treflipTrigger");
+                pointsToAdd = 400;
+            }
             if (pointsToAdd > 0)
             {
                 //AddPoints(pointsToAdd);
@@ -154,16 +160,14 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private bool Grounded()
     {
-        grounded = transform.position.y < 1f;
-        return grounded;
+        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, .5f, mask);
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, LayerMask.NameToLayer("Player"));
-        Debug.DrawRay(transform.position, Vector3.down);
         if (grounded && !hit.collider.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("hit " + hit.collider.gameObject.name);
+            Debug.Log("hit not ground: " + hit.collider.gameObject.name);
             grounded = false;
         }
+        //grounded = transform.position.y < 1f;
         return grounded;
     }
 

@@ -7,34 +7,11 @@ cool sk8board textures
 trick animations fade into each other? transitions? idk it's kinda fine
 skateboard select
 
-generics:
-=========
-perhaps procedural levels eventually?
-start with hand crafted puzzle levels for now
-
-Player competes to skateboard around and pick up baking ingredients
-Missing ingredients means you lose score
-doing cool tricks can gain score
-Missing time limit means you get points deducted / added for speedy etc
-
-“Score x points in y seconds to pass the level”
-Missing some points or going slowly means you score less stars. 
-Get all 3 stars to feel cool. Get 1 to pass the level
-
-Points for doing tricks
-Points for collecting ingredients
-Big points for delivering ingredients to the oven and completing a cake while doing a flip
-
-
-level roadmap:
-=========================
-Level 1: learning to move
--Drive forward to the finish. ez pz.
-Level 2: kickflip / intro to ollie
--Do a trick in the spectator area (but really anywhere, you will score points. But more for doing in front of spectators)
-Level 3: learning to cake
--pick up eggs and deliver to oven
--wait for cake
--deliver to finish
-Level 4+: ingredients and special tricks
--Combos and recipes become increasingly convoluted
+more levels:
+------------
+adventures in slugland inspired
+pick up one item at a time. used on a teleporter to go to a certain level
+every item has a level
+can also do tricks to unlock certain areas
+find certain items to unlock certain tricks, etc
+"find the green key to unlock a trick" idk
