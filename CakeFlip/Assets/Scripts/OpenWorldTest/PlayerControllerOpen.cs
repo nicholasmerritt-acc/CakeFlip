@@ -1,19 +1,25 @@
+using System;
 using UnityEngine;
 
 public class PlayerControllerOpen : MonoBehaviour
 {
-    [Header("Tweakables")]
+    [Header("Camera")]
     [SerializeField] private float yaw = 0f;
     [SerializeField] private float pitch = 15f;
+
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private Vector3 moveMe;
     [SerializeField] private bool stopping;
+    [SerializeField] private float speedAnimationAdjustment = 2f;
 
     [Header("Jumping")]
     private bool hasJumped = false;
     [SerializeField] private bool grounded;
     [SerializeField] private float jumpForce = 27f;
+    [SerializeField] private float gravity = -10f;
+    [SerializeField] private float fallingGravity = -10f;
     [SerializeField] private LayerMask mask;
 
     [Header("Debugging")]
@@ -26,9 +32,16 @@ public class PlayerControllerOpen : MonoBehaviour
     [SerializeField] private Animator myAnimator;
     [SerializeField] private Transform cameraTransform;
 
-    [Header("")]
+    [Header("Positioning")]
     [SerializeField] private Vector3 respawnPosition;
     [SerializeField] private int yBoundary = -30;
+
+    [Header("Shapeshifting")]
+    [SerializeField] private bool isSkateboard = false;
+    [SerializeField] private GameObject Guy;
+    [SerializeField] private Animator guyAnimator;
+    [SerializeField] private GameObject Skateboard;
+    public static event Action<bool> OnShapeshift;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,6 +50,14 @@ public class PlayerControllerOpen : MonoBehaviour
         myAnimator = GetComponentInChildren<Animator>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
+
+        guyAnimator = Guy.GetComponent<Animator>();
+        BecomeMan();
+    }
+
+    private void OnEnable()
+    {
+        //OnShapeshift += Shapeshift;
     }
 
     // Update is called once per frame
@@ -60,7 +81,7 @@ public class PlayerControllerOpen : MonoBehaviour
             stopping = true;
         }
 
-        if (Grounded())
+        if (Grounded() && isSkateboard)
         {
             if (Input.GetButtonDown("Jump"))
             {
@@ -98,6 +119,11 @@ public class PlayerControllerOpen : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Shapeshift();
+        }
+
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
         cameraForward.y = 0;
@@ -130,32 +156,65 @@ public class PlayerControllerOpen : MonoBehaviour
         //Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
         moveMe = cameraRelativeMoveDirection * moveSpeed;
 
-
         //transform.Translate(moveMe);
         //cc.Move(moveMe);
     }
 
+    public void Shapeshift()
+    {
+        Shapeshift(!isSkateboard);
+    }
+
+    public void Shapeshift(bool toSkateboard)
+    {
+        isSkateboard = toSkateboard;
+
+        Skateboard.SetActive(toSkateboard);
+        Guy.SetActive(!toSkateboard);
+
+        //we just shapeshifted, so tell our listeners
+        OnShapeshift?.Invoke(toSkateboard);
+    }
+
+    public void BecomeSkateboard()
+    {
+        Shapeshift(true);
+    }
+
+    public void BecomeMan()
+    {
+        Shapeshift(false);
+    }
+
+
     private void FixedUpdate()
     {
-        if (hasJumped)
-        {
-            myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            hasJumped = false;
-        }
-
         if (stopping)
         {
-            myRigidbody.linearVelocity = Vector3.zero; //super hard stop
+            hasJumped = false;
+            myRigidbody.linearVelocity = Vector3.up * myRigidbody.linearVelocity.y; //super hard stop. zero out everything but the y
             myRigidbody.angularVelocity = Vector3.zero;
             //myRigidbody.AddForce(-myRigidbody.linearVelocity); ???
             stopping = false;
         }
+        else if (isSkateboard)
+        {
+            myRigidbody.AddForce(moveMe, ForceMode.Force);
+
+            if (hasJumped)
+            {
+                myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                hasJumped = false;
+            }
+        } 
         else
         {
+            hasJumped = false;
+            guyAnimator.SetFloat("Speed_f", moveMe.sqrMagnitude * speedAnimationAdjustment);
 
-            myRigidbody.AddForce(moveMe, ForceMode.Force);
+            Vector3 newMove = new Vector3(moveMe.x, myRigidbody.linearVelocity.y, moveMe.z);
+            myRigidbody.linearVelocity = newMove;
         }
-
     }
 
     private bool Grounded()

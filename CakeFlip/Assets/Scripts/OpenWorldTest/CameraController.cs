@@ -1,10 +1,10 @@
+using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] private Transform target;
-
 
     [Header("Tweakable Values")]
     [SerializeField] private float yaw = 0f;
@@ -15,12 +15,36 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float sensitivityY = 3f;
     [SerializeField] private float cameraOffsetDistance = 3f;
     [SerializeField] private Vector3 offset = new Vector3(0f, .5f, 0f);
+    [SerializeField] private Vector3 skateboardOffset = new Vector3(0f, .5f, 0f);
+    [SerializeField] private Vector3 guyOffset = new Vector3(0f, 2f, 0f);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnEnable()
+    {
+        PlayerControllerOpen.OnShapeshift += OnPlayerShapeshift;
+    }
+
+    private void OnDisable()
+    {
+        PlayerControllerOpen.OnShapeshift -= OnPlayerShapeshift;
+    }
+
+    private void OnPlayerShapeshift(bool skateboard)
+    {
+        if (skateboard)
+        {
+            offset = skateboardOffset;
+        }
+        else
+        {
+            offset = guyOffset;
+        }
     }
 
     // Update is called once per frame
