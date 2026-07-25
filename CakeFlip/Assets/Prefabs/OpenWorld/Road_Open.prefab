@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c53d95dc4084d364d8aee55a74f0bc2d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.82
+      value: -1.8199998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c53d95dc4084d364d8aee55a74f0bc2d,
         type: 3}
@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c53d95dc4084d364d8aee55a74f0bc2d,
         type: 3}
       propertyPath: m_Name
-      value: Road
+      value: Road_Open
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c53d95dc4084d364d8aee55a74f0bc2d,
         type: 3}
