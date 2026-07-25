@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControllerOpen : MonoBehaviour
 {
@@ -43,7 +44,13 @@ public class PlayerControllerOpen : MonoBehaviour
     [SerializeField] private GameObject Skateboard;
     public static event Action<bool> OnShapeshift;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Input")]
+    InputSystem_Actions inputActions;
+
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+    }
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
@@ -57,7 +64,57 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private void OnEnable()
     {
-        //OnShapeshift += Shapeshift;
+        inputActions.Player.Enable();
+        inputActions.Player.Reset.performed += ResetPlayer;
+        inputActions.Player.Jump.performed += Jump;
+        inputActions.Player.Trick1.performed += DoTrick1;
+    }
+
+    private void DoTrick1(InputAction.CallbackContext obj)
+    {
+        DoTrick(Trick.TrickType.Frontflip);
+    }
+
+    private void DoTrick(Trick.TrickType whichFlip)
+    {
+        if (!isSkateboard)
+        {
+            return;
+        }
+
+        if (Grounded())
+        {
+            return;
+        }
+
+        switch (whichFlip)
+        {
+            case Trick.TrickType.Frontflip:
+                //myAnimator.set
+                //TODO in progress tricking
+                break;
+        }
+    }
+
+    private void Jump(InputAction.CallbackContext value)
+    {
+        if (isSkateboard && Grounded())
+        {
+            hasJumped = true;
+        }
+    }
+
+    private void ResetPlayer(InputAction.CallbackContext value)
+    {
+        Respawn();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Reset.performed -= ResetPlayer;
+        inputActions.Player.Jump.performed -= Jump;
+        inputActions.Player.Disable();
+
     }
 
     // Update is called once per frame
@@ -71,52 +128,15 @@ public class PlayerControllerOpen : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.R) || transform.position.y < yBoundary)
+        if (transform.position.y < yBoundary)
         {
             Respawn();
             return;
         }
+
         else if (moveZ < 0)
         {
             stopping = true;
-        }
-
-        if (Grounded() && isSkateboard)
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                hasJumped = true;
-            }
-        }
-        else
-        {
-            int pointsToAdd = 0;
-            //can only do tricks in midair! keep doing tricks after victory screen but don't add the score
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                myAnimator.SetTrigger("frontflipTrigger");
-                pointsToAdd = 200;
-            }
-            else if (Input.GetKeyDown(KeyCode.X))
-            {
-                myAnimator.SetTrigger("sideflipTrigger");
-                pointsToAdd = 100;
-            }
-            else if (Input.GetKeyDown(KeyCode.C))
-            {
-                myAnimator.SetTrigger("backflipTrigger");
-                pointsToAdd = 300;
-            }
-            else if (Input.GetKeyDown(KeyCode.V))
-            {
-                myAnimator.SetTrigger("treflipTrigger");
-                pointsToAdd = 400;
-            }
-            if (pointsToAdd > 0)
-            {
-                //AddPoints(pointsToAdd);
-                Debug.Log($"Scored {pointsToAdd} points!");
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.E))
