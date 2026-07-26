@@ -1,0 +1,1 @@
+This folder contains raw assets from the unity store. As I used them in the project, I will copy them over to Imported and rename or reformat as needed.
