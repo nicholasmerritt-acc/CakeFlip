@@ -1,12 +1,15 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControllerOpen : MonoBehaviour
 {
-    [Header("Camera")]
-    [SerializeField] private float yaw = 0f;
-    [SerializeField] private float pitch = 15f;
+    //[Header("Camera")]
+    //[SerializeField] private float yaw = 0f;
+    //[SerializeField] private float pitch = 15f;
+
+    private InputSystem_Actions inputActions;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
@@ -19,8 +22,8 @@ public class PlayerControllerOpen : MonoBehaviour
     private bool hasJumped = false;
     [SerializeField] private bool grounded;
     [SerializeField] private float jumpForce = 27f;
-    [SerializeField] private float gravity = -10f;
-    [SerializeField] private float fallingGravity = -10f;
+    //[SerializeField] private float gravity = -10f;
+    //[SerializeField] private float fallingGravity = -10f;
     [SerializeField] private LayerMask mask;
 
     [Header("Debugging")]
@@ -30,7 +33,6 @@ public class PlayerControllerOpen : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Rigidbody myRigidbody;
-    [SerializeField] private Animator myAnimator;
     [SerializeField] private Transform cameraTransform;
 
     [Header("Positioning")]
@@ -42,10 +44,9 @@ public class PlayerControllerOpen : MonoBehaviour
     [SerializeField] private GameObject Guy;
     [SerializeField] private Animator guyAnimator;
     [SerializeField] private GameObject Skateboard;
+    [SerializeField] private Animator skateboardAnimator;
     public static event Action<bool> OnShapeshift;
 
-    [Header("Input")]
-    InputSystem_Actions inputActions;
 
     private void Awake()
     {
@@ -54,25 +55,121 @@ public class PlayerControllerOpen : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
-        myAnimator = GetComponentInChildren<Animator>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
+        
+        if (Guy == null)
+        {
+            //TODO find him
+        }
 
-        guyAnimator = Guy.GetComponent<Animator>();
+        if (Skateboard == null)
+        {
+            //TODO find it. can't leave home without me trusty skateboard
+        }
+
+        if (guyAnimator == null)
+        {
+            guyAnimator = Guy.GetComponent<Animator>();
+        }
+        if (skateboardAnimator == null)
+        {
+            skateboardAnimator = Skateboard.GetComponent<Animator>();
+        }
         BecomeMan();
     }
 
     private void OnEnable()
     {
         inputActions.Player.Enable();
+        inputActions.Player.Move.performed += PlayerMove;
+        inputActions.Player.Move.canceled += PlayerMove;
         inputActions.Player.Reset.performed += ResetPlayer;
         inputActions.Player.Jump.performed += Jump;
+        inputActions.Player.Shapeshift.performed += ShapeshiftPressed;
+
         inputActions.Player.Trick1.performed += DoTrick1;
+        inputActions.Player.Trick2.performed += DoTrick2;
+        inputActions.Player.Trick3.performed += DoTrick3;
     }
 
-    private void DoTrick1(InputAction.CallbackContext obj)
+
+    private void OnDisable()
+    {
+        inputActions.Player.Reset.performed -= ResetPlayer;
+        inputActions.Player.Jump.performed -= Jump;
+        inputActions.Player.Move.performed -= PlayerMove;
+        inputActions.Player.Move.canceled -= PlayerMove;
+        inputActions.Player.Shapeshift.performed -= ShapeshiftPressed;
+
+        inputActions.Player.Trick1.performed -= DoTrick1;
+        inputActions.Player.Trick2.performed -= DoTrick2;
+        inputActions.Player.Trick3.performed -= DoTrick3;
+        inputActions.Player.Disable();
+    }
+
+    private void PlayerMove(InputAction.CallbackContext value)
+    {
+        Vector2 moveInput = value.ReadValue<Vector2>();
+        Debug.Log($"moveinput {moveInput}");
+        float moveX = moveInput.x;
+        float moveZ = moveInput.y;
+
+        if (moveZ < 0 && isSkateboard)
+        {
+            stopping = true;
+        }
+
+        Vector3 cameraForward = cameraTransform.forward;
+        Vector3 cameraRight = cameraTransform.right;
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        Vector3 cameraRelativeMoveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
+
+        if (cameraRelativeMoveDirection.sqrMagnitude > .001f && !stopping)
+        {
+            //get target rotation
+            Quaternion targetRotation = Quaternion.LookRotation(cameraRelativeMoveDirection);
+            Quaternion slerpTarget = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+            //slerp
+            transform.rotation = slerpTarget;
+
+            //debug
+            current = transform.rotation.eulerAngles;
+            bigTarget = targetRotation.eulerAngles;
+            tinyTarget = slerpTarget.eulerAngles;
+        }
+
+        //if (!isSkateboard)
+        //{
+        //    transform.rotation = Quaternion.Euler(cameraForward);
+        //}
+        //yaw += Input.GetAxisRaw("Mouse X") * 5f;
+        //pitch -= Input.GetAxisRaw("Mouse Y") * 5f;
+        //Quaternion newRotation = Quaternion.Euler(pitch, yaw, 0f);
+        //transform.rotation = newRotation;
+
+        //Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
+        moveMe = cameraRelativeMoveDirection * moveSpeed;
+
+    }
+
+
+    private void DoTrick1(InputAction.CallbackContext value)
     {
         DoTrick(Trick.TrickType.Frontflip);
+    }
+    private void DoTrick2(InputAction.CallbackContext value)
+    {
+        DoTrick(Trick.TrickType.Backflip);
+    }
+    private void DoTrick3(InputAction.CallbackContext value)
+    {
+        DoTrick(Trick.TrickType.Sideflip);
     }
 
     private void DoTrick(Trick.TrickType whichFlip)
@@ -109,78 +206,25 @@ public class PlayerControllerOpen : MonoBehaviour
         Respawn();
     }
 
-    private void OnDisable()
-    {
-        inputActions.Player.Reset.performed -= ResetPlayer;
-        inputActions.Player.Jump.performed -= Jump;
-        inputActions.Player.Disable();
-
-    }
 
     // Update is called once per frame
     void Update()
     {
+        //TODO menus
+
         //if (Input.GetKeyDown(KeyCode.Escape))
         //{
         //    SceneManager.LoadScene("MainMenu");
         //}
-
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
 
         if (transform.position.y < yBoundary)
         {
             Respawn();
             return;
         }
-
-        else if (moveZ < 0)
-        {
-            stopping = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Shapeshift();
-        }
-
-        Vector3 cameraForward = cameraTransform.forward;
-        Vector3 cameraRight = cameraTransform.right;
-        cameraForward.y = 0;
-        cameraRight.y = 0;
-
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        Vector3 cameraRelativeMoveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
-
-        if (cameraRelativeMoveDirection.sqrMagnitude > .001f && !stopping)
-        {
-            //get target rotation
-            Quaternion targetRotation = Quaternion.LookRotation(cameraRelativeMoveDirection);
-            Quaternion slerpTarget = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            //slerp
-            transform.rotation = slerpTarget;
-
-            //debug
-            current = transform.rotation.eulerAngles;
-            bigTarget = targetRotation.eulerAngles;
-            tinyTarget = slerpTarget.eulerAngles;
-        }
-
-        //yaw += Input.GetAxisRaw("Mouse X") * 5f;
-        //pitch -= Input.GetAxisRaw("Mouse Y") * 5f;
-        //Quaternion newRotation = Quaternion.Euler(pitch, yaw, 0f);
-        //transform.rotation = newRotation;
-
-        //Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
-        moveMe = cameraRelativeMoveDirection * moveSpeed;
-
-        //transform.Translate(moveMe);
-        //cc.Move(moveMe);
     }
 
-    public void Shapeshift()
+    private void ShapeshiftPressed(InputAction.CallbackContext value)
     {
         Shapeshift(!isSkateboard);
     }

@@ -3,16 +3,20 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("Player")]
+    [Header("References")]
     [SerializeField] private Transform target;
 
-    [Header("Tweakable Values")]
+    [Header("Position / Rotation")]
     [SerializeField] private float yaw = 0f;
     [SerializeField] private float pitch = 15f;
     [SerializeField] private float maxPitch;
     [SerializeField] private float minPitch;
+
+    [Header("Sensitivities")]
     [SerializeField] private float sensitivityX = 3f;
     [SerializeField] private float sensitivityY = 3f;
+
+    [Header("Offsets")]
     [SerializeField] private float cameraOffsetDistance = 3f;
     [SerializeField] private Vector3 offset = new Vector3(0f, .5f, 0f);
     [SerializeField] private Vector3 skateboardOffset = new Vector3(0f, .5f, 0f);
@@ -47,7 +51,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // LateUpdate to prevent jittering. Update camera after player movement
     void LateUpdate()
     {
         if (Input.GetButtonDown("ZoomIn"))
