@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float pitch = 15f;
     [SerializeField] private float maxPitch;
     [SerializeField] private float minPitch;
+    public bool LookAroundEnabled = true;
 
     [Header("Sensitivities")]
     [SerializeField] private float sensitivityX = 3f;
@@ -30,7 +31,6 @@ public class CameraController : MonoBehaviour
         inputActions = new InputSystem_Actions();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -75,15 +75,19 @@ public class CameraController : MonoBehaviour
     // LateUpdate to prevent jittering. Update camera after player movement
     void LateUpdate()
     {
-        yaw += Input.GetAxisRaw("Mouse X") * sensitivityX;
-        pitch -= Input.GetAxisRaw("Mouse Y") * sensitivityY;
-        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+        if (LookAroundEnabled)
+        {
+            yaw += Input.GetAxisRaw("Mouse X") * sensitivityX;
+            pitch -= Input.GetAxisRaw("Mouse Y") * sensitivityY;
+            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
-        Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);
-        Vector3 focalPoint = target.transform.position + offset;
+            Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);
+            Vector3 focalPoint = target.transform.position + offset;
 
-        // P - f*r*d?
-        transform.position = focalPoint - targetRotation * Vector3.forward * cameraOffsetDistance;
-        transform.rotation = targetRotation;
+            // P - f*r*d?
+            transform.position = focalPoint - targetRotation * Vector3.forward * cameraOffsetDistance;
+            transform.rotation = targetRotation;
+        }
+
     }
 }
