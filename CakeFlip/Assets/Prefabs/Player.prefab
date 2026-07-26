@@ -48,25 +48,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b6571835fd6eb44ba0762a20ae0a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yaw: 0
-  pitch: 15
   moveSpeed: 5
   rotateSpeed: 5
   moveMe: {x: 0, y: 0, z: 0}
   stopping: 0
+  moving: 0
   speedAnimationAdjustment: 2
   grounded: 0
   jumpForce: 6
-  gravity: -10
-  fallingGravity: -10
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 119
   current: {x: 0, y: 0, z: 0}
   bigTarget: {x: 0, y: 0, z: 0}
   tinyTarget: {x: 0, y: 0, z: 0}
   myRigidbody: {fileID: 0}
-  myAnimator: {fileID: 0}
   cameraTransform: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   yBoundary: -30
@@ -74,6 +70,7 @@ MonoBehaviour:
   Guy: {fileID: 7202836182820792647}
   guyAnimator: {fileID: 7202836182828079813}
   Skateboard: {fileID: 7214875788289831723}
+  skateboardAnimator: {fileID: 2171050898757678960}
 --- !u!54 &7932165733979925898
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -108,7 +105,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7018513433735755992}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 06dfa6332c913064d82c4d3b92771c37, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -120,8 +117,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.32418185, y: 0.22421476, z: 0.8640702}
-  m_Center: {x: 0, y: 0.09357329, z: 0.023408294}
+  m_Size: {x: 0.9464565, y: 0.54587406, z: 2.532381}
+  m_Center: {x: 0.07308981, y: 0.2544029, z: -0.036305845}
 --- !u!1001 &7202836182820761509
 PrefabInstance:
   m_ObjectHideFlags: 0

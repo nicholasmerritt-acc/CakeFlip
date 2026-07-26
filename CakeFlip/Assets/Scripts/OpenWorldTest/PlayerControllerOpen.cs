@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,8 +21,6 @@ public class PlayerControllerOpen : MonoBehaviour
     private bool hasJumped = false;
     [SerializeField] private bool grounded;
     [SerializeField] private float jumpForce = 27f;
-    //[SerializeField] private float gravity = -10f;
-    //[SerializeField] private float fallingGravity = -10f;
     [SerializeField] private LayerMask mask;
 
     [Header("Debugging")]
@@ -52,6 +49,7 @@ public class PlayerControllerOpen : MonoBehaviour
     {
         inputActions = new InputSystem_Actions();
     }
+
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
@@ -82,25 +80,20 @@ public class PlayerControllerOpen : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Player.Enable();
-        inputActions.Player.Move.performed += PlayerMove;
-        inputActions.Player.Move.canceled += PlayerMove;
         inputActions.Player.Reset.performed += ResetPlayer;
         inputActions.Player.Jump.performed += Jump;
-        inputActions.Player.Shapeshift.performed += ShapeshiftPressed;
+        inputActions.Player.Shapeshift.performed += ShapeshiftOnPress;
 
         inputActions.Player.Trick1.performed += DoTrick1;
         inputActions.Player.Trick2.performed += DoTrick2;
         inputActions.Player.Trick3.performed += DoTrick3;
     }
 
-
     private void OnDisable()
     {
         inputActions.Player.Reset.performed -= ResetPlayer;
         inputActions.Player.Jump.performed -= Jump;
-        inputActions.Player.Move.performed -= PlayerMove;
-        inputActions.Player.Move.canceled -= PlayerMove;
-        inputActions.Player.Shapeshift.performed -= ShapeshiftPressed;
+        inputActions.Player.Shapeshift.performed -= ShapeshiftOnPress;
 
         inputActions.Player.Trick1.performed -= DoTrick1;
         inputActions.Player.Trick2.performed -= DoTrick2;
@@ -108,10 +101,9 @@ public class PlayerControllerOpen : MonoBehaviour
         inputActions.Player.Disable();
     }
 
-    private void PlayerMove(InputAction.CallbackContext value)
+    private void HandleMovement()
     {
-        Vector2 moveInput = value.ReadValue<Vector2>();
-        Debug.Log($"moveinput {moveInput}");
+        Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         float moveX = moveInput.x;
         float moveZ = moveInput.y;
 
@@ -144,20 +136,8 @@ public class PlayerControllerOpen : MonoBehaviour
             tinyTarget = slerpTarget.eulerAngles;
         }
 
-        //if (!isSkateboard)
-        //{
-        //    transform.rotation = Quaternion.Euler(cameraForward);
-        //}
-        //yaw += Input.GetAxisRaw("Mouse X") * 5f;
-        //pitch -= Input.GetAxisRaw("Mouse Y") * 5f;
-        //Quaternion newRotation = Quaternion.Euler(pitch, yaw, 0f);
-        //transform.rotation = newRotation;
-
-        //Vector3 moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
         moveMe = cameraRelativeMoveDirection * moveSpeed;
-
     }
-
 
     private void DoTrick1(InputAction.CallbackContext value)
     {
@@ -174,23 +154,14 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private void DoTrick(Trick.TrickType whichFlip)
     {
-        if (!isSkateboard)
+        //only attempt trick if we are an airborne skateboard
+        if (!isSkateboard || Grounded())
         {
             return;
         }
 
-        if (Grounded())
-        {
-            return;
-        }
-
-        switch (whichFlip)
-        {
-            case Trick.TrickType.Frontflip:
-                //myAnimator.set
-                //TODO in progress tricking
-                break;
-        }
+        Trick.SkateboardTrick value = GameManager.Instance.SkateboardTrickDictionary[whichFlip];
+        skateboardAnimator.SetTrigger(value.AnimationTrigger);
     }
 
     private void Jump(InputAction.CallbackContext value)
@@ -222,9 +193,10 @@ public class PlayerControllerOpen : MonoBehaviour
             Respawn();
             return;
         }
+        HandleMovement();
     }
 
-    private void ShapeshiftPressed(InputAction.CallbackContext value)
+    private void ShapeshiftOnPress(InputAction.CallbackContext value)
     {
         Shapeshift(!isSkateboard);
     }
@@ -263,6 +235,7 @@ public class PlayerControllerOpen : MonoBehaviour
         }
         else if (isSkateboard)
         {
+            Debug.Log("applying force");
             myRigidbody.AddForce(moveMe, ForceMode.Force);
 
             if (hasJumped)

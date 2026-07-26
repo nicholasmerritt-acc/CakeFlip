@@ -1,13 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum ItemType
+    {
+        Undefined,
+        Egg,
+        Donut,
+        Key
+    }
+
     //singleton. there can be only one
     public static GameManager Instance { get; private set; }
 
+    public Dictionary<Trick.TrickType, Trick.SkateboardTrick> SkateboardTrickDictionary;
+    public Dictionary<ItemType, GameObject> SpawnableItemTable; //TODO items etc
+
     public string nextLevelName = "Level1";
 
-    void Awake()
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -18,6 +30,58 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        InitializeTrickDictionary();
+    }
+
+    private void InitializeTrickDictionary()
+    {
+        SkateboardTrickDictionary = new()
+        {
+            {
+                Trick.TrickType.Backflip,
+                new Trick.SkateboardTrick
+                {
+                    WhichTrick = Trick.TrickType.Backflip,
+                    Points = 10,
+                    AnimationTrigger = "backflipTrigger",
+                    Unlocked = false
+                }
+            },
+            {
+                Trick.TrickType.Sideflip,
+                new Trick.SkateboardTrick
+                {
+                    WhichTrick = Trick.TrickType.Sideflip,
+                    Points = 10,
+                    AnimationTrigger = "sideflipTrigger",
+                    Unlocked = false
+                }
+            },
+            {
+                Trick.TrickType.Treflip,
+                new Trick.SkateboardTrick
+                {
+                    WhichTrick = Trick.TrickType.Treflip,
+                    Points = 10,
+                    AnimationTrigger = "treflipTrigger",
+                    Unlocked = false
+                }
+            },
+            {
+                Trick.TrickType.Frontflip,
+                new Trick.SkateboardTrick
+                {
+                    WhichTrick = Trick.TrickType.Frontflip,
+                    Points = 10,
+                    AnimationTrigger = "frontflipTrigger",
+                    Unlocked = false
+                }
+            }
+        };
     }
 
     /// <summary>
