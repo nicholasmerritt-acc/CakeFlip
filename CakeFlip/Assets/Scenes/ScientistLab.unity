@@ -1727,13 +1727,36 @@ PrefabInstance:
     - target: {fileID: 8790889740295287822, guid: 60c2b3338255b7e47af7b2fd3374e478,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 711341335857149504, guid: 60c2b3338255b7e47af7b2fd3374e478,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7296236171832747952}
   m_SourcePrefab: {fileID: 100100000, guid: 60c2b3338255b7e47af7b2fd3374e478, type: 3}
+--- !u!1 &7296236171832747951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 711341335857149504, guid: 60c2b3338255b7e47af7b2fd3374e478,
+    type: 3}
+  m_PrefabInstance: {fileID: 7296236171832747950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7296236171832747952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296236171832747951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1f36d286a001040a83f320509acbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  TeleportTo: CityStreet
 --- !u!65 &7662721605391276761
 BoxCollider:
   m_ObjectHideFlags: 0
