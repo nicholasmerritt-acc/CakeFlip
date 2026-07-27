@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2573865238001343602}
   - component: {fileID: 8821938552273279076}
   - component: {fileID: 319436916230630045}
+  - component: {fileID: 9044287484658316655}
   m_Layer: 0
-  m_Name: Box Volume
+  m_Name: Teleport Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,6 +72,19 @@ MonoBehaviour:
   blendDistance: 1
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 1f4a0ee9fe70af74ab5ae1184cfc9a94, type: 2}
+--- !u!114 &9044287484658316655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711341335857149504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1f36d286a001040a83f320509acbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  TeleportTo: CityStreet
 --- !u!1 &6835262907072817655
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +312,7 @@ PrefabInstance:
     - target: {fileID: 5945052716929817944, guid: 83042a092373d86429563194a6ea4856,
         type: 3}
       propertyPath: m_Name
-      value: OrangePortal
+      value: OrangePortalVFX
       objectReference: {fileID: 0}
     - target: {fileID: 7222258468207783038, guid: 83042a092373d86429563194a6ea4856,
         type: 3}

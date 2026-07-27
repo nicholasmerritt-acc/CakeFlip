@@ -4,10 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerControllerOpen : MonoBehaviour
 {
-    //[Header("Camera")]
-    //[SerializeField] private float yaw = 0f;
-    //[SerializeField] private float pitch = 15f;
-
     private InputSystem_Actions inputActions;
 
     [Header("Movement")]
@@ -230,12 +226,10 @@ public class PlayerControllerOpen : MonoBehaviour
             hasJumped = false;
             myRigidbody.linearVelocity = Vector3.up * myRigidbody.linearVelocity.y; //super hard stop. zero out everything but the y
             myRigidbody.angularVelocity = Vector3.zero;
-            //myRigidbody.AddForce(-myRigidbody.linearVelocity); ???
             stopping = false;
         }
         else if (isSkateboard)
         {
-            Debug.Log("applying force");
             myRigidbody.AddForce(moveMe, ForceMode.Force);
 
             if (hasJumped)
@@ -263,7 +257,6 @@ public class PlayerControllerOpen : MonoBehaviour
             Debug.Log("hit not ground: " + hit.collider.gameObject.name);
             grounded = false;
         }
-        //grounded = transform.position.y < 1f;
         return grounded;
     }
 
