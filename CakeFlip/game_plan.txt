@@ -2,20 +2,52 @@ CakeFlip: Xtreme Baking
 
 todo next: 
 -----------------
+mandatory requirements:
+	remove getkey
+	player health
+	at least one more playable scene
+	navmesh
+	game over
+
+main menu
+	new game
+	load game
+	settings
+	controls? help? idk
+
+game manager singleton to track dialogue seen or not
+	i hate that word why did i include it
+
 item pickup / inventory
+	when you collide (trigger) an item, pick it up
+	if you are carrying an item, drop that one
+	if you are carrying an item through a teleporter, you go to that level
+	need UI annoucement on level load of which level it is
 more levels / more items to correspond
+
+wile e coyote tunnel for spawning navmesh cars
+need tunnel prefabs and buildout blockout more
+need navmesh
+need waypoints and pathfinding code to make cars move
 
 sound effects / music
 audio manager
 
 scientist tutorial
 actual "baking" stuff. like combine ingreds to get to weird levels!
+maybe the scientist has an oven
+
+"talk" to npcs with dialogue system.
+talk to guy on the street and ask about science lab
 
 nice to have:
 ---------------
 cool sk8board textures
 trick animations fade into each other? transitions? idk it's kinda fine
-skateboard select
+skateboard select from main menu
+race feature. race enemy cars from one waypoint to another
+	turnoff portals and Ui during race?
+
 
 more levels:
 ------------

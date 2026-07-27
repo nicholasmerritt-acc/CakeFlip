@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float pitch = 15f;
     [SerializeField] private float maxPitch;
     [SerializeField] private float minPitch;
+    [SerializeField] private float oldInputSystemAdjustment = .05f;
     public bool LookAroundEnabled = true;
 
     [Header("Sensitivities")]
@@ -77,16 +78,19 @@ public class CameraController : MonoBehaviour
     {
         if (LookAroundEnabled)
         {
-            yaw += Input.GetAxisRaw("Mouse X") * sensitivityX;
-            pitch -= Input.GetAxisRaw("Mouse Y") * sensitivityY;
+            Vector2 mouseDelta = inputActions.Player.Look.ReadValue<Vector2>() * oldInputSystemAdjustment;
+
+            float mouseX = mouseDelta.x;
+            float mouseY = mouseDelta.y;
+
+            yaw += mouseX * sensitivityX;
+            pitch -= mouseY * sensitivityY;
             pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
             Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);
             Vector3 focalPoint = target.transform.position + offset;
-
-            // P - f*r*d?
-            transform.position = focalPoint - targetRotation * Vector3.forward * cameraOffsetDistance;
-            transform.rotation = targetRotation;
+            Vector3 targetPosition = focalPoint - targetRotation * Vector3.forward * cameraOffsetDistance;
+            transform.SetPositionAndRotation(targetPosition, targetRotation);
         }
 
     }
