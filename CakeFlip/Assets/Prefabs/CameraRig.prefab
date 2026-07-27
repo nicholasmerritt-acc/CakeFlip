@@ -285,9 +285,12 @@ MonoBehaviour:
   pitch: 0
   maxPitch: 50
   minPitch: -20
+  LookAroundEnabled: 1
   sensitivityX: 3
   sensitivityY: 3
-  cameraOffsetDistance: 3
+  cameraOffsetDistance: 6
+  minZoom: 1
+  maxZoom: 9
   offset: {x: 0, y: 0.5, z: 0}
   skateboardOffset: {x: 0, y: 0.5, z: 0}
   guyOffset: {x: 0, y: 2, z: 0}

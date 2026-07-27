@@ -2,7 +2,17 @@ CakeFlip: Xtreme Baking
 
 todo next: 
 -----------------
-more levels
+item pickup / inventory
+more levels / more items to correspond
+
+sound effects / music
+audio manager
+
+scientist tutorial
+actual "baking" stuff. like combine ingreds to get to weird levels!
+
+nice to have:
+---------------
 cool sk8board textures
 trick animations fade into each other? transitions? idk it's kinda fine
 skateboard select
@@ -12,6 +22,6 @@ more levels:
 adventures in slugland inspired
 pick up one item at a time. used on a teleporter to go to a certain level
 every item has a level
-can also do tricks to unlock certain areas
+can also do tricks to unlock certain areas? gain combo? impress npcs? idk
 find certain items to unlock certain tricks, etc
 "find the green key to unlock a trick" idk
