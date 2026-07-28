@@ -2,8 +2,10 @@ CakeFlip: Xtreme Baking
 
 todo next: 
 -----------------
+Guy class
+Skateboard class
+
 mandatory requirements:
-	remove getkey
 	player health
 	at least one more playable scene
 	navmesh

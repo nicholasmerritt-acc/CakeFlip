@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public Dictionary<Trick.TrickType, Trick.SkateboardTrick> SkateboardTrickDictionary;
+    public HashSet<Trick.TrickType> UnlockedTricks;
     public Dictionary<ItemType, GameObject> SpawnableItemTable; //TODO items etc
 
     public string nextLevelName = "Level1";
@@ -34,10 +35,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeTrickDictionary();
+        InitializeTrickDictionaries();
     }
 
-    private void InitializeTrickDictionary()
+    private void InitializeTrickDictionaries()
     {
         SkateboardTrickDictionary = new()
         {
@@ -82,7 +83,18 @@ public class GameManager : MonoBehaviour
                 }
             }
         };
+
+        UnlockedTricks = new();
+        UnlockTrick(Trick.TrickType.Backflip);
+        //TODO get unlocks from playerprefs
     }
+
+    public void UnlockTrick(Trick.TrickType trickType)
+    {
+        UnlockedTricks.Add(trickType);
+        //TODO add trick to playerprefs
+    }
+
 
     /// <summary>
     /// save which level we are on, so if we quit to main menu we can go back to where we left off

@@ -52,13 +52,14 @@ MonoBehaviour:
   rotateSpeed: 5
   moveMe: {x: 0, y: 0, z: 0}
   stopping: 0
-  moving: 0
   speedAnimationAdjustment: 2
   grounded: 0
   jumpForce: 6
   mask:
     serializedVersion: 2
     m_Bits: 119
+  trickInProgress: 0
+  trickCanceled: 0
   current: {x: 0, y: 0, z: 0}
   bigTarget: {x: 0, y: 0, z: 0}
   tinyTarget: {x: 0, y: 0, z: 0}
@@ -344,6 +345,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2171050898757678960}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: de798ef6360d5034ab03fb4207303665,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2689811946592239016}
   m_SourcePrefab: {fileID: 100100000, guid: de798ef6360d5034ab03fb4207303665, type: 3}
 --- !u!1 &7214875788289831723 stripped
 GameObject:
@@ -373,6 +378,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2689811946592239016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7214875788289831723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a912950c48b784295b7525babaff35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!4 &8028708540491540881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: de798ef6360d5034ab03fb4207303665,

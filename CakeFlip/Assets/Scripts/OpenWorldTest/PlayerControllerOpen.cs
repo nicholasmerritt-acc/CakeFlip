@@ -17,7 +17,11 @@ public class PlayerControllerOpen : MonoBehaviour
     private bool hasJumped = false;
     [SerializeField] private bool grounded;
     [SerializeField] private float jumpForce = 27f;
-    [SerializeField] private LayerMask mask;
+    [SerializeField] private LayerMask groundedCheckMask;
+
+    [Header("Tricks")]
+    [SerializeField] private bool trickInProgress = false;
+    [SerializeField] private bool trickCanceled = false;
 
     [Header("Debugging")]
     [SerializeField] private Vector3 current;
@@ -36,7 +40,7 @@ public class PlayerControllerOpen : MonoBehaviour
     [SerializeField] private bool isSkateboard = false;
     [SerializeField] private GameObject Guy;
     [SerializeField] private Animator guyAnimator;
-    [SerializeField] private GameObject Skateboard;
+    [SerializeField] private GameObject mySkateboard;
     [SerializeField] private Animator skateboardAnimator;
     public static event Action<bool> OnShapeshift;
 
@@ -57,7 +61,7 @@ public class PlayerControllerOpen : MonoBehaviour
             //TODO find him
         }
 
-        if (Skateboard == null)
+        if (mySkateboard == null)
         {
             //TODO find it. can't leave home without me trusty skateboard
         }
@@ -68,7 +72,7 @@ public class PlayerControllerOpen : MonoBehaviour
         }
         if (skateboardAnimator == null)
         {
-            skateboardAnimator = Skateboard.GetComponent<Animator>();
+            skateboardAnimator = mySkateboard.GetComponent<Animator>();
         }
         BecomeMan();
     }
@@ -83,6 +87,8 @@ public class PlayerControllerOpen : MonoBehaviour
         inputActions.Player.Trick1.performed += DoTrick1;
         inputActions.Player.Trick2.performed += DoTrick2;
         inputActions.Player.Trick3.performed += DoTrick3;
+
+        Skateboard.TrickCompleted += TrickCompleted;
     }
 
     private void OnDisable()
@@ -95,6 +101,8 @@ public class PlayerControllerOpen : MonoBehaviour
         inputActions.Player.Trick2.performed -= DoTrick2;
         inputActions.Player.Trick3.performed -= DoTrick3;
         inputActions.Player.Disable();
+
+        Skateboard.TrickCompleted -= TrickCompleted;
     }
 
     private void HandleMovement()
@@ -150,11 +158,20 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private void DoTrick(Trick.TrickType whichFlip)
     {
-        //only attempt trick if we are an airborne skateboard
-        if (!isSkateboard || Grounded())
+        bool unlocked = GameManager.Instance.UnlockedTricks.Contains(whichFlip);
+
+        //only attempt trick if we are an airborne skateboard, and if we've unlocked it.
+        grounded = Grounded();
+        if (!isSkateboard || !unlocked || Grounded())
         {
+            if (!unlocked)
+            {
+                Debug.Log("you haven't learned that trick yet!");
+            }
             return;
         }
+
+        trickInProgress = true;
 
         Trick.SkateboardTrick value = GameManager.Instance.SkateboardTrickDictionary[whichFlip];
         skateboardAnimator.SetTrigger(value.AnimationTrigger);
@@ -201,7 +218,7 @@ public class PlayerControllerOpen : MonoBehaviour
     {
         isSkateboard = toSkateboard;
 
-        Skateboard.SetActive(toSkateboard);
+        mySkateboard.SetActive(toSkateboard);
         Guy.SetActive(!toSkateboard);
 
         //we just shapeshifted, so tell our listeners
@@ -250,7 +267,7 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private bool Grounded()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, .5f, mask);
+        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, .5f, groundedCheckMask);
 
         if (grounded && !hit.collider.gameObject.CompareTag("Ground"))
         {
@@ -269,6 +286,23 @@ public class PlayerControllerOpen : MonoBehaviour
 
     public void AddPoints(int points)
     {
-        Debug.Log("got {points}");
+        Debug.Log($"got {points} points");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (trickInProgress && isSkateboard && collision.gameObject.CompareTag("Ground"))
+        {
+            trickInProgress = false;
+            skateboardAnimator.SetTrigger("trickCanceled");
+            Debug.Log("trick failed! oops!");
+        }
+    }
+
+    private void TrickCompleted(Trick.TrickType whichTrick)
+    {
+        Debug.Log("Finished a trick! nice!");
+        trickInProgress = false;
+        trickCanceled = false;
     }
 }
