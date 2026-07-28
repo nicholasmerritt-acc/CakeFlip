@@ -1,24 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static ItemPickup;
 
 public class GameManager : MonoBehaviour
 {
-    public enum ItemType
-    {
-        Undefined,
-        Egg,
-        Donut,
-        Key
-    }
-
     //singleton. there can be only one
     public static GameManager Instance { get; private set; }
 
+    [Header("Tricks")]
     public Dictionary<Trick.TrickType, Trick.SkateboardTrick> SkateboardTrickDictionary;
     public HashSet<Trick.TrickType> UnlockedTricks;
-    public Dictionary<ItemType, GameObject> SpawnableItemTable; //TODO items etc
 
-    public string nextLevelName = "Level1";
+    [Header("Inventory")]
+    public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
+    public PickupableItemType CurrentItem;
+    public static Dictionary<PickupableItemType, string> ItemToLevelName;
 
     private void Awake()
     {
@@ -36,6 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InitializeTrickDictionaries();
+        InitializeItemDictionary();
     }
 
     private void InitializeTrickDictionaries()
@@ -89,22 +86,26 @@ public class GameManager : MonoBehaviour
         //TODO get unlocks from playerprefs
     }
 
+    private void InitializeItemDictionary()
+    {
+        ItemToLevelName = new Dictionary<PickupableItemType, string>();
+        //TODO match all items to level name strings for loading
+    }
+
+
+
     public void UnlockTrick(Trick.TrickType trickType)
     {
         UnlockedTricks.Add(trickType);
         //TODO add trick to playerprefs
     }
 
-
-    /// <summary>
-    /// save which level we are on, so if we quit to main menu we can go back to where we left off
-    /// </summary>
-    /// <param name="nextLevelName">name of the scene unity is to load as the next level</param>
-    public static void SetNextLevel(string nextLevelName)
+    public void PickupItem(ItemPickup.PickupableItemType itemType)
     {
-        if (Instance != null)
-        {
-            Instance.nextLevelName = nextLevelName;
-        }
+        //TODO drop old item
+
+        CurrentItem = itemType;
+        //TODO update UI
+        Debug.Log($"picked up {itemType}");
     }
 }

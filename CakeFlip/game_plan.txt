@@ -5,6 +5,19 @@ todo next:
 Guy class
 Skateboard class
 
+
+city -> empty level?
+	will contain pizzas and ice creams?
+	should contain most items actually. the "home base"
+science -> some science / doctor item?
+	contains nothing, so always travel to city
+	the "tutorial", the cutscene will teach new things every time
+	or maybe the doctor/scientist has quests for you
+something else -> pizza level
+	should contain ice cream and doctor item
+something else -> ice cream level
+	should contain pizza and doctor item
+
 mandatory requirements:
 	player health
 	at least one more playable scene
@@ -49,6 +62,7 @@ trick animations fade into each other? transitions? idk it's kinda fine
 skateboard select from main menu
 race feature. race enemy cars from one waypoint to another
 	turnoff portals and Ui during race?
+exploding crates??
 
 
 more levels:

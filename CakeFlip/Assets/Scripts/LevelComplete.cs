@@ -31,7 +31,7 @@ public class LevelComplete : MonoBehaviour
                 player.levelComplete = true;
                 levelCompleteText.SetActive(true);
                 pointsNeededText.SetActive(false);
-                GameManager.SetNextLevel(nextLevelName);
+                //GameManager.SetNextLevel(nextLevelName);
                 Invoke(nameof(LoadNextScene), loadLevelDelay);
             }
             else
