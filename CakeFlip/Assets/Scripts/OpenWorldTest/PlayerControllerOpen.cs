@@ -21,7 +21,6 @@ public class PlayerControllerOpen : MonoBehaviour
 
     [Header("Tricks")]
     [SerializeField] private bool trickInProgress = false;
-    [SerializeField] private bool trickCanceled = false;
 
     [Header("Debugging")]
     [SerializeField] private Vector3 current;
@@ -31,6 +30,7 @@ public class PlayerControllerOpen : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody myRigidbody;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private BoxCollider myBoxCollider;
 
     [Header("Positioning")]
     [SerializeField] private Vector3 respawnPosition;
@@ -38,10 +38,14 @@ public class PlayerControllerOpen : MonoBehaviour
 
     [Header("Shapeshifting")]
     [SerializeField] private bool isSkateboard = false;
-    [SerializeField] private GameObject Guy;
+    [SerializeField] private GameObject myGuy;
+    [SerializeField] private Guy guy;
     [SerializeField] private Animator guyAnimator;
     [SerializeField] private GameObject mySkateboard;
+    [SerializeField] private Skateboard skateboard;
     [SerializeField] private Animator skateboardAnimator;
+
+
     public static event Action<bool> OnShapeshift;
 
 
@@ -55,20 +59,21 @@ public class PlayerControllerOpen : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
+        myBoxCollider = GetComponent<BoxCollider>();
         
-        if (Guy == null)
+        if (guy == null)
         {
-            //TODO find him
+            guy = myGuy.GetComponent<Guy>();
         }
-
-        if (mySkateboard == null)
+        if (skateboard == null)
         {
-            //TODO find it. can't leave home without me trusty skateboard
+            //can't leave home without me trusty skateboard
+            skateboard = mySkateboard.GetComponent<Skateboard>();
         }
 
         if (guyAnimator == null)
         {
-            guyAnimator = Guy.GetComponent<Animator>();
+            guyAnimator = myGuy.GetComponent<Animator>();
         }
         if (skateboardAnimator == null)
         {
@@ -158,6 +163,12 @@ public class PlayerControllerOpen : MonoBehaviour
 
     private void DoTrick(Trick.TrickType whichFlip)
     {
+        if (trickInProgress)
+        {
+            Debug.Log("already doing a trick!");
+            return;
+        }
+
         bool unlocked = GameManager.Instance.UnlockedTricks.Contains(whichFlip);
 
         //only attempt trick if we are an airborne skateboard, and if we've unlocked it.
@@ -219,7 +230,18 @@ public class PlayerControllerOpen : MonoBehaviour
         isSkateboard = toSkateboard;
 
         mySkateboard.SetActive(toSkateboard);
-        Guy.SetActive(!toSkateboard);
+        myGuy.SetActive(!toSkateboard);
+
+        if (toSkateboard)
+        {
+            myBoxCollider.center = skateboard.BoxColliderCenterValues;
+            myBoxCollider.size = skateboard.BoxColliderSizeValues;
+        }
+        else
+        {
+            myBoxCollider.center = guy.BoxColliderCenterValues;
+            myBoxCollider.size = guy.BoxColliderSizeValues;
+        }
 
         //we just shapeshifted, so tell our listeners
         OnShapeshift?.Invoke(toSkateboard);
@@ -277,6 +299,9 @@ public class PlayerControllerOpen : MonoBehaviour
         return grounded;
     }
 
+    /// <summary>
+    /// Set player back to initial position and stop all movement
+    /// </summary>
     private void Respawn()
     {
         transform.SetPositionAndRotation(respawnPosition, Quaternion.identity);
@@ -299,10 +324,14 @@ public class PlayerControllerOpen : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// announce that we have compelete a skateboard trick
+    /// </summary>
+    /// <param name="whichTrick"></param>
     private void TrickCompleted(Trick.TrickType whichTrick)
     {
-        Debug.Log("Finished a trick! nice!");
+        Debug.Log($"Finished a trick: {whichTrick}! nice!");
         trickInProgress = false;
-        trickCanceled = false;
+        AddPoints(GameManager.Instance.SkateboardTrickDictionary[whichTrick].Points);
     }
 }

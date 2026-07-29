@@ -27,6 +27,7 @@ public class TeleportArea : MonoBehaviour
 
     private IEnumerator DoTeleport()
     {
+        GameManager.Instance.SaveInventory();
         yield return new WaitForSeconds(teleportDelay);
         SceneManager.LoadScene(SceneNameToTeleportTo);
     }

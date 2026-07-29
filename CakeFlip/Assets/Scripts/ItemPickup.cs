@@ -9,7 +9,8 @@ public class ItemPickup : MonoBehaviour
         Egg,
         Donut,
         Key,
-        Pizza
+        Pizza,
+        IceCream
     }
 
     public PickupableItemType ItemType;
@@ -18,8 +19,8 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.PickupItem(ItemType);
-            Destroy(gameObject);
+            GameManager.Instance.PickupItem(this);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static ItemPickup;
 
@@ -13,8 +15,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Inventory")]
     public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
-    public PickupableItemType CurrentItem;
     public static Dictionary<PickupableItemType, string> ItemToLevelName;
+    public GameObject CurrentItem;
+    private float dropoffOffset = -3f;
+    public static event Action<string, string> InventoryChanged;
+
+    [Header("References")]
+    public PlayerControllerOpen Player;
 
     private void Awake()
     {
@@ -33,6 +40,8 @@ public class GameManager : MonoBehaviour
     {
         InitializeTrickDictionaries();
         InitializeItemDictionary();
+
+        Player = FindAnyObjectByType<PlayerControllerOpen>();
     }
 
     private void InitializeTrickDictionaries()
@@ -88,11 +97,11 @@ public class GameManager : MonoBehaviour
 
     private void InitializeItemDictionary()
     {
-        ItemToLevelName = new Dictionary<PickupableItemType, string>();
-        //TODO match all items to level name strings for loading
+        ItemToLevelName = new Dictionary<PickupableItemType, string>
+        {
+            { PickupableItemType.Undefined, "CityStreet" }
+        };
     }
-
-
 
     public void UnlockTrick(Trick.TrickType trickType)
     {
@@ -100,12 +109,44 @@ public class GameManager : MonoBehaviour
         //TODO add trick to playerprefs
     }
 
-    public void PickupItem(ItemPickup.PickupableItemType itemType)
+    /// <summary>
+    /// we can only hold one item at a time, so if we pick something up, we must drop something
+    /// </summary>
+    /// <param name="pickup"></param>
+    public void PickupItem(ItemPickup pickup)
     {
-        //TODO drop old item
+        string droppedString = "";
 
-        CurrentItem = itemType;
-        //TODO update UI
-        Debug.Log($"picked up {itemType}");
+        if (CurrentItem != null)
+        {
+            //"drop" the current item
+            CurrentItem.SetActive(true);
+
+            //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
+            CurrentItem.transform.parent = Player.transform.parent;
+
+            //make new position a certain amount behind us, but keep the height of the item before we picked it up
+            Vector3 newPosition = Player.transform.position + Player.transform.forward * dropoffOffset;
+            newPosition.y = CurrentItem.transform.position.y;
+            CurrentItem.transform.position = newPosition;
+
+            Debug.Log($"Dropped {CurrentItem} behind player");
+            droppedString = CurrentItem.name;
+        }
+
+        //set current item to the item we just picked up
+        CurrentItem = pickup.gameObject;
+
+        InventoryChanged?.Invoke(pickup.name, droppedString);
+        Debug.Log($"picked up {pickup.name}");
     }
+
+    /// <summary>
+    /// make sure our inventory persists between scenes
+    /// </summary>
+    public void SaveInventory()
+    {
+        CurrentItem.transform.parent = transform;
+    }
+
 }
