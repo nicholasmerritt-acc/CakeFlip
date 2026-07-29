@@ -1,28 +1,38 @@
 CakeFlip: Xtreme Baking
+-----------------------
 
-todo next: 
------------------
-Guy class
-Skateboard class
-
-
-city -> empty level?
-	will contain pizzas and ice creams?
-	should contain most items actually. the "home base"
-science -> some science / doctor item?
-	contains nothing, so always travel to city
-	the "tutorial", the cutscene will teach new things every time
-	or maybe the doctor/scientist has quests for you
-something else -> pizza level
-	should contain ice cream and doctor item
-something else -> ice cream level
-	should contain pizza and doctor item
-
-mandatory requirements:
+todo next (mandatory):
+----------------------
 	player health
 	at least one more playable scene
+		just make pizza level. ez pz.
 	navmesh
-	game over
+	game over. 
+		maybe some evil level the enemies can kill you
+		maybe if you get run over by a pizza truck? idk
+
+todo next (4fun): 
+----------------
+ladders, to make the human form useful
+exploding crates?? maybe they have a chance to drop items
+	respawn after a while
+	just get some stupid explosion sfx and vfx
+	maybe some npc talks about how the businesses always put out boxes
+
+no item -> city ->
+	should contain most items. the "home base"
+some science / doctor item -> science lab
+	contains nothing, so usually travel to city
+	the "tutorial", the cutscene will teach new things every time
+	or maybe the doctor/scientist has quests for you
+pizza -> some level. maybe a city where every building is a pizza shop
+	welcome to the pizza dimension.
+key -> some level. 
+	dungeon???
+ice cream -> some level
+	nice leve? everything is fluffy? less gravity? idk
+donut -> some level
+	everything is round? no that sounds horrible
 
 main menu
 	new game
@@ -34,8 +44,6 @@ game manager singleton to track dialogue seen or not
 	i hate that word why did i include it
 
 item pickup / inventory
-	when you collide (trigger) an item, pick it up
-	if you are carrying an item, drop that one
 	if you are carrying an item through a teleporter, you go to that level
 	need UI annoucement on level load of which level it is
 more levels / more items to correspond
@@ -62,7 +70,6 @@ trick animations fade into each other? transitions? idk it's kinda fine
 skateboard select from main menu
 race feature. race enemy cars from one waypoint to another
 	turnoff portals and Ui during race?
-exploding crates??
 
 
 more levels:
