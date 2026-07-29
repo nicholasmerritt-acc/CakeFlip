@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class ItemBobUpAndDown : MonoBehaviour
 {
-    [SerializeField] private float maxY = 1.5f;
-    [SerializeField] private float minY = 1f;
+    [SerializeField] private float maxY = .5f;
+    private float maxYTotal;
+    [SerializeField] private float minY = .5f;
+    private float minYTotal;
     [SerializeField] private float moveSpeed = .3f;
 
     private void Start()
     {
-        Vector3 startPosition = transform.position;
-        startPosition.y = (maxY + minY) / 2f;
-        transform.position = startPosition;
+        maxYTotal = transform.position.y + maxY;
+        minYTotal = transform.position.y - minY;
     }
 
     void Update()
     {
-        if (transform.position.y > maxY || transform.position.y < minY)
+        if (transform.position.y > maxYTotal || transform.position.y < minYTotal)
         {
             moveSpeed = -moveSpeed;
         }

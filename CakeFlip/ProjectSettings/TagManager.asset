@@ -9,6 +9,7 @@ TagManager:
   - CurrentScoreText
   - IncrementalScoreText
   - Ground
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - UI
   - Ground
   - ItemPickup
-  - 
-  - 
+  - Buildings
+  - NPCs
   - 
   - 
   - 

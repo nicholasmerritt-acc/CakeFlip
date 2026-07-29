@@ -6,7 +6,6 @@ todo next (mandatory):
 	player health
 	at least one more playable scene
 		just make pizza level. ez pz.
-	navmesh
 	game over. 
 		maybe some evil level the enemies can kill you
 		maybe if you get run over by a pizza truck? idk
