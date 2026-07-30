@@ -10,6 +10,7 @@ TagManager:
   - IncrementalScoreText
   - Ground
   - NPC
+  - DestructableObject
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - ItemPickup
   - Buildings
   - NPCs
-  - 
+  - DestructableItems
   - 
   - 
   - 

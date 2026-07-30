@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int yBoundary = -30;
 
     [Header("Shapeshifting")]
-    [SerializeField] private bool isSkateboard = false;
+    public bool IsSkateboard = false;
     private Shapeshiftable currentForm;
     [SerializeField] private GameObject myGuy;
     [SerializeField] private Guy guy;
@@ -61,6 +61,13 @@ public class PlayerController : MonoBehaviour
 
         //you must be swift as a raging river
         BecomeMan();
+
+        SetPlayer();
+    }
+
+    private void SetPlayer()
+    {
+        GameManager.Instance.Player = this;
     }
 
     private void SetupReferences()
@@ -132,7 +139,7 @@ public class PlayerController : MonoBehaviour
         float moveX = moveInput.x;
         float moveZ = moveInput.y;
 
-        if (moveZ < 0 && isSkateboard)
+        if (moveZ < 0 && IsSkateboard)
         {
             stopping = true;
         }
@@ -189,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
         //only attempt trick if we are an airborne skateboard, and if we've unlocked it.
         grounded = Grounded();
-        if (!isSkateboard || !unlocked || Grounded())
+        if (!IsSkateboard || !unlocked || Grounded())
         {
             if (!unlocked)
             {
@@ -206,7 +213,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext value)
     {
-        if (isSkateboard && Grounded())
+        if (IsSkateboard && Grounded())
         {
             hasJumped = true;
         }
@@ -239,12 +246,12 @@ public class PlayerController : MonoBehaviour
 
     private void ShapeshiftOnPress(InputAction.CallbackContext value)
     {
-        Shapeshift(!isSkateboard);
+        Shapeshift(!IsSkateboard);
     }
 
     public void Shapeshift(bool toSkateboard)
     {
-        isSkateboard = toSkateboard;
+        IsSkateboard = toSkateboard;
 
         mySkateboard.SetActive(toSkateboard);
         myGuy.SetActive(!toSkateboard);
@@ -286,7 +293,7 @@ public class PlayerController : MonoBehaviour
             myRigidbody.angularVelocity = Vector3.zero;
             stopping = false;
         }
-        else if (isSkateboard)
+        else if (IsSkateboard)
         {
             myRigidbody.AddForce(moveMe, ForceMode.Force);
 
@@ -335,7 +342,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (trickInProgress && isSkateboard && collision.gameObject.CompareTag("Ground"))
+        if (trickInProgress && IsSkateboard && collision.gameObject.CompareTag("Ground"))
         {
             trickInProgress = false;
             skateboardAnimator.SetTrigger("trickCanceled");

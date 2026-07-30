@@ -12,7 +12,6 @@ public class TeleportArea : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //teleport after delay?
             if (string.IsNullOrEmpty(SceneNameToTeleportTo))
             {
                 Debug.Log("Nowhere to teleport to! Staying here...");
@@ -25,6 +24,10 @@ public class TeleportArea : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// teleport player after delay. load a new scene and keep track of what we are holding
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DoTeleport()
     {
         GameManager.Instance.SaveInventory();
@@ -32,6 +35,7 @@ public class TeleportArea : MonoBehaviour
         SceneManager.LoadScene(SceneNameToTeleportTo);
     }
 
+    //TODO teleport loading bar
     //private void OnTriggerStay(Collider other)
     //{
     //    if (other.CompareTag("Player"))

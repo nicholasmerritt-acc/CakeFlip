@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using static ItemPickup;
 
@@ -40,8 +39,6 @@ public class GameManager : MonoBehaviour
     {
         InitializeTrickDictionaries();
         InitializeItemDictionary();
-
-        Player = FindAnyObjectByType<PlayerController>();
     }
 
     private void InitializeTrickDictionaries()
@@ -146,7 +143,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SaveInventory()
     {
-        CurrentItem.transform.parent = transform;
+        if (CurrentItem != null)
+        {
+            CurrentItem.transform.parent = transform;
+        }
     }
 
 }
