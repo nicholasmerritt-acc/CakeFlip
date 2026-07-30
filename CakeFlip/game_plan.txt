@@ -4,8 +4,6 @@ CakeFlip: Xtreme Baking
 todo next (mandatory):
 ----------------------
 	player health
-	at least one more playable scene
-		just make pizza level. ez pz.
 	game over. 
 		maybe some evil level the enemies can kill you
 		maybe if you get run over by a pizza truck? idk
@@ -14,6 +12,7 @@ todo next (mandatory):
 
 todo next (4fun): 
 ----------------
+SPAWNING. cars and crates!
 debug trick failing...
 and maybe add some npcs with quests to unlock the other tricks
 doing tricks (and unique tricks?!?!) increases combo (ui that goes up in a cone)
@@ -27,26 +26,34 @@ crates: maybe they have a chance to drop items
 	just get some stupid explosion sfx and vfx
 	maybe some npc talks about how the businesses always put out boxes
 
-5 levels is the goal! have 2.
+6 levels is the goal! have 3.
 
 1. no item -> city ->
 	should contain most items. the "home base"
 2. some science / doctor item -> science lab
 	contains nothing, so usually travel to city
-	the "tutorial", the cutscene will teach new things every time
-	or maybe the doctor/scientist has quests for you
+	the "tutorial", the billboard will teach new things every time
+	maybe the doctor/scientist has quests for you. requests different items.
 3. pizza -> pizza dimension. maybe a city where every building is a pizza shop
 	welcome to the pizza dimension.
 	contains only pizza. so you have to learn dropping?
 	npc that teaches you how to drop items
 	or throw items? ooh that could be fun
-4. key -> dungeon dimension??? or just lots of crates
-	find a dungeon door asset and we are in business
+4. pirate item (sword maybe) lead to crate island
+	just lots of crates
 	chance to destroy a bunch of crates and they can spawn items?
-5. ice cream -> dessert dimension
+5. key -> competition island
+	competition island: do tricks for 3 judges. their scores appear in real time
+	(on billboards and also in UI)
+	countdown timer
+	get enough points to win the game
+	you can bribe the judges with food that you find oooh
+	3 judges. perfect for ice cream donut pizza that we already have
+6. ice cream -> dessert dimension
 	nice leve? everything is fluffy? less gravity? idk
-donut -> dessert dimension but different part?
-	everything is round? no that sounds horrible
+6. donut -> dessert dimension but different part
+	two floating islands that can see each other?
+	then we need two spawn points, and teleporter has to indicate which one
 
 main menu
 	new game
@@ -62,10 +69,8 @@ item pickup / inventory
 	need UI annoucement on level load of which level it is
 more levels / more items to correspond
 
-wile e coyote tunnel for spawning navmesh cars
+wile e coyote tunnel for spawning navmesh cars!
 need tunnel prefabs and buildout blockout more
-need navmesh
-need waypoints and pathfinding code to make cars move
 
 sound effects / music
 audio manager
@@ -85,12 +90,8 @@ skateboard select from main menu
 race feature. race enemy cars from one waypoint to another
 	turnoff portals and Ui during race?
 
-
 more levels:
 ------------
 adventures in slugland inspired
 pick up one item at a time. used on a teleporter to go to a certain level
 every item has a level
-can also do tricks to unlock certain areas? gain combo? impress npcs? idk
-find certain items to unlock certain tricks, etc
-"find the green key to unlock a trick" idk
