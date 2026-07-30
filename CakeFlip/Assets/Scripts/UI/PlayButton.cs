@@ -5,6 +5,6 @@ public class PlayButton : MonoBehaviour
 {
     public void OnPlayButtonClick()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("ScientistLab");
     }
 }

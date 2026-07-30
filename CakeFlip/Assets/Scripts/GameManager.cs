@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public static event Action<string, string> InventoryChanged;
 
     [Header("References")]
-    public PlayerControllerOpen Player;
+    public PlayerController Player;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         InitializeTrickDictionaries();
         InitializeItemDictionary();
 
-        Player = FindAnyObjectByType<PlayerControllerOpen>();
+        Player = FindAnyObjectByType<PlayerController>();
     }
 
     private void InitializeTrickDictionaries()
