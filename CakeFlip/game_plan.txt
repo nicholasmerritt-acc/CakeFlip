@@ -9,28 +9,43 @@ todo next (mandatory):
 	game over. 
 		maybe some evil level the enemies can kill you
 		maybe if you get run over by a pizza truck? idk
+		maybe if you fall off the edge, you die instead of respawn
+	check rubric for other stuff
 
 todo next (4fun): 
 ----------------
+debug trick failing...
+and maybe add some npcs with quests to unlock the other tricks
+doing tricks (and unique tricks?!?!) increases combo (ui that goes up in a cone)
+combo adds to your movement speed and jump force! ooh
+some sort of flame effect at max combo!
+
+scientist should disable movement as well as looking!
 ladders, to make the human form useful
-exploding crates?? maybe they have a chance to drop items
+crates: maybe they have a chance to drop items
 	respawn after a while
 	just get some stupid explosion sfx and vfx
 	maybe some npc talks about how the businesses always put out boxes
 
-no item -> city ->
+5 levels is the goal! have 2.
+
+1. no item -> city ->
 	should contain most items. the "home base"
-some science / doctor item -> science lab
+2. some science / doctor item -> science lab
 	contains nothing, so usually travel to city
 	the "tutorial", the cutscene will teach new things every time
 	or maybe the doctor/scientist has quests for you
-pizza -> some level. maybe a city where every building is a pizza shop
+3. pizza -> pizza dimension. maybe a city where every building is a pizza shop
 	welcome to the pizza dimension.
-key -> some level. 
-	dungeon???
-ice cream -> some level
+	contains only pizza. so you have to learn dropping?
+	npc that teaches you how to drop items
+	or throw items? ooh that could be fun
+4. key -> dungeon dimension??? or just lots of crates
+	find a dungeon door asset and we are in business
+	chance to destroy a bunch of crates and they can spawn items?
+5. ice cream -> dessert dimension
 	nice leve? everything is fluffy? less gravity? idk
-donut -> some level
+donut -> dessert dimension but different part?
 	everything is round? no that sounds horrible
 
 main menu
