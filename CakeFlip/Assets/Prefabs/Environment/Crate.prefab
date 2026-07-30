@@ -108,7 +108,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -128,6 +128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   explosionPrefab: {fileID: 8206823659724979421, guid: 3ac269508f5f1c04c912e876fbd923ac,
     type: 3}
+  bigExplosion: 0
+  explosionRadius: 1
+  explosionForce: 10
 --- !u!54 &5058054840550875585
 Rigidbody:
   m_ObjectHideFlags: 0
