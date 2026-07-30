@@ -30,7 +30,7 @@ public class PlayerControllerOpen : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody myRigidbody;
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private BoxCollider myBoxCollider;
+    [SerializeField] private CapsuleCollider myCapsuleCollider;
 
     [Header("Positioning")]
     [SerializeField] private Vector3 respawnPosition;
@@ -38,6 +38,7 @@ public class PlayerControllerOpen : MonoBehaviour
 
     [Header("Shapeshifting")]
     [SerializeField] private bool isSkateboard = false;
+    private Shapeshiftable currentForm;
     [SerializeField] private GameObject myGuy;
     [SerializeField] private Guy guy;
     [SerializeField] private Animator guyAnimator;
@@ -56,19 +57,35 @@ public class PlayerControllerOpen : MonoBehaviour
 
     void Start()
     {
+        SetupReferences();
+
+        //you must be swift as a raging river
+        BecomeMan();
+    }
+
+    private void SetupReferences()
+    {
         myRigidbody = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
-        myBoxCollider = GetComponent<BoxCollider>();
-        
+        myCapsuleCollider = GetComponent<CapsuleCollider>();
+
         if (guy == null)
         {
-            guy = myGuy.GetComponent<Guy>();
+            guy = FindAnyObjectByType<Guy>();
+        }
+        if (myGuy == null)
+        {
+            myGuy = guy.gameObject;
         }
         if (skateboard == null)
         {
             //can't leave home without me trusty skateboard
-            skateboard = mySkateboard.GetComponent<Skateboard>();
+            skateboard = FindAnyObjectByType<Skateboard>();
+        }
+        if (mySkateboard == null)
+        {
+            mySkateboard = skateboard.gameObject;
         }
 
         if (guyAnimator == null)
@@ -79,7 +96,6 @@ public class PlayerControllerOpen : MonoBehaviour
         {
             skateboardAnimator = mySkateboard.GetComponent<Animator>();
         }
-        BecomeMan();
     }
 
     private void OnEnable()
@@ -217,6 +233,7 @@ public class PlayerControllerOpen : MonoBehaviour
             Respawn();
             return;
         }
+
         HandleMovement();
     }
 
@@ -234,16 +251,18 @@ public class PlayerControllerOpen : MonoBehaviour
 
         if (toSkateboard)
         {
-            myBoxCollider.center = skateboard.BoxColliderCenterValues;
-            myBoxCollider.size = skateboard.BoxColliderSizeValues;
+            currentForm = skateboard;
         }
         else
         {
-            myBoxCollider.center = guy.BoxColliderCenterValues;
-            myBoxCollider.size = guy.BoxColliderSizeValues;
+            currentForm = guy;
         }
 
-        //we just shapeshifted, so tell our listeners
+        myCapsuleCollider.height = currentForm.ColliderHeight;
+        myCapsuleCollider.radius = currentForm.ColliderRadius;
+        myCapsuleCollider.center = currentForm.ColliderCenterValues;
+        myCapsuleCollider.direction = (int)currentForm.Direction;
+
         OnShapeshift?.Invoke(toSkateboard);
     }
 
