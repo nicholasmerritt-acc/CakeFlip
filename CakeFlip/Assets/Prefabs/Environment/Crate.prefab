@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6276685355069388614}
   - component: {fileID: 8866163626716190032}
   - component: {fileID: 9213991839854772472}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833f4b32a8c8bef4a95607feafbfa440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  explosionPrefab: {fileID: 8206823659724979421, guid: 3ac269508f5f1c04c912e876fbd923ac,
+    type: 3}
