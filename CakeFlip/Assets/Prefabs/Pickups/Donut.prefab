@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 389270882418260426}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.2241432, w: 0.97455627}
-  m_LocalPosition: {x: 71.56626, y: 0.34, z: 12.87496}
+  m_LocalPosition: {x: 71.56626, y: 1, z: 12.87496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d45e71fa1f41d148b157372b07c6a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemBobUpAndDown
-  maxY: 0.5
-  minY: 0.5
+  maxY: 0.3
+  minY: 0.3
   moveSpeed: 0.3
 --- !u!114 &479157810019974686
 MonoBehaviour:

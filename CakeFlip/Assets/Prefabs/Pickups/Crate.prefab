@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8866163626716190032}
   - component: {fileID: 9213991839854772472}
   - component: {fileID: 5058054840550875585}
+  - component: {fileID: 743671433408270603}
   m_Layer: 10
   m_Name: Crate
   m_TagString: DestructableObject
@@ -131,6 +132,7 @@ MonoBehaviour:
   bigExplosion: 0
   explosionRadius: 1
   explosionForce: 10
+  spawnOnDeath: 1
 --- !u!54 &5058054840550875585
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -158,3 +160,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &743671433408270603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701029425464507419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8158aff7cb4a15640be5829190442bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSpawner
+  spawnInterval: 0
+  initialSpawnDelay: 0
+  spawnPosition: {fileID: 0}
+  spawnPrefabs:
+  - {fileID: 0}
+  - {fileID: 4635375324700627325, guid: 034db0c833824ca43b720c050089b404, type: 3}
+  - {fileID: 389270882418260426, guid: acb792e1082f7094aaa55f1fdab0d30f, type: 3}
+  - {fileID: 8088583876245496828, guid: fd3322688b8071d4cb751be021c2c025, type: 3}
+  - {fileID: 5608309774190951295, guid: 643275bead90bd64ca412012a686fd23, type: 3}
+  weights: 3c0000000a0000000a0000000a0000000a000000
+  continuousSpawning: 0
