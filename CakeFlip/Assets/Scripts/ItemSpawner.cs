@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Util;
 
 public class ItemSpawner : MonoBehaviour
 {
@@ -7,8 +8,7 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private float initialSpawnDelay;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private GameObject[] spawnPrefabs;
-    [SerializeField] private int[] dropPercents;
-    private int maxDropPercent = 100;
+    [SerializeField] private int[] weights;
 
     void Start()
     {
@@ -21,9 +21,9 @@ public class ItemSpawner : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnItem()
     {
-        if (spawnPrefabs == null || spawnPrefabs.Length == 0 || dropPercents == null || dropPercents.Length == 0 || spawnPrefabs.Length != dropPercents.Length)
+        if (spawnPrefabs == null || spawnPrefabs.Length == 0 || weights == null || weights.Length == 0 || spawnPrefabs.Length != weights.Length)
         {
-            Debug.LogWarning("spawnPrefabs and/or dropPercents are not setup correctly. Ensure they are the same nonzero length.");
+            Debug.LogWarning("spawnPrefabs and/or weights are not setup correctly. Ensure they are the same nonzero length.");
             yield break;
         }
 
@@ -32,27 +32,12 @@ public class ItemSpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnInterval);
-            float currentDropChance = Random.Range(0, maxDropPercent);
-
-            GameObject prefabToSpawn = spawnPrefabs[0];
-            int sumTotal = 0;
-            for (int i = 0; i < spawnPrefabs.Length; i++ )
-            {
-                int dropRate = dropPercents[i];
-                sumTotal += dropRate;
-                if (currentDropChance <= sumTotal)
-                {
-                    prefabToSpawn = spawnPrefabs[i];
-                    Debug.Log($"Spawned {prefabToSpawn} with a {sumTotal} % drop rate");
-                    break;
-                }
-            }
-            if (prefabToSpawn == null)
-            {
-                Debug.LogWarning($"dropPercents math is off. should sum to {maxDropPercent}");
-                prefabToSpawn = spawnPrefabs[0];
-            }
-            Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
+            Instantiate(spawnPrefabs.GetWeightedItem(weights), spawnPosition.position, Quaternion.identity);
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }
