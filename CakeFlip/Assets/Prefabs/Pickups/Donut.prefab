@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d45e71fa1f41d148b157372b07c6a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemBobUpAndDown
-  maxY: 1.5
+  maxY: 0.5
   minY: 0.5
   moveSpeed: 0.3
 --- !u!114 &479157810019974686

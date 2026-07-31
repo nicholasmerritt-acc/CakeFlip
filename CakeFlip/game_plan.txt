@@ -14,6 +14,7 @@ todo next (4fun):
 ----------------
 SPAWNING. cars and crates!
 debug trick failing...
+debug teleport not quite working how it should...
 and maybe add some npcs with quests to unlock the other tricks
 doing tricks (and unique tricks?!?!) increases combo (ui that goes up in a cone)
 combo adds to your movement speed and jump force! ooh

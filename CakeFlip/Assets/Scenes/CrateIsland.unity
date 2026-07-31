@@ -1044,22 +1044,7 @@ PrefabInstance:
     - target: {fileID: 8790889740295287822, guid: 60c2b3338255b7e47af7b2fd3374e478,
         type: 3}
       propertyPath: m_Name
-      value: OrangePortal
-      objectReference: {fileID: 0}
-    - target: {fileID: 9044287484658316655, guid: 60c2b3338255b7e47af7b2fd3374e478,
-        type: 3}
-      propertyPath: TeleportTo
-      value: ScientistLab
-      objectReference: {fileID: 0}
-    - target: {fileID: 9044287484658316655, guid: 60c2b3338255b7e47af7b2fd3374e478,
-        type: 3}
-      propertyPath: teleportDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9044287484658316655, guid: 60c2b3338255b7e47af7b2fd3374e478,
-        type: 3}
-      propertyPath: SceneNameToTeleportTo
-      value: CityStreet
+      value: PortalActivationArea
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4837,7 +4822,7 @@ PrefabInstance:
     - target: {fileID: 2671379212885585983, guid: acb792e1082f7094aaa55f1fdab0d30f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000008923597
+      value: 0.98
       objectReference: {fileID: 0}
     - target: {fileID: 2671379212885585983, guid: acb792e1082f7094aaa55f1fdab0d30f,
         type: 3}
@@ -4878,6 +4863,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 25.905
+      objectReference: {fileID: 0}
+    - target: {fileID: 2738819674705571800, guid: acb792e1082f7094aaa55f1fdab0d30f,
+        type: 3}
+      propertyPath: maxY
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8167,7 +8157,7 @@ PrefabInstance:
     - target: {fileID: 2634163955991374707, guid: 245173cd32e2d9649a8a7634589a0389,
         type: 3}
       propertyPath: m_text
-      value: 'no skateboarding allowed
+      value: 'no skateboarding allowed.
 
         crates WILL explode
 

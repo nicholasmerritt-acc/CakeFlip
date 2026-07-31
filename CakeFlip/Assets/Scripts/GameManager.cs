@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static ItemPickup;
 
 public class GameManager : MonoBehaviour
@@ -14,16 +15,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Inventory")]
     public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
-    public static Dictionary<PickupableItemType, string> ItemToLevelName;
+    public Dictionary<PickupableItemType, string> ItemToLevelName;
     public GameObject CurrentItem;
-    private float dropoffOffset = -3f;
-    public static event Action<string, string> InventoryChanged;
+    private float itemDropOffset = -3f;
+    public static event Action<string> ItemCarried;
+    public static event Action<string> ItemDropped;
 
     [Header("References")]
     public PlayerController Player;
 
     private void Awake()
     {
+        //singleton
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -33,12 +36,10 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-    }
 
-    private void Start()
-    {
-        InitializeTrickDictionaries();
+        //these are initialized here because other Start() methods depend on them
         InitializeItemDictionary();
+        InitializeTrickDictionaries();
     }
 
     private void InitializeTrickDictionaries()
@@ -94,9 +95,15 @@ public class GameManager : MonoBehaviour
 
     private void InitializeItemDictionary()
     {
+        //TODO constants
         ItemToLevelName = new Dictionary<PickupableItemType, string>
         {
-            { PickupableItemType.Undefined, "CityStreet" }
+            { PickupableItemType.Undefined, "CityStreet" },
+            { PickupableItemType.Egg, "CityStreet" },
+            { PickupableItemType.Donut, "ScientistLab" },
+            { PickupableItemType.Key, "ScientistLab" },
+            { PickupableItemType.Pizza, "CrateIsland" },
+            { PickupableItemType.IceCream, "CrateIsland" }
         };
     }
 
@@ -112,30 +119,41 @@ public class GameManager : MonoBehaviour
     /// <param name="pickup"></param>
     public void PickupItem(ItemPickup pickup)
     {
-        string droppedString = "";
-
         if (CurrentItem != null)
         {
-            //"drop" the current item
-            CurrentItem.SetActive(true);
-
-            //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
-            CurrentItem.transform.parent = Player.transform.parent;
-
-            //make new position a certain amount behind us, but keep the height of the item before we picked it up
-            Vector3 newPosition = Player.transform.position + Player.transform.forward * dropoffOffset;
-            newPosition.y = CurrentItem.transform.position.y;
-            CurrentItem.transform.position = newPosition;
-
-            Debug.Log($"Dropped {CurrentItem} behind player");
-            droppedString = CurrentItem.name;
+            //make new position a certain amount behind us
+            Vector3 newPosition = Player.transform.position + Player.transform.forward * itemDropOffset;
+            //newPosition.y = CurrentItem.transform.position.y;
+            DropCurrentItem(newPosition);
         }
 
         //set current item to the item we just picked up
         CurrentItem = pickup.gameObject;
-
-        InventoryChanged?.Invoke(pickup.name, droppedString);
+        ItemCarried?.Invoke(pickup.name);
         Debug.Log($"picked up {pickup.name}");
+    }
+
+    public GameObject DropCurrentItem(Vector3 newPosition)
+    {
+        if (CurrentItem == null)
+        {
+            Debug.Log("Trying to drop a null item!");
+            return null;
+        }
+
+        //"drop" the current item
+        CurrentItem.SetActive(true);
+
+        //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
+        CurrentItem.transform.parent = Player.transform.parent;
+        CurrentItem.transform.position = newPosition;
+
+        Debug.Log($"Dropped {CurrentItem} at new position {newPosition}");
+        ItemDropped?.Invoke(CurrentItem.name);
+
+        GameObject dropMe = CurrentItem;
+        CurrentItem = null;
+        return dropMe;
     }
 
     /// <summary>

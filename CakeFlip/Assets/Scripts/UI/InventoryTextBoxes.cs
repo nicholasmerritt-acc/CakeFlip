@@ -10,19 +10,18 @@ public class InventoryTextBoxes : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.InventoryChanged += UpdateInventoryAndDroppedText;
+        GameManager.ItemCarried += UpdateCarryingText;
+        GameManager.ItemDropped += UpdateDroppedText;
     }
 
     private void OnDisable()
     {
-        GameManager.InventoryChanged -= UpdateInventoryAndDroppedText;
+        GameManager.ItemCarried -= UpdateCarryingText;
+        GameManager.ItemDropped -= UpdateDroppedText;
     }
 
-    private void UpdateInventoryAndDroppedText(string newItemName, string droppedItemName)
+    private void UpdateCarryingText(string newItemName)
     {
-        //ignore previous text updates
-        StopAllCoroutines();
-
         string newText = "";
         if (string.IsNullOrEmpty(newItemName))
         {
@@ -34,17 +33,22 @@ public class InventoryTextBoxes : MonoBehaviour
         }
         MyInventoryText.text = newText;
 
+    }
+
+    private void UpdateDroppedText(string droppedText) {
+        //ignore previous text fade
+        StopAllCoroutines();
+
         //now set dropped text
-        if (string.IsNullOrEmpty(droppedItemName))
+        if (string.IsNullOrEmpty(droppedText))
         {
-            newText = "";
+            MyDroppedText.text = "";
         }
         else
         {
-            newText = $"Dropped: {droppedItemName}";
+            MyDroppedText.text = $"Dropped: {droppedText}";
+            StartCoroutine(nameof(FadeDroppedText));
         }
-        MyDroppedText.text = newText;
-        StartCoroutine(nameof(FadeDroppedText));
     }
 
     private IEnumerator FadeDroppedText()
