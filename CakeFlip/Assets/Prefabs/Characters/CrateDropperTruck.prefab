@@ -175,11 +175,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   spawnInterval: 5
+  initialSpawnDelay: 0
   spawnPosition: {fileID: 8354930769975982889}
-  cratePrefabs:
+  spawnPrefabs:
   - {fileID: 3701029425464507419, guid: c82951ffb23cde94988e0676974c4a92, type: 3}
   - {fileID: 2359277910329186708, guid: ce17240c733480a458901ac17222c6e2, type: 3}
-  dropPercents: 
+  dropPercents: 5000000014000000
 --- !u!1 &3038432169050312406
 GameObject:
   m_ObjectHideFlags: 0
