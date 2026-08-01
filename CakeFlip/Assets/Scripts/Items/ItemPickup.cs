@@ -10,7 +10,9 @@ public class ItemPickup : MonoBehaviour
         Donut,
         Key,
         Pizza,
-        IceCream
+        IceCream,
+        ToyShip,
+        Saturn
     }
 
     public PickupableItemType ItemType;

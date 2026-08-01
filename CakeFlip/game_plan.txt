@@ -8,13 +8,21 @@ todo next (mandatory):
 		maybe some evil level the enemies can kill you
 		maybe if you get run over by a pizza truck? idk
 		maybe if you fall off the edge, you die instead of respawn
-	check rubric for other stuff
+	rubric says:
+		need to beef up UI and navmesh agents
+	UI:
+		simple main menu, settings, pause menu
+			save system?
+	navmesh agents:
+		truck spawning in tunnel
+		"cop" that chases you if you blow up too many crates
+		
 
 todo next (4fun): 
 ----------------
+hookup teleporters / basic blockout for final levels
 SPAWNING. cars and crates!
 debug trick failing...
-debug teleport not quite working how it should...
 and maybe add some npcs with quests to unlock the other tricks
 doing tricks (and unique tricks?!?!) increases combo (ui that goes up in a cone)
 combo adds to your movement speed and jump force! ooh
@@ -22,16 +30,12 @@ some sort of flame effect at max combo!
 
 scientist should disable movement as well as looking!
 ladders, to make the human form useful
-crates: maybe they have a chance to drop items
-	respawn after a while
-	just get some stupid explosion sfx and vfx
-	maybe some npc talks about how the businesses always put out boxes
 
 6 levels is the goal! have 3.
 
 1. no item -> city ->
 	should contain most items. the "home base"
-2. some science / doctor item -> science lab
+2. saturn -> science lab
 	contains nothing, so usually travel to city
 	the "tutorial", the billboard will teach new things every time
 	maybe the doctor/scientist has quests for you. requests different items.
@@ -40,16 +44,17 @@ crates: maybe they have a chance to drop items
 	contains only pizza. so you have to learn dropping?
 	npc that teaches you how to drop items
 	or throw items? ooh that could be fun
-4. pirate item (sword maybe) lead to crate island
-	just lots of crates
-	chance to destroy a bunch of crates and they can spawn items?
-5. key -> competition island
+4. toy ship -> pirate island
+	maybe add a few more crate trucks
+	pirate ships sailing in the distance??? could be kinda fun
+5. key -> olympic dimension
 	competition island: do tricks for 3 judges. their scores appear in real time
 	(on billboards and also in UI)
 	countdown timer
 	get enough points to win the game
 	you can bribe the judges with food that you find oooh
 	3 judges. perfect for ice cream donut pizza that we already have
+	if you score badly you instantly lose the game. ow
 6. ice cream -> dessert dimension
 	nice leve? everything is fluffy? less gravity? idk
 6. donut -> dessert dimension but different part
