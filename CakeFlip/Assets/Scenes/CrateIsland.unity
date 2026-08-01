@@ -3069,8 +3069,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 669660502533661132, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 886779347}
+    - targetCorrespondingSourceObject: {fileID: 669660502533661132, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 886779348}
   m_SourcePrefab: {fileID: 100100000, guid: 47e28d6e557037144869ff7922653189, type: 3}
+--- !u!1 &886779346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 669660502533661132, guid: 47e28d6e557037144869ff7922653189,
+    type: 3}
+  m_PrefabInstance: {fileID: 886779345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &886779347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886779346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf7de1e3bf42b747a066fa9a09616b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseGameHandler
+  PauseMenuPrefab: {fileID: 5835155309167706248, guid: a596c018a3c19934694d80f5c7c336cf,
+    type: 3}
+  PauseMenu: {fileID: 0}
+--- !u!114 &886779348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886779346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf76f531c77159d4eb561382c84eeda5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  MusicSource: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  SfxSource: {fileID: 0}
+  buttonPressClip: {fileID: 0}
+  explosionClip: {fileID: 0}
+  skateboardRollClip: {fileID: 0}
+  skateboardJumpClip: {fileID: 0}
 --- !u!1001 &887367690
 PrefabInstance:
   m_ObjectHideFlags: 0

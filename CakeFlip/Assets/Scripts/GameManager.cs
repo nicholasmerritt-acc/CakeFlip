@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static ItemPickup;
 
 public class GameManager : MonoBehaviour
@@ -23,6 +22,10 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public PlayerController Player;
+    public AudioManager TheAudioManager;
+
+    [Header("Game State")]
+    public bool IsPaused = false;
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         //these are initialized here because other Start() methods depend on them
         InitializeItemDictionary();
         InitializeTrickDictionaries();
+        TheAudioManager = GetComponent<AudioManager>();
     }
 
     private void InitializeTrickDictionaries()
@@ -103,7 +107,9 @@ public class GameManager : MonoBehaviour
             { PickupableItemType.Donut, "ScientistLab" },
             { PickupableItemType.Key, "ScientistLab" },
             { PickupableItemType.Pizza, "CrateIsland" },
-            { PickupableItemType.IceCream, "CrateIsland" }
+            { PickupableItemType.IceCream, "CrateIsland" },
+            { PickupableItemType.ToyShip, "CrateIsland" },
+            { PickupableItemType.Saturn, "CrateIsland" }
         };
     }
 
@@ -179,5 +185,21 @@ public class GameManager : MonoBehaviour
         GameObject itemToReturn = CurrentItem;
         CurrentItem = null;
         return itemToReturn;
+    }
+
+    public bool TogglePause()
+    {
+        if (IsPaused)
+        {
+            //unpause
+            IsPaused = false;
+            Time.timeScale = 1.0f;
+        } 
+        else
+        {
+            IsPaused = true;
+            Time.timeScale = 0.0f;
+        }
+        return IsPaused;
     }
 }

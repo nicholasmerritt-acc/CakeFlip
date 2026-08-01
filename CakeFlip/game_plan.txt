@@ -20,6 +20,7 @@ todo next (mandatory):
 
 todo next (4fun): 
 ----------------
+item pickup and trick namespaces. not hard! just do it
 hookup teleporters / basic blockout for final levels
 SPAWNING. cars and crates!
 debug trick failing...
