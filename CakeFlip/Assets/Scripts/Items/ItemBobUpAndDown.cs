@@ -16,7 +16,7 @@ public class ItemBobUpAndDown : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.y > maxYTotal || transform.position.y < minYTotal)
+        if ((moveSpeed > 0 && transform.position.y > maxYTotal) || (moveSpeed < 0 && transform.position.y < minYTotal))
         {
             moveSpeed = -moveSpeed;
         }

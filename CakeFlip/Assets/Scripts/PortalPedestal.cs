@@ -57,11 +57,7 @@ public class PortalPedestal : MonoBehaviour
                 itemOnPedestal = dropped.GetComponent<ItemPickup>();
 
                 //update portal item and which dimension we're traveling to
-                itemOnPortal = Instantiate(dropped, portalHoverPoint.position, Quaternion.identity);
-                if (itemOnPortal.TryGetComponent<Collider>(out Collider collider)) 
-                {
-                    collider.enabled = false;
-                }
+                itemOnPortal = Instantiate(dropped, portalHoverPoint.position, dropped.transform.rotation);
                 //lookup which dimension we should travel to aka the name of the scene to load
                 teleportArea.SceneNameToTeleportTo = GameManager.Instance.ItemToLevelName[itemOnPedestal.ItemType];
             } 
@@ -69,11 +65,8 @@ public class PortalPedestal : MonoBehaviour
             {
                 Debug.Log("swapping item on pedestal");
                 //take item off pedestal.
-                if (itemOnPedestal.TryGetComponent<Collider>(out Collider collider))
-                {
-                    collider.enabled = true;
-                }
                 GameManager.Instance.PickupItem(itemOnPedestal);
+                itemOnPedestal = null;
 
                 //should be removed from pedestal. now remove from portal.
                 Destroy(itemOnPortal);

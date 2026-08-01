@@ -7,6 +7,7 @@ public class InventoryTextBoxes : MonoBehaviour
     [SerializeField] private TMP_Text MyInventoryText;
     [SerializeField] private TMP_Text MyDroppedText;
     [SerializeField] private float fadeDroppedDelay = 3.0f;
+    private const string INVENTORY_EMPTY_STRING = "<inventory empty>";
 
     private void OnEnable()
     {
@@ -25,7 +26,7 @@ public class InventoryTextBoxes : MonoBehaviour
         string newText = "";
         if (string.IsNullOrEmpty(newItemName))
         {
-            newText = "<inventory empty>";
+            newText = INVENTORY_EMPTY_STRING;
         }
         else
         {
@@ -49,6 +50,9 @@ public class InventoryTextBoxes : MonoBehaviour
             MyDroppedText.text = $"Dropped: {droppedText}";
             StartCoroutine(nameof(FadeDroppedText));
         }
+
+        //if we dropped something, inventory is now empty
+        MyInventoryText.text = INVENTORY_EMPTY_STRING;
     }
 
     private IEnumerator FadeDroppedText()

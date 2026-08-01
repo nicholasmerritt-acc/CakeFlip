@@ -129,8 +129,35 @@ public class GameManager : MonoBehaviour
 
         //set current item to the item we just picked up
         CurrentItem = pickup.gameObject;
+
+        //"pick up" item, aka parent it to the GameManager, and disable it
+        ToggleCurrentItem(false);
+
         ItemCarried?.Invoke(pickup.name);
         Debug.Log($"picked up {pickup.name}");
+    }
+
+    /// <summary>
+    /// Change the transfrom from an inactive child of the game manager to a real active item in the world, and vice versa
+    /// </summary>
+    /// <param name="dropping"></param>
+    private void ToggleCurrentItem(bool dropping)
+    {
+        if (CurrentItem.TryGetComponent<Collider>(out Collider collider))
+        {
+            collider.enabled = dropping;
+        }
+        CurrentItem.SetActive(dropping);
+
+        if (dropping)
+        {
+            //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
+            CurrentItem.transform.parent = Player.transform.parent;
+        } 
+        else
+        {
+            CurrentItem.transform.parent = transform;
+        }
     }
 
     public GameObject DropCurrentItem(Vector3 newPosition)
@@ -141,30 +168,16 @@ public class GameManager : MonoBehaviour
             return null;
         }
 
-        //"drop" the current item
-        CurrentItem.SetActive(true);
+        //"drop" the current item. aka return it to the way it was. enable gameObject and collider
+        ToggleCurrentItem(true);
 
-        //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
-        CurrentItem.transform.parent = Player.transform.parent;
         CurrentItem.transform.position = newPosition;
 
         Debug.Log($"Dropped {CurrentItem} at new position {newPosition}");
         ItemDropped?.Invoke(CurrentItem.name);
 
-        GameObject dropMe = CurrentItem;
+        GameObject itemToReturn = CurrentItem;
         CurrentItem = null;
-        return dropMe;
+        return itemToReturn;
     }
-
-    /// <summary>
-    /// make sure our inventory persists between scenes
-    /// </summary>
-    public void SaveInventory()
-    {
-        if (CurrentItem != null)
-        {
-            CurrentItem.transform.parent = transform;
-        }
-    }
-
 }
