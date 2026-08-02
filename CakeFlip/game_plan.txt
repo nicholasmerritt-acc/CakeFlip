@@ -3,26 +3,47 @@ CakeFlip: Xtreme Baking
 
 todo next (mandatory):
 ----------------------
-	player health
-	game over. 
-		maybe some evil level the enemies can kill you
-		maybe if you get run over by a pizza truck? idk
-		maybe if you fall off the edge, you die instead of respawn
-	rubric says:
-		need to beef up UI and navmesh agents
-	UI:
-		simple main menu, settings, pause menu
-			save system?
-	navmesh agents:
-		truck spawning in tunnel
-		"cop" that chases you if you blow up too many crates
-		
+game over. 
+	maybe some evil level the enemies can kill you
+	maybe if you get run over by a pizza truck? idk
+	maybe if you fall off the edge, you die instead of respawn
+rubric says:
+	need to beef up UI and navmesh agents
+UI:
+	simple main menu, settings, pause menu
+	simple save system: which item is on which teleporter? so we can have "rare" items
+		orrr just what has been unlocked. 
+		and which level we are in currently. 
+		controls? mini tutorial? idk nahhh probably not
+	have button on main menu to set "cheats" and unlock all
+navmesh agents:
+	truck spawning in tunnel
+	"cop" that chases you if you blow up too many crates
+
+simple npcs:
+	just use billboards. scrap the dialogue. too hard.
+	announce "dimension blah" or vice versa when entering a level. 
+	could also be nav mesh agents and wander around slowly
+	quest exclamation mark could be good though !!!
+	interact area with large trigger collider
+
+help message on portal
+
+different music every level? that'd be cool
+
+combo:
+	combo meter in ui?
+	jumps give you a tiny bit?
+	if you land in the middle of an animation, pkay crash animation (flash red) and cancel combo
 
 todo next (4fun): 
 ----------------
+
 item pickup and trick namespaces. not hard! just do it
 hookup teleporters / basic blockout for final levels
 SPAWNING. cars and crates!
+	"cop" that chases you if you blow up crates
+
 debug trick failing...
 and maybe add some npcs with quests to unlock the other tricks
 doing tricks (and unique tricks?!?!) increases combo (ui that goes up in a cone)
@@ -30,16 +51,32 @@ combo adds to your movement speed and jump force! ooh
 some sort of flame effect at max combo!
 
 scientist should disable movement as well as looking!
+	or maybe just scrap. idk. or have 1 second timeout
+
 ladders, to make the human form useful
 
-6 levels is the goal! have 3.
+8 levels is the stretch goal! have 3. 3 is good enough for now. polish a bit, then build out additional levels. do stuff
+ABOVE THIS LINE first. then go crazy
+
+------------------------------------------------------------------------
 
 1. no item -> city ->
-	should contain most items. the "home base"
+	should contain most items, if only once. key on the roof. the "home base"
+	main goal: demo of skateboard
+	do tricks for npc to unlock double jump
+	do tricks for other npc to unlock more tricks and comp dimension 
+	!! maybe he gives keys. or something. or rare items. idk
+	build cityscape/roof hopping!!! in city level. hide rare item high up!!
+	jump into double jump should be first unlock
 2. saturn -> science lab
 	contains nothing, so usually travel to city
 	the "tutorial", the billboard will teach new things every time
+
+	science lab is demo of teleport? maybe a long lit hallway would be spooky and cool
 	maybe the doctor/scientist has quests for you. requests different items.
+	"be careful out there. dimensional travel is no joke." audio sources? or trigger areas that play the dialogue
+	eventually: voice record scientist lines for my professional voice actors aka me wife
+
 3. pizza -> pizza dimension. maybe a city where every building is a pizza shop
 	welcome to the pizza dimension.
 	contains only pizza. so you have to learn dropping?
@@ -48,6 +85,8 @@ ladders, to make the human form useful
 4. toy ship -> pirate island
 	maybe add a few more crate trucks
 	pirate ships sailing in the distance??? could be kinda fun
+	pirate ship that launches crates???? that could be cool... with water... oooh. 
+	take demo urp level??? palm trees swaying?!?!?! oooh yeah
 5. key -> olympic dimension
 	competition island: do tricks for 3 judges. their scores appear in real time
 	(on billboards and also in UI)
@@ -61,13 +100,11 @@ ladders, to make the human form useful
 6. donut -> dessert dimension but different part
 	two floating islands that can see each other?
 	then we need two spawn points, and teleporter has to indicate which one
-
-main menu
-	new game
-	load game
-	settings
-	controls? help? idk
-
+7. competition island so game can end
+	maybe a simple round racetrack and a trick interact big trigger collider area
+	npcs that judge. 
+8. roman level! vase item! just import ludus lol
+	
 game manager singleton to track dialogue seen or not
 	i hate that word why did i include it
 
@@ -91,14 +128,28 @@ talk to guy on the street and ask about science lab
 
 nice to have:
 ---------------
+replace everything with kenney city kit. looks so much better man. 
 cool sk8board textures
 trick animations fade into each other? transitions? idk it's kinda fine
 skateboard select from main menu
 race feature. race enemy cars from one waypoint to another
 	turnoff portals and Ui during race?
+then tricks. do tricks to fill combo meter. impress npcs and they will reward you with items or unlock skills. first unlock is double jump? do x backflips 
 
-more levels:
-------------
-adventures in slugland inspired
-pick up one item at a time. used on a teleporter to go to a certain level
-every item has a level
+
+
+
+FINAL SUBMIT CHECKLIST:
+----------------------------
+
+start and update need cleanups
+make things private. get and set. then recheck in inspector. EVERY PUBLIC THING. do it.
+
+
+
+
+
+
+
+
+
