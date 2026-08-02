@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Tricks")]
     [SerializeField] private bool trickInProgress = false;
+    [SerializeField] private int failedTrickDamage = 1;
 
     [Header("Debugging")]
     [SerializeField] private Vector3 current;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody myRigidbody;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private CapsuleCollider myCapsuleCollider;
+    [SerializeField] private Health health;
 
     [Header("Positioning")]
     [SerializeField] private Vector3 respawnPosition;
@@ -72,11 +74,17 @@ public class PlayerController : MonoBehaviour
 
     private void SetupReferences()
     {
-        myRigidbody = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
-        myCapsuleCollider = GetComponent<CapsuleCollider>();
 
+        if (myRigidbody == null)
+        {
+            myRigidbody = GetComponent<Rigidbody>();
+        }
+        if (myCapsuleCollider == null) 
+        {
+            myCapsuleCollider = GetComponent<CapsuleCollider>();
+        }
         if (guy == null)
         {
             guy = FindAnyObjectByType<Guy>();
@@ -94,7 +102,6 @@ public class PlayerController : MonoBehaviour
         {
             mySkateboard = skateboard.gameObject;
         }
-
         if (guyAnimator == null)
         {
             guyAnimator = myGuy.GetComponent<Animator>();
@@ -102,6 +109,10 @@ public class PlayerController : MonoBehaviour
         if (skateboardAnimator == null)
         {
             skateboardAnimator = mySkateboard.GetComponent<Animator>();
+        }
+        if (health == null)
+        {
+            health = GetComponent<Health>();
         }
     }
 
@@ -347,6 +358,7 @@ public class PlayerController : MonoBehaviour
             trickInProgress = false;
             skateboardAnimator.SetTrigger("trickCanceled");
             Debug.Log("trick failed! oops!");
+            health.TakeDamage(failedTrickDamage);
         }
     }
 

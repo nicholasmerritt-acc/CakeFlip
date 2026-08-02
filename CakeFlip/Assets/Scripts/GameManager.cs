@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static ItemPickup;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public PlayerController Player;
+    [SerializeField] Health playerHealth;
     public AudioManager TheAudioManager;
 
     [Header("Game State")]
@@ -44,6 +46,17 @@ public class GameManager : MonoBehaviour
         InitializeItemDictionary();
         InitializeTrickDictionaries();
         TheAudioManager = GetComponent<AudioManager>();
+        if (Player == null)
+        {
+            Player = FindAnyObjectByType<PlayerController>();
+        }
+        playerHealth = Player.GetComponent<Health>();
+        playerHealth.OnDeath += OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void InitializeTrickDictionaries()
