@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Trick;
 
 public class PlayerController : MonoBehaviour
 {
@@ -85,18 +86,18 @@ public class PlayerController : MonoBehaviour
 
     private void DoTrick1(InputAction.CallbackContext value)
     {
-        DoTrick(Trick.TrickType.Frontflip);
+        DoTrick(TrickType.Frontflip);
     }
     private void DoTrick2(InputAction.CallbackContext value)
     {
-        DoTrick(Trick.TrickType.Backflip);
+        DoTrick(TrickType.Backflip);
     }
     private void DoTrick3(InputAction.CallbackContext value)
     {
-        DoTrick(Trick.TrickType.Sideflip);
+        DoTrick(TrickType.Sideflip);
     }
 
-    private void DoTrick(Trick.TrickType whichFlip)
+    private void DoTrick(TrickType whichFlip)
     {
         if (trickInProgress)
         {
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
         trickInProgress = true;
 
-        Trick.SkateboardTrick whichTrick = GameManager.Instance.SkateboardTrickDictionary[whichFlip];
+        SkateboardTrick whichTrick = GameManager.Instance.SkateboardTrickDictionary[whichFlip];
         shapeshifter.SetAnimationTrigger(whichTrick.AnimationTrigger);
     }
 

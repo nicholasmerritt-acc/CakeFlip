@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static ItemPickup;
+using Trick;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Tricks")]
-    public Dictionary<Trick.TrickType, Trick.SkateboardTrick> SkateboardTrickDictionary;
-    public HashSet<Trick.TrickType> UnlockedTricks;
+    public Dictionary<TrickType, SkateboardTrick> SkateboardTrickDictionary;
+    public HashSet<TrickType> UnlockedTricks;
 
     [Header("Inventory")]
     public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
@@ -64,40 +65,40 @@ public class GameManager : MonoBehaviour
         SkateboardTrickDictionary = new()
         {
             {
-                Trick.TrickType.Backflip,
-                new Trick.SkateboardTrick
+                TrickType.Backflip,
+                new SkateboardTrick
                 {
-                    WhichTrick = Trick.TrickType.Backflip,
+                    WhichTrick = TrickType.Backflip,
                     Points = 10,
                     AnimationTrigger = "backflipTrigger",
                     Unlocked = false
                 }
             },
             {
-                Trick.TrickType.Sideflip,
-                new Trick.SkateboardTrick
+                TrickType.Sideflip,
+                new SkateboardTrick
                 {
-                    WhichTrick = Trick.TrickType.Sideflip,
+                    WhichTrick = TrickType.Sideflip,
                     Points = 10,
                     AnimationTrigger = "sideflipTrigger",
                     Unlocked = false
                 }
             },
             {
-                Trick.TrickType.Treflip,
-                new Trick.SkateboardTrick
+                TrickType.Treflip,
+                new SkateboardTrick
                 {
-                    WhichTrick = Trick.TrickType.Treflip,
+                    WhichTrick = TrickType.Treflip,
                     Points = 10,
                     AnimationTrigger = "treflipTrigger",
                     Unlocked = false
                 }
             },
             {
-                Trick.TrickType.Frontflip,
-                new Trick.SkateboardTrick
+                TrickType.Frontflip,
+                new SkateboardTrick
                 {
-                    WhichTrick = Trick.TrickType.Frontflip,
+                    WhichTrick = TrickType.Frontflip,
                     Points = 10,
                     AnimationTrigger = "frontflipTrigger",
                     Unlocked = false
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
         };
 
         UnlockedTricks = new();
-        UnlockTrick(Trick.TrickType.Backflip);
+        UnlockTrick(TrickType.Backflip);
         //TODO get unlocks from playerprefs
     }
 
@@ -126,7 +127,7 @@ public class GameManager : MonoBehaviour
         };
     }
 
-    public void UnlockTrick(Trick.TrickType trickType)
+    public void UnlockTrick(TrickType trickType)
     {
         UnlockedTricks.Add(trickType);
         //TODO add trick to playerprefs

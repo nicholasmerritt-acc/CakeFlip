@@ -1,4 +1,4 @@
-public class Trick
+namespace Trick
 {
     public struct SkateboardTrick
     {
@@ -16,40 +16,41 @@ public class Trick
         Treflip
     }
 
-    public SkateboardTrick Frontflip = new SkateboardTrick
+    public class Trick
     {
-        WhichTrick = TrickType.Frontflip,
-        Points = 10,
-        AnimationTrigger = "frontflipTrigger",
-        Unlocked = false
-    };
 
-    public SkateboardTrick Backflip = new SkateboardTrick
-    {
-        WhichTrick = TrickType.Backflip,
-        Points = 10,
-        AnimationTrigger = "backflipTrigger",
-        Unlocked = false
-    };
+        public SkateboardTrick Frontflip = new SkateboardTrick
+        {
+            WhichTrick = TrickType.Frontflip,
+            Points = 10,
+            AnimationTrigger = "frontflipTrigger",
+            Unlocked = false
+        };
 
-    public SkateboardTrick Sideflip = new SkateboardTrick
-    {
-        WhichTrick = TrickType.Sideflip,
-        Points = 10,
-        AnimationTrigger = "sideflipTrigger",
-        Unlocked = false
-    };
+        public SkateboardTrick Backflip = new SkateboardTrick
+        {
+            WhichTrick = TrickType.Backflip,
+            Points = 10,
+            AnimationTrigger = "backflipTrigger",
+            Unlocked = false
+        };
 
-    public SkateboardTrick Treflip = new SkateboardTrick
-    {
-        WhichTrick = TrickType.Treflip,
-        Points = 10,
-        AnimationTrigger = "treflipTrigger",
-        Unlocked = false
-    };
+        public SkateboardTrick Sideflip = new SkateboardTrick
+        {
+            WhichTrick = TrickType.Sideflip,
+            Points = 10,
+            AnimationTrigger = "sideflipTrigger",
+            Unlocked = false
+        };
 
+        public SkateboardTrick Treflip = new SkateboardTrick
+        {
+            WhichTrick = TrickType.Treflip,
+            Points = 10,
+            AnimationTrigger = "treflipTrigger",
+            Unlocked = false
+        };
+    }
 }
-
-
 
 
