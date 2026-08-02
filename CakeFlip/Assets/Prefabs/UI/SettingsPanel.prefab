@@ -1060,7 +1060,7 @@ GameObject:
   - component: {fileID: 3045925308985253998}
   - component: {fileID: 7193383471258814925}
   m_Layer: 5
-  m_Name: PauseJustSettingsPanel
+  m_Name: SettingsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

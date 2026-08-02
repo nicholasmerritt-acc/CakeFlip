@@ -22,6 +22,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayButtonPressClip()
+    {
+        SfxSource.PlayOneShot(buttonPressClip);
+    }
+
     private void PlayBackgroundMusic()
     {
         MusicSource.clip = backgroundMusic;
