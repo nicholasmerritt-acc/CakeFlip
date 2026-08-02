@@ -43,12 +43,12 @@ public class CameraController : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.Zoom.performed += ZoomPerformed;
 
-        PlayerController.OnShapeshift += OnPlayerShapeshift;
+        PlayerShapeshift.OnShapeshift += OnPlayerShapeshift;
     }
 
     private void OnDisable()
     {
-        PlayerController.OnShapeshift -= OnPlayerShapeshift;
+        PlayerShapeshift.OnShapeshift -= OnPlayerShapeshift;
 
         inputActions.Player.Zoom.performed -= ZoomPerformed;
         inputActions.Player.Disable();

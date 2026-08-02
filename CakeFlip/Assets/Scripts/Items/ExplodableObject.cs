@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ExplodableObject : MonoBehaviour
 {
+    [SerializeField] private int explosionDamage = 20;
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private bool bigExplosion = false;
     [SerializeField] private float explosionRadius = 1f;
@@ -13,7 +14,8 @@ public class ExplodableObject : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //explode when we collide with skateboard
-            if (collision.gameObject.GetComponent<PlayerController>().IsSkateboard) {
+            if (collision.gameObject.GetComponent<PlayerShapeshift>().IsSkateboard)
+            {
                 Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
                 if (spawnOnDeath)
@@ -38,6 +40,8 @@ public class ExplodableObject : MonoBehaviour
                         }
                     }
                 }
+
+                collision.gameObject.GetComponent<Health>().TakeDamage(explosionDamage);
                 Destroy(gameObject);
             }
         }

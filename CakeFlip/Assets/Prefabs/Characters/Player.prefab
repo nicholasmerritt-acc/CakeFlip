@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7932165733979925898}
   - component: {fileID: 7624717326209744615}
   - component: {fileID: 916740486484959120}
+  - component: {fileID: 5722479151191485825}
+  - component: {fileID: 9200488174929857055}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -49,32 +51,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b6571835fd6eb44ba0762a20ae0a9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotateSpeed: 20
-  moveMe: {x: 0, y: 0, z: 0}
-  stopping: 0
-  speedAnimationAdjustment: 2
-  grounded: 0
-  jumpForce: 6
-  groundedCheckMask:
-    serializedVersion: 2
-    m_Bits: 64
   trickInProgress: 0
-  current: {x: 0, y: 0, z: 0}
-  bigTarget: {x: 0, y: 0, z: 0}
-  tinyTarget: {x: 0, y: 0, z: 0}
+  failedTrickDamage: 1
+  health: {fileID: 0}
+  movement: {fileID: 0}
   myRigidbody: {fileID: 7932165733979925898}
-  cameraTransform: {fileID: 0}
-  myCapsuleCollider: {fileID: 7624717326209744615}
+  shapeshifter: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   yBoundary: -30
-  IsSkateboard: 0
-  myGuy: {fileID: 7202836182820792647}
-  guy: {fileID: 0}
-  guyAnimator: {fileID: 7202836182828079813}
-  mySkateboard: {fileID: 7214875788289831723}
-  skateboard: {fileID: 2689811946592239016}
-  skateboardAnimator: {fileID: 2171050898757678960}
 --- !u!54 &7932165733979925898
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -137,6 +121,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31b71886db3af64ca5f1679de7ba338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  health: 100
+  maxHealth: 100
+--- !u!114 &5722479151191485825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7018513433735755992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b1b216e591fec48b0e0a4a1ca4a671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShapeshift
+  IsSkateboard: 0
+  myCapsuleCollider: {fileID: 7624717326209744615}
+  myGuy: {fileID: 7202836182820792647}
+  guy: {fileID: 6125678657421182394}
+  guyAnimator: {fileID: 7202836182828079813}
+  mySkateboard: {fileID: 7214875788289831723}
+  skateboard: {fileID: 2689811946592239016}
+  skateboardAnimator: {fileID: 2171050898757678960}
+--- !u!114 &9200488174929857055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7018513433735755992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d49e09fff523645b3382ae9cd5c3b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  moveSpeed: 5
+  rotateSpeed: 5
+  moveMe: {x: 0, y: 0, z: 0}
+  stopping: 0
+  speedAnimationAdjustment: 2
+  grounded: 0
+  jumpForce: 27
+  groundedCheckMask:
+    serializedVersion: 2
+    m_Bits: 320
+  current: {x: 0, y: 0, z: 0}
+  bigTarget: {x: 0, y: 0, z: 0}
+  tinyTarget: {x: 0, y: 0, z: 0}
+  myRigidbody: {fileID: 7932165733979925898}
+  cameraTransform: {fileID: 0}
+  shapeshifter: {fileID: 5722479151191485825}
 --- !u!1001 &7202836182820761509
 PrefabInstance:
   m_ObjectHideFlags: 0
