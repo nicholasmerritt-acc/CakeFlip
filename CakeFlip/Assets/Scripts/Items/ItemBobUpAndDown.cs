@@ -8,7 +8,9 @@ public class ItemBobUpAndDown : MonoBehaviour
     private float minYTotal;
     [SerializeField] private float moveSpeed = .3f;
 
-    private void Start()
+    //we want to do this setting in Awake, because sometimes items are disabled until we want them to appear in the scene
+    //e.g. when they are "in inventory" or being swapped onto a pedestal
+    private void Awake()
     {
         maxYTotal = transform.position.y + maxY;
         minYTotal = transform.position.y - minY;

@@ -2,28 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Util;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class CarDrive : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    [SerializeField] private float minSpeed = .01f;
+    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private List<Transform> destinations;
-    private float destinationCheckInterval = 1.0f;
+    [SerializeField] private float destinationCheckInterval = 1.0f;
+    [SerializeField] private float stoppingDistance = 1.0f;
     [SerializeField] private int destinationIndex;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnDrawGizmosSelected()
     {
-        agent = GetComponent<NavMeshAgent>();
-        
-        if (destinations == null || destinations.Count == 0)
+        DrawDestinationPath();
+    }
+
+    private void DrawDestinationPath()
+    {
+        if (destinations.Count < 2)
         {
-            Debug.LogWarning($"no destinations found for {name}");
+            return;
         } 
         else
         {
-            agent.destination = destinations[destinationIndex].position;
+            Gizmos.color = Color.darkViolet;
+
+            Vector3[] destinationPairs = new Vector3[destinations.Count * 2];
+            for (int i = 0; i < destinations.Count; i++)
+            {
+                destinationPairs[i * 2] = destinations[i].transform.position;
+                destinationPairs[(i * 2) + 1] = destinations[(i + 1) % destinations.Count].transform.position;
+            }
+
+            Gizmos.DrawLineList(destinationPairs);
         }
+    }
+
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = stoppingDistance;
+        SetNextDestination();
 
         StartCoroutine(nameof(CheckForNewDestination));
     }
@@ -33,16 +54,24 @@ public class CarDrive : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(destinationCheckInterval);
-            if (destinations == null || destinations.Count == 0)
-            {
-                Debug.LogWarning($"no destinations found for {name}");
-            }
-            else if (agent.destination == null || !agent.hasPath || agent.remainingDistance < .1f)
-            {
-                destinationIndex = (destinationIndex + 1) % destinations.Count;
-                agent.destination = destinations[destinationIndex].position;
-                Debug.Log($"{name} switching to destination {destinationIndex}: {agent.destination}");
-            }
+            SetNextDestination();
+        }
+    }
+
+    private void SetNextDestination()
+    {
+        if (destinations == null || destinations.Count == 0)
+        {
+            Debug.LogError($"No destinations found for {name}. Assign some destinations in the inspector.");
+        }
+        //change destinations if:
+        else if (agent.destination == null || //1. we don't have one
+            (agent.remainingDistance <= agent.stoppingDistance && //2. OR we are close enough to the destination
+            (!agent.hasPath || agent.velocity.sqrMagnitude < minSpeed))) //3. AND we have stopped
+        {
+            agent.TrySetDestination(destinations[destinationIndex].position);
+            Debug.Log($"{name} set destination {destinationIndex}: {agent.destination}");
+            destinationIndex = (destinationIndex + 1) % destinations.Count;
         }
     }
 

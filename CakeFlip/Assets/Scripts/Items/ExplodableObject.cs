@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class ExplodableObject : MonoBehaviour
 {
-    [SerializeField] private int explosionDamage = 20;
     [SerializeField] private GameObject explosionPrefab;
-    [SerializeField] private bool bigExplosion = false;
+    [SerializeField] private int explosionDamage = 20;
     [SerializeField] private float explosionRadius = 1f;
     [SerializeField] private float explosionForce = 10f;
+    [SerializeField] private float upwardsModifier = 5f;
+    [SerializeField] private bool bigExplosion = false;
     [SerializeField] private bool spawnOnDeath = false;
 
     private void OnCollisionEnter(Collision collision)
@@ -27,7 +28,7 @@ public class ExplodableObject : MonoBehaviour
                 }
 
                 //add explosion force to all colliders around this.
-                //we do this after spawning so we have a chance of launching some item into the air
+                //we do this after spawning so we have a chance of launching the spawned item into the air
                 if (bigExplosion)
                 {
                     Vector3 explosionPosition = transform.position;
@@ -36,11 +37,12 @@ public class ExplodableObject : MonoBehaviour
                     {
                         if (collider.TryGetComponent<Rigidbody>(out Rigidbody rb))
                         {
-                            rb.AddExplosionForce(explosionForce, explosionPosition, explosionRadius);
+                            rb.AddExplosionForce(explosionForce, explosionPosition, explosionRadius, upwardsModifier);
                         }
                     }
                 }
 
+                //for now, we just do this for the player. TODO for npcs too? so they can say "ow" and potentially be blown up? idk
                 collision.gameObject.GetComponent<Health>().TakeDamage(explosionDamage);
                 Destroy(gameObject);
             }

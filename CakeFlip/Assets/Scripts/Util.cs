@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Util
 {
@@ -8,7 +9,6 @@ namespace Util
         /// <summary>
         /// Return an item from the array, given a corresponding weights array that accounts for how often certain items should spawn.
         /// </summary>
-        /// <returns></returns>
         public static T GetWeightedItem<T>(this T[] itemArray, int[] weights)
         {
             if (itemArray.Length != weights.Length)
@@ -41,6 +41,27 @@ namespace Util
             }
 
             return foundItem;
+        }
+
+        /// <summary>
+        /// Get a random item from an array.
+        /// </summary>
+        public static T GetRandomItem<T>(this T[] itemArray)
+        {
+            return itemArray[Random.Range(0, itemArray.Length)];
+        }
+
+        /// <summary>
+        /// Attempt to set destination, and log an error if we fail.
+        /// </summary>
+        public static bool TrySetDestination(this NavMeshAgent agent, Vector3 destination)
+        {
+            bool succeeded = agent.SetDestination(destination);
+            if (!succeeded)
+            {
+                Debug.LogError($"NavMeshAgent {agent} ({agent.name}) failed to set destination: {destination}");
+            }
+            return succeeded;
         }
     }
 
