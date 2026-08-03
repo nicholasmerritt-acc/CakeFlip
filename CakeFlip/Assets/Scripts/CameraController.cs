@@ -75,9 +75,9 @@ public class CameraController : MonoBehaviour
         offset = newOffset;
     }
 
-    private void ZoomPerformed(InputAction.CallbackContext value)
+    private void ZoomPerformed(InputAction.CallbackContext context)
     {
-        float zoomAmount = value.ReadValue<float>();
+        float zoomAmount = context.ReadValue<float>();
         cameraOffsetDistance += zoomAmount;
         cameraOffsetDistance = Mathf.Clamp(cameraOffsetDistance, minZoom, maxZoom);
     }

@@ -33,7 +33,7 @@ public class PortalPedestal : MonoBehaviour
         inputActions.Player.Interact.performed += OnPlayerInteraction;
     }
 
-    private void OnPlayerInteraction(InputAction.CallbackContext value)
+    private void OnPlayerInteraction(InputAction.CallbackContext context)
     {
         if (pedestalEnabled)
         {

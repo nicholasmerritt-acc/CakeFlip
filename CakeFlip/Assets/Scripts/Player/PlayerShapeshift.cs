@@ -95,7 +95,7 @@ public class PlayerShapeshift : MonoBehaviour
     }
 
 
-    private void ShapeshiftOnPress(InputAction.CallbackContext value)
+    private void ShapeshiftOnPress(InputAction.CallbackContext context)
     {
         Shapeshift(!IsSkateboard);
     }

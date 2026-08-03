@@ -84,15 +84,15 @@ public class PlayerController : MonoBehaviour
         Skateboard.TrickCompleted -= TrickCompleted;
     }
 
-    private void DoTrick1(InputAction.CallbackContext value)
+    private void DoTrick1(InputAction.CallbackContext context)
     {
         DoTrick(TrickType.Frontflip);
     }
-    private void DoTrick2(InputAction.CallbackContext value)
+    private void DoTrick2(InputAction.CallbackContext context)
     {
         DoTrick(TrickType.Backflip);
     }
-    private void DoTrick3(InputAction.CallbackContext value)
+    private void DoTrick3(InputAction.CallbackContext context)
     {
         DoTrick(TrickType.Sideflip);
     }

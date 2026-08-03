@@ -24,7 +24,7 @@ public class ScientistDialogue : MonoBehaviour
         inputActions.Player.DialogueNext.performed += DialogueNextPressed;
     }
 
-    private void DialogueNextPressed(InputAction.CallbackContext value)
+    private void DialogueNextPressed(InputAction.CallbackContext context)
     {
         if (waiting)
         {

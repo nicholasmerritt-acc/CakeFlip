@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump(InputAction.CallbackContext value)
+    private void Jump(InputAction.CallbackContext context)
     {
         if (shapeshifter.IsSkateboard && Grounded())
         {
