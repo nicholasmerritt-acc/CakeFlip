@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class PauseMenuBackButton : PanelBackButton
+public class PauseMenuBackButton : MonoBehaviour
 {
-    public override void DeactivatePanel()
+    public void OnBackClick()
     {
-        GameManager.Instance.TogglePause();
-        base.DeactivatePanel();
+        GameManager.Instance.ThePauseGameHandler.TogglePause();
     }
 }

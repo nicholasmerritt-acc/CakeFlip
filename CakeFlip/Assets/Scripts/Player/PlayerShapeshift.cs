@@ -21,7 +21,7 @@ public class PlayerShapeshift : MonoBehaviour
     [SerializeField] private Skateboard skateboard;
     [SerializeField] private Animator skateboardAnimator;
 
-    public static event Action<bool> OnShapeshift;
+    public static event Action<Vector3> CameraOffsetChanged;
 
     private void Awake()
     {
@@ -121,7 +121,7 @@ public class PlayerShapeshift : MonoBehaviour
         myCapsuleCollider.center = currentForm.ColliderCenterValues;
         myCapsuleCollider.direction = (int)currentForm.Direction;
 
-        OnShapeshift?.Invoke(toSkateboard);
+        CameraOffsetChanged?.Invoke(currentForm.CameraOffset);
     }
 
     public void BecomeSkateboard()

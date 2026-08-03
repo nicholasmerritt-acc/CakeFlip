@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 1617349331715804439}
   - component: {fileID: 3360542565473314800}
   - component: {fileID: 1306185679244766674}
-  - component: {fileID: 7372517451638501834}
+  - component: {fileID: 5320969653572135497}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7372517451638501834}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseGameHandler, Assembly-CSharp
         m_MethodName: TogglePauseMenu
         m_Mode: 1
@@ -611,7 +611,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7372517451638501834
+--- !u!114 &5320969653572135497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -620,10 +620,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3026360266338614006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cf7de1e3bf42b747a066fa9a09616b1, type: 3}
+  m_Script: {fileID: 11500000, guid: e688d16e742f01b4992e98b269ce8692, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PauseGameHandler
-  PauseMenu: {fileID: 5835155309167706248}
+  m_EditorClassIdentifier: Assembly-CSharp::PanelBackButton
+  PanelToDeactivate: {fileID: 5835155309167706248}
 --- !u!1 &3074088449977781010
 GameObject:
   m_ObjectHideFlags: 0

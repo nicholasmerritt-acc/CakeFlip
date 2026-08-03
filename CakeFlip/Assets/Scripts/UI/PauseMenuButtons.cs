@@ -43,4 +43,12 @@ public class PauseMenuButtons : MonoBehaviour
         audioManager.PlayButtonPressClip();
         UnityEditor.EditorApplication.isPlaying = false;
     }
+
+    /// <summary>
+    /// For debug use only. Unlock all the tricks in the game.
+    /// </summary>
+    public void DEBUG_UnlockAll()
+    {
+        GameManager.Instance.DEBUG_UnlockAll();
+    }
 }

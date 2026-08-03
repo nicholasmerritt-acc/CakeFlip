@@ -3,10 +3,15 @@ CakeFlip: Xtreme Baking
 
 todo next (mandatory):
 ----------------------
-game over. 
+game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. the wise doctor offers you a choice:
+	two buttons are: 
+		return to main menu
+		respawn, with some curse. maybe just lose an item or all your gold or something.
+		then you respawn in the science lab.
+
 	maybe some evil level the enemies can kill you
 	maybe if you get run over by a pizza truck? idk
-	maybe if you fall off the edge, you die instead of respawn
+	maybe if you fall off the edge in certain levels, you die instead of respawn
 rubric says:
 	need to beef up UI and navmesh agents
 UI:
@@ -17,7 +22,7 @@ UI:
 		controls? mini tutorial? idk nahhh probably not
 	have button on main menu to set "cheats" and unlock all
 navmesh agents:
-	truck spawning in tunnel
+	trucks spawning in tunnel. go to end of street and despawn. or maybe just set position back at the beginning. sort of an "item pool"
 	"cop" that chases you if you blow up too many crates
 
 simple npcs:

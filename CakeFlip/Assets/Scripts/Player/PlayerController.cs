@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetPlayer()
     {
-        GameManager.Instance.Player = this;
+        GameManager.Instance.SetPlayer(this);
     }
 
     private void SetupReferences()

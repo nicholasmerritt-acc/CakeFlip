@@ -24,8 +24,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minZoom = 1f;
     [SerializeField] private float maxZoom = 7f;
     [SerializeField] private Vector3 offset = new Vector3(0f, .5f, 0f);
-    [SerializeField] private Vector3 skateboardOffset = new Vector3(0f, .5f, 0f);
-    [SerializeField] private Vector3 guyOffset = new Vector3(0f, 2f, 0f);
 
     private void Awake()
     {
@@ -43,27 +41,38 @@ public class CameraController : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.Zoom.performed += ZoomPerformed;
 
-        PlayerShapeshift.OnShapeshift += OnPlayerShapeshift;
+        PlayerShapeshift.CameraOffsetChanged += CameraOffsetChanged;
+        PauseGameHandler.GamePaused += ReleaseMouse;
+        PauseGameHandler.GameUnpaused += CaptureMouse;
+    }
+
+    private void ReleaseMouse()
+    {
+        LookAroundEnabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private void CaptureMouse()
+    {
+        LookAroundEnabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnDisable()
     {
-        PlayerShapeshift.OnShapeshift -= OnPlayerShapeshift;
+        PlayerShapeshift.CameraOffsetChanged -= CameraOffsetChanged;
+        PauseGameHandler.GamePaused -= ReleaseMouse;
+        PauseGameHandler.GameUnpaused -= CaptureMouse;
 
         inputActions.Player.Zoom.performed -= ZoomPerformed;
         inputActions.Player.Disable();
     }
 
-    private void OnPlayerShapeshift(bool skateboard)
+    private void CameraOffsetChanged(Vector3 newOffset)
     {
-        if (skateboard)
-        {
-            offset = skateboardOffset;
-        }
-        else
-        {
-            offset = guyOffset;
-        }
+        offset = newOffset;
     }
 
     private void ZoomPerformed(InputAction.CallbackContext value)

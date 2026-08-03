@@ -1,12 +1,61 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseGameHandler : MonoBehaviour
 {
-    public GameObject PauseMenuPrefab;
-    public GameObject PauseMenu;
-    //public GameObject SettingsPanel;
     private InputSystem_Actions inputActions;
+
+    public static event Action GamePaused;
+    public static event Action GameUnpaused;
+
+    [Header("Game State")]
+    public bool IsPaused = false;
+
+    [Header("References")]
+    [SerializeField] private GameObject pauseMenuPrefab;
+    private Canvas canvas;
+    public Canvas Canvas
+    {
+        get
+        {
+            if (canvas == null)
+            {
+                canvas = FindAnyObjectByType<Canvas>();
+            }
+            return canvas;
+        }
+
+        set => canvas = value;
+    }
+    private GameObject pauseMenu;
+    public GameObject PauseMenu
+    {
+        get
+        {
+            if (pauseMenu == null)
+            {
+                pauseMenu = Instantiate(pauseMenuPrefab, Canvas.transform);
+            }
+            return pauseMenu;
+        }
+
+        set => pauseMenu = value;
+    }
+    private GameObject settingsPanel;
+    public GameObject SettingsPanel
+    {
+        get
+        {
+            if (settingsPanel == null)
+            {
+                settingsPanel = PauseMenu.GetComponent<PauseMenu>().SettingsPanel;
+            }
+            return settingsPanel;
+        }
+
+        set => settingsPanel = value;
+    }
 
     private void Awake()
     {
@@ -27,30 +76,44 @@ public class PauseGameHandler : MonoBehaviour
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        TogglePauseMenu();
-    }
-
-    //public void OnPauseButtonClick()
-    //{
-    //    AudioManager.Instance.PlayButtonPressClip();
-    //    TogglePauseMenu();
-    //}
-
-    /// <summary>
-    /// Pause or unpause the game. Make sure all panels are disabled if we are unpaused.
-    /// </summary>
-    public void TogglePauseMenu()
-    {
-        bool isNowPaused = GameManager.Instance.TogglePause();
         if (PauseMenu == null)
         {
-            //TODO turn this into a property
-            PauseMenu = Instantiate(PauseMenuPrefab, FindAnyObjectByType<Canvas>().transform);
+            Debug.LogError("PauseMenu prefab is not setup correctly.");
+            return;
         }
-        PauseMenu.SetActive(isNowPaused);
 
-        //if (!isNowPaused) {
-        //    SettingsPanel.SetActive(false);
-        //}
+        if (!SettingsPanel.activeInHierarchy)
+        {
+            TogglePause();
+        }
+        else
+        {
+            //if settings panel IS active, that means it is on top of an active pause menu.
+            //so, turn off settings panel but keep pause menu intact
+            SettingsPanel.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Pause or unpause the game. Will instantiate PauseMenu if it is not already there.
+    /// </summary>
+    public bool TogglePause()
+    {
+        if (IsPaused)
+        {
+            //unpause
+            IsPaused = false;
+            Time.timeScale = 1.0f;
+            GameUnpaused?.Invoke();
+        }
+        else
+        {
+            IsPaused = true;
+            Time.timeScale = 0.0f;
+            GamePaused?.Invoke();
+        }
+
+        PauseMenu.SetActive(IsPaused);
+        return IsPaused;
     }
 }

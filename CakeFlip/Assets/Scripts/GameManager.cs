@@ -23,12 +23,10 @@ public class GameManager : MonoBehaviour
     public static event Action<string> ItemDropped;
 
     [Header("References")]
-    public PlayerController Player;
-    [SerializeField] Health playerHealth;
+    [SerializeField] private PlayerController player;
+    [SerializeField] private Health playerHealth;
     public AudioManager TheAudioManager;
-
-    [Header("Game State")]
-    public bool IsPaused = false;
+    public PauseGameHandler ThePauseGameHandler;
 
     private void Awake()
     {
@@ -47,11 +45,11 @@ public class GameManager : MonoBehaviour
         InitializeItemDictionary();
         InitializeTrickDictionaries();
         TheAudioManager = GetComponent<AudioManager>();
-        if (Player == null)
+        if (player == null)
         {
-            Player = FindAnyObjectByType<PlayerController>();
+            player = FindAnyObjectByType<PlayerController>();
         }
-        playerHealth = Player.GetComponent<Health>();
+        playerHealth = player.GetComponent<Health>();
         playerHealth.OnDeath += OnPlayerDeath;
     }
 
@@ -142,7 +140,7 @@ public class GameManager : MonoBehaviour
         if (CurrentItem != null)
         {
             //make new position a certain amount behind us
-            Vector3 newPosition = Player.transform.position + Player.transform.forward * itemDropOffset;
+            Vector3 newPosition = player.transform.position + player.transform.forward * itemDropOffset;
             //newPosition.y = CurrentItem.transform.position.y;
             DropCurrentItem(newPosition);
         }
@@ -172,7 +170,7 @@ public class GameManager : MonoBehaviour
         if (dropping)
         {
             //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
-            CurrentItem.transform.parent = Player.transform.parent;
+            CurrentItem.transform.parent = player.transform.parent;
         } 
         else
         {
@@ -201,19 +199,19 @@ public class GameManager : MonoBehaviour
         return itemToReturn;
     }
 
-    public bool TogglePause()
+    public void SetPlayer(PlayerController playerController)
     {
-        if (IsPaused)
+        player = playerController;
+    }
+
+    /// <summary>
+    /// For debug use only. Unlock all the tricks in the game.
+    /// </summary>
+    public void DEBUG_UnlockAll()
+    {
+        foreach (TrickType trick in Enum.GetValues(typeof(TrickType)))
         {
-            //unpause
-            IsPaused = false;
-            Time.timeScale = 1.0f;
-        } 
-        else
-        {
-            IsPaused = true;
-            Time.timeScale = 0.0f;
+            UnlockedTricks.Add(trick);
         }
-        return IsPaused;
     }
 }
