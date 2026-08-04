@@ -63,6 +63,14 @@ namespace Util
             }
             return succeeded;
         }
+
+        public static void TrySetEnabledCollider(this GameObject obj, bool enable)
+        {
+            if (obj.TryGetComponent<Collider>(out Collider collider))
+            {
+                collider.enabled = enable;
+            }
+        }
     }
 
 }

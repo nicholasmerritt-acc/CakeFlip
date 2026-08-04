@@ -1,17 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Util;
 
-public class PortalPedestal : MonoBehaviour
+public class PortalPedestal : InteractableEnvironmentItem
 {
-    [SerializeField] private bool pedestalEnabled = false;
     [SerializeField] private ItemPickup itemOnPedestal;
     [SerializeField] private GameObject itemOnPortal;
     [SerializeField] private Transform portalHoverPoint;
     [SerializeField] private Transform pedestalHoverPoint;
     [SerializeField] private TeleportArea teleportArea;
     [SerializeField] private string defaultScene;
+    [SerializeField] private string interactMessage = "Put an Item here to change the teleporter's destination.";
 
     private InputSystem_Actions inputActions;
+
+    public override string InteractMessage { get => interactMessage; set => interactMessage = value; }
+
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
@@ -35,7 +39,7 @@ public class PortalPedestal : MonoBehaviour
 
     private void OnPlayerInteraction(InputAction.CallbackContext context)
     {
-        if (pedestalEnabled)
+        if (CanInteract)
         {
             if (itemOnPedestal == null)
             {
@@ -48,10 +52,7 @@ public class PortalPedestal : MonoBehaviour
                     return;
                 }
                 dropped.SetActive(true);
-                if (dropped.TryGetComponent<Collider>(out Collider droppedCollider))
-                {
-                    droppedCollider.enabled = false;
-                }
+                dropped.TrySetEnabledCollider(false);
                 //TODO extension method for enable/disable collider
 
                 itemOnPedestal = dropped.GetComponent<ItemPickup>();
@@ -84,13 +85,9 @@ public class PortalPedestal : MonoBehaviour
         inputActions.Player.Disable();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            pedestalEnabled = true;
-            Debug.Log("Pedestal activated");
-        }
+        base.OnTriggerEnter(other);
         if (itemOnPedestal == null)
         {
             //TODO show UI thing that says "press F to place item on pedestal"
@@ -100,13 +97,17 @@ public class PortalPedestal : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            pedestalEnabled = false;
-            Debug.Log("Pedestal deactivated");
-        }
+        base.OnTriggerExit(other);
+        //TODO update pedestal specific?
         //TODO hide UI thing
+    }
+
+    public override void PlayerNearby()
+    {
+        Debug.Log("pedestal is nearby the player! standing by");
+        Debug.Log(interactMessage);
+        Debug.Log(InteractMessage);
     }
 }

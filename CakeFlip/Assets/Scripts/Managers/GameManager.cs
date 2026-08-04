@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static ItemPickup;
 using Trick;
+using Util;
 
 public class GameManager : MonoBehaviour
 {
@@ -175,10 +176,7 @@ public class GameManager : MonoBehaviour
     /// <param name="dropping"></param>
     private void ToggleCurrentItem(bool dropping)
     {
-        if (CurrentItem.TryGetComponent<Collider>(out Collider collider))
-        {
-            collider.enabled = dropping;
-        }
+        CurrentItem.TrySetEnabledCollider(dropping);
         CurrentItem.SetActive(dropping);
 
         if (dropping)

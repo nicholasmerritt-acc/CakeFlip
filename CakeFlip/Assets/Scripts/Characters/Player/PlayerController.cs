@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool trickInProgress = false;
     [SerializeField] private int failedTrickDamage = 1;
 
+    [Header("Interacting")]
+    [SerializeField] private InteractableEnvironmentItem nearbyItem;
+
     [Header("References")]
     [SerializeField] private Health health;
     [SerializeField] private PlayerMovement movement;
@@ -162,6 +165,12 @@ public class PlayerController : MonoBehaviour
             shapeshifter.SetAnimationTrigger("trickCanceled");
             Debug.Log("trick failed! oops!");
             health.TakeDamage(failedTrickDamage);
+        }
+
+        //TODO i don't think this does anything
+        if (collision.gameObject.TryGetComponent<InteractableEnvironmentItem>(out InteractableEnvironmentItem interactable))
+        {
+            interactable.PlayerNearby();
         }
     }
 
