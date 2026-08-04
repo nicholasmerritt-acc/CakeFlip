@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseGameHandler : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PauseGameHandler : MonoBehaviour
 
     [Header("Game State")]
     public bool IsPaused = false;
+    public bool isMainMenu = false;
 
     [Header("References")]
     [SerializeField] private GameObject pauseMenuPrefab;
@@ -60,6 +62,12 @@ public class PauseGameHandler : MonoBehaviour
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
+        SceneManager.sceneLoaded += SetupMainMenu;
+    }
+
+    private void SetupMainMenu(Scene arg0, LoadSceneMode arg1)
+    {
+        isMainMenu = arg0.buildIndex == 0;
     }
 
     private void OnEnable()
@@ -72,10 +80,15 @@ public class PauseGameHandler : MonoBehaviour
     {
         inputActions.Player.PauseGame.performed -= OnPause;
         inputActions.Player.Disable();
+        SceneManager.sceneLoaded -= SetupMainMenu;
     }
 
     private void OnPause(InputAction.CallbackContext context)
     {
+        if (isMainMenu)
+        {
+            return;
+        }
         if (PauseMenu == null)
         {
             Debug.LogError("PauseMenu prefab is not setup correctly.");
