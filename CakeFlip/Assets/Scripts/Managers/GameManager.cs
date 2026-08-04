@@ -45,6 +45,20 @@ public class GameManager : MonoBehaviour
         InitializeItemDictionary();
         InitializeTrickDictionaries();
         TheAudioManager = GetComponent<AudioManager>();
+    }
+
+    private void Start()
+    {
+        FindPlayerReference();
+    }
+
+    private void FindPlayerReference()
+    {
+        if (ThePauseGameHandler.isMainMenu)
+        {
+            return;
+        }
+
         if (player == null)
         {
             player = FindAnyObjectByType<PlayerController>();
