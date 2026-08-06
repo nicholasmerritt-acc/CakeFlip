@@ -3,6 +3,13 @@ CakeFlip: Xtreme Baking
 
 todo next (mandatory):
 ----------------------
+main menu 
+	fix skateboard not moving
+
+help message on portal
+	long hallway with glass
+	scientist is falling through the floor??
+
 IInteractable class. first up on the chopping block is PortalPedestal
 game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. the wise doctor offers you a choice:
 	two buttons are: 
@@ -31,7 +38,6 @@ simple npcs:
 	quest exclamation mark could be good though !!!
 	interact area with large trigger collider
 
-help message on portal
 
 different music every level? that'd be cool
 
