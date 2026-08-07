@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6387239266116695414}
   - component: {fileID: 3395457560910156439}
   - component: {fileID: 2299114051217894082}
+  - component: {fileID: 6371495883853535436}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   TheAudioManager: {fileID: 6387239266116695414}
   ThePauseGameHandler: {fileID: 6996866326784673981}
+  TheAsyncLoader: {fileID: 6371495883853535436}
 --- !u!114 &6996866326784673981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseGameHandler
   IsPaused: 0
+  isMainMenu: 0
   pauseMenuPrefab: {fileID: 8666202204513798994, guid: 0394e436a8e1ad149abdbe9e774b3b3c,
     type: 3}
 --- !u!114 &6387239266116695414
@@ -281,3 +284,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6371495883853535436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669660502533661132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a7d7ce5d3307e43bc39faca38097a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AsyncLoader
+  currentLevelToLoad: 
+  loadingScreenPrefab: {fileID: 4614393032447525400, guid: 05ecbd60ad50d29459e0b4d0fcc539d7,
+    type: 3}
+  loadingScreen: {fileID: 0}

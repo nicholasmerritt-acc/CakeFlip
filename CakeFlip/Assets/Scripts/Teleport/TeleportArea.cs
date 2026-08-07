@@ -31,7 +31,7 @@ public class TeleportArea : MonoBehaviour
     private IEnumerator DoTeleport()
     {
         yield return new WaitForSeconds(teleportDelay);
-        SceneManager.LoadScene(SceneNameToTeleportTo);
+        GameManager.Instance.LoadScene(SceneNameToTeleportTo);
     }
 
     //TODO teleport loading bar

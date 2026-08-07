@@ -14,7 +14,7 @@ public class PauseMenuButtons : MonoBehaviour
     public void ResetLevelOnClick()
     {
         audioManager.PlayButtonPressClip();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class PauseMenuButtons : MonoBehaviour
     public void MainMenuOnClick()
     {
         audioManager.PlayButtonPressClip();
-        SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.LoadScene("MainMenu");
     }
 
     /// <summary>

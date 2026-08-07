@@ -3,6 +3,7 @@ CakeFlip: Xtreme Baking
 
 todo next (mandatory):
 ----------------------
+double check all loading screens are correct
 attempted navmesh on the main menu. it was weird and unnecessary.
 let's beef up the city level then. add some spawners and some more vehicles
 just copy paste some streets. full of pizza shops i guess.
@@ -18,6 +19,7 @@ then npcs:
 
 help message on portal
 	long hallway with glass
+	fiiiilled with ovens. very creepy vibe.
 	scientist is falling through the floor??
 
 game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. the wise doctor offers you a choice:

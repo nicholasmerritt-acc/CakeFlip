@@ -16,20 +16,7 @@ public class PauseGameHandler : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject pauseMenuPrefab;
-    private Canvas canvas;
-    public Canvas Canvas
-    {
-        get
-        {
-            if (canvas == null)
-            {
-                canvas = FindAnyObjectByType<Canvas>();
-            }
-            return canvas;
-        }
 
-        set => canvas = value;
-    }
     private GameObject pauseMenu;
     public GameObject PauseMenu
     {
@@ -37,7 +24,7 @@ public class PauseGameHandler : MonoBehaviour
         {
             if (pauseMenu == null)
             {
-                pauseMenu = Instantiate(pauseMenuPrefab, Canvas.transform);
+                pauseMenu = Instantiate(pauseMenuPrefab, GameManager.Instance.Canvas.transform);
             }
             return pauseMenu;
         }
@@ -65,9 +52,9 @@ public class PauseGameHandler : MonoBehaviour
         SceneManager.sceneLoaded += SetupMainMenu;
     }
 
-    private void SetupMainMenu(Scene arg0, LoadSceneMode arg1)
+    private void SetupMainMenu(Scene scene, LoadSceneMode mode)
     {
-        isMainMenu = arg0.buildIndex == 0;
+        isMainMenu = scene.buildIndex == 0;
     }
 
     private void OnEnable()

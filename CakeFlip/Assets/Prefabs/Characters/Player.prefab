@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trickInProgress: 0
   failedTrickDamage: 1
+  nearbyItem: {fileID: 0}
   health: {fileID: 0}
   movement: {fileID: 0}
   myRigidbody: {fileID: 7932165733979925898}
@@ -161,7 +162,7 @@ MonoBehaviour:
   stopping: 0
   speedAnimationAdjustment: 2
   grounded: 0
-  jumpForce: 27
+  jumpForce: 7
   groundedCheckMask:
     serializedVersion: 2
     m_Bits: 320

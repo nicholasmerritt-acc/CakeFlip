@@ -28,6 +28,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Health playerHealth;
     public AudioManager TheAudioManager;
     public PauseGameHandler ThePauseGameHandler;
+    public AsyncLoader TheAsyncLoader;
+    private Canvas canvas;
+    public Canvas Canvas
+    {
+        get
+        {
+            if (canvas == null)
+            {
+                canvas = FindAnyObjectByType<Canvas>();
+            }
+            return canvas;
+        }
+
+        set => canvas = value;
+    }
 
     private void Awake()
     {
@@ -46,6 +61,21 @@ public class GameManager : MonoBehaviour
         InitializeItemDictionary();
         InitializeTrickDictionaries();
         TheAudioManager = GetComponent<AudioManager>();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += ResetCanvas;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= ResetCanvas;
+    }
+
+    private void ResetCanvas(Scene scene, LoadSceneMode mode)
+    {
+        canvas = null;
     }
 
     private void Start()
@@ -70,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        SceneManager.LoadScene("MainMenu");
+        GameManager.Instance.LoadScene("MainMenu");
     }
 
     private void InitializeTrickDictionaries()
@@ -214,6 +244,12 @@ public class GameManager : MonoBehaviour
     public void SetPlayer(PlayerController playerController)
     {
         player = playerController;
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        Debug.Log("loading screen from gm");
+        TheAsyncLoader.LoadLevelAsync(sceneName);
     }
 
     /// <summary>
