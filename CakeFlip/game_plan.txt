@@ -3,14 +3,23 @@ CakeFlip: Xtreme Baking
 
 todo next (mandatory):
 ----------------------
-main menu 
-	fix skateboard not moving
+attempted navmesh on the main menu. it was weird and unnecessary.
+let's beef up the city level then. add some spawners and some more vehicles
+just copy paste some streets. full of pizza shops i guess.
+
+convert abstract class to IInteractable??? idk
+
+then npcs:
+	just use billboards. scrap the dialogue. too hard.
+	announce "dimension blah" or vice versa when entering a level. 
+	could also be nav mesh agents and wander around slowly
+	quest exclamation mark could be good though !!!
+	interact area with large trigger collider
 
 help message on portal
 	long hallway with glass
 	scientist is falling through the floor??
 
-IInteractable class. first up on the chopping block is PortalPedestal
 game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. the wise doctor offers you a choice:
 	two buttons are: 
 		return to main menu
@@ -30,13 +39,6 @@ UI:
 navmesh agents:
 	trucks spawning in tunnel. go to end of street and despawn. or maybe just set position back at the beginning. sort of an "item pool"
 	"cop" that chases you if you blow up too many crates
-
-simple npcs:
-	just use billboards. scrap the dialogue. too hard.
-	announce "dimension blah" or vice versa when entering a level. 
-	could also be nav mesh agents and wander around slowly
-	quest exclamation mark could be good though !!!
-	interact area with large trigger collider
 
 
 different music every level? that'd be cool

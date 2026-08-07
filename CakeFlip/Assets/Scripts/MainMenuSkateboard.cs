@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MainMenuSkateboard : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
-    [SerializeField] private float stoppingDistance = .1f;
+    [SerializeField] private Vector3 direction;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float stoppingDistance = .5f;
 
     [Header("Items")]
     [SerializeField] private GameObject[] items;
@@ -15,15 +15,10 @@ public class MainMenuSkateboard : MonoBehaviour
     [SerializeField] private Transform itemHoldingArea;
     [SerializeField] private int itemIndex;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        if (agent == null)
-        {
-            agent = GetComponent<NavMeshAgent>();
-        }
-        agent.SetDestination(endPoint.position);
-        agent.stoppingDistance = stoppingDistance;
+        direction = (endPoint.position - transform.position).normalized;
+        direction.y = 0f;
     }
 
     // Update is called once per frame
@@ -31,16 +26,23 @@ public class MainMenuSkateboard : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, endPoint.position) < stoppingDistance)
         {
-            Debug.Log("resetting");
             transform.position = startPoint.position;
-            GetNextItem();
+            HoldNextItem();
         }
+        transform.Translate(direction * (moveSpeed * Time.deltaTime), Space.World);
     }
 
-    private void GetNextItem()
+    /// <summary>
+    /// Replace the item currently held (if there is one) with an item from the pool.
+    /// Instead of destroying and instantiating, we just move them to a holding zone offscreen.
+    /// </summary>
+    private void HoldNextItem()
     {
-        items[itemIndex].transform.position = itemJail.position;
-        items[itemIndex + 1].transform.position = itemHoldingArea.position;
-        itemIndex++;
+        int nextIndex = (itemIndex + 1) % items.Length;
+        items[itemIndex].transform.parent = itemJail;
+        items[itemIndex].transform.localPosition = Vector3.zero;
+        items[nextIndex].transform.parent = itemHoldingArea;
+        items[nextIndex].transform.localPosition = Vector3.zero;
+        itemIndex = nextIndex;
     }
 }
