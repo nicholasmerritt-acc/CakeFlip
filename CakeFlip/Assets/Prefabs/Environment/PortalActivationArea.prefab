@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2573865238001343602}
   - component: {fileID: 319436916230630045}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Teleport Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8527258788593702802}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PortalHoverPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,8 @@ GameObject:
   - component: {fileID: 6167233022348442853}
   - component: {fileID: 4221114788125617865}
   - component: {fileID: 204833650012441837}
-  m_Layer: 0
+  - component: {fileID: 3659087900231423326}
+  m_Layer: 12
   m_Name: PedestalArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,13 +147,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed567a9d8329d2c4f849fc60e4b7949e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  pedestalEnabled: 0
+  CanInteract: 0
   itemOnPedestal: {fileID: 0}
   itemOnPortal: {fileID: 0}
   portalHoverPoint: {fileID: 8527258788593702802}
   pedestalHoverPoint: {fileID: 4641700322819164539}
   teleportArea: {fileID: 1756219198015364116}
   defaultScene: 
+  interactMessage: Put an Item here to change the teleporter's destination.
+--- !u!208 &3659087900231423326
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505763697200468114}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6835262907072817655
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +182,7 @@ GameObject:
   - component: {fileID: 4929690016141126441}
   - component: {fileID: 8926750018781578306}
   - component: {fileID: 1649469104927100543}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4641700322819164539}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PedestalHoverPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +340,7 @@ GameObject:
   - component: {fileID: 7729220153828503830}
   - component: {fileID: 1602257218540606569}
   - component: {fileID: 1756219198015364116}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PortalActivationArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,6 +481,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Disc_Orange
       objectReference: {fileID: 0}
+    - target: {fileID: 94268058935313269, guid: 74427d55bbb131a42a455163ffdeabe3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -486,6 +509,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7729220153828503830}
     m_Modifications:
+    - target: {fileID: 1434365075537969796, guid: 83042a092373d86429563194a6ea4856,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2072418827617089287, guid: 83042a092373d86429563194a6ea4856,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 2424856464176163887, guid: 83042a092373d86429563194a6ea4856,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -545,6 +578,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OrangePortalVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5945052716929817944, guid: 83042a092373d86429563194a6ea4856,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7222258468207783038, guid: 83042a092373d86429563194a6ea4856,
         type: 3}
@@ -619,6 +657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pedestal
+      objectReference: {fileID: 0}
+    - target: {fileID: 814256291913593830, guid: 27c62ed5ee56960479a62995f3bb3aef,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -27,10 +27,10 @@ public class Patroller : MonoBehaviour
     /// </summary>
     private void DrawDestinationPath()
     {
-        if (destinations.Count < 2)
+        if (destinations == null || destinations.Count < 2)
         {
             return;
-        } 
+        }
         else
         {
             Gizmos.color = Color.darkViolet;
@@ -38,8 +38,14 @@ public class Patroller : MonoBehaviour
             Vector3[] destinationPairs = new Vector3[destinations.Count * 2];
             for (int i = 0; i < destinations.Count; i++)
             {
+                int nextIndex = (i + 1) % destinations.Count;
+                if (destinations[i] == null || destinations[nextIndex] == null)
+                {
+                    //we return here so we don't get null reference in the prefab editor, for example
+                    return;
+                }
                 destinationPairs[i * 2] = destinations[i].transform.position;
-                destinationPairs[(i * 2) + 1] = destinations[(i + 1) % destinations.Count].transform.position;
+                destinationPairs[(i * 2) + 1] = destinations[nextIndex].transform.position;
             }
 
             Gizmos.DrawLineList(destinationPairs);

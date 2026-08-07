@@ -3,6 +3,7 @@ CakeFlip: Xtreme Baking
 
 todo next (mandatory):
 ----------------------
+trees to city street scene. nice lil park
 double check all loading screens are correct
 convert abstract class to IInteractable??? idk
 
@@ -35,8 +36,8 @@ UI:
 		and which level we are in currently. 
 		controls? mini tutorial? idk nahhh probably not
 navmesh agents:
-	trucks spawning in tunnel. go to end of street and despawn. or maybe just set position back at the beginning. sort of an "item pool"
-	"cop" that chases you if you blow up too many crates
+	TODO sort of an "item pool"
+	crate island: "cop" that chases you if you blow up too many crates
 
 
 different music every level? that'd be cool
@@ -64,6 +65,7 @@ scientist should disable movement as well as looking!
 	or maybe just scrap. idk. or have 1 second timeout
 
 ladders, to make the human form useful
+	interactable item that just transports you upwards
 
 8 levels is the stretch goal! have 3. 3 is good enough for now. polish a bit, then build out additional levels. do stuff
 ABOVE THIS LINE first. then go crazy
