@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using Util;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class CarDrive : MonoBehaviour
+public class Patroller : MonoBehaviour
 {
     [SerializeField] private float minSpeed = .01f;
     [SerializeField] private NavMeshAgent agent;
@@ -13,6 +13,9 @@ public class CarDrive : MonoBehaviour
     [SerializeField] private float destinationCheckInterval = 1.0f;
     [SerializeField] private float stoppingDistance = 1.0f;
     [SerializeField] private int destinationIndex;
+
+
+
 
     private void OnDrawGizmosSelected()
     {
@@ -62,7 +65,7 @@ public class CarDrive : MonoBehaviour
     {
         if (destinations == null || destinations.Count == 0)
         {
-            Debug.LogError($"No destinations found for {name}. Assign some destinations in the inspector.");
+            return;
         }
         //change destinations if:
         else if (agent.destination == null || //1. we don't have one
@@ -73,6 +76,17 @@ public class CarDrive : MonoBehaviour
             Debug.Log($"{name} set destination {destinationIndex}: {agent.destination}");
             destinationIndex = (destinationIndex + 1) % destinations.Count;
         }
+    }
+
+    public void SetDestinations(Transform[] newDestinations)
+    {
+        destinations = new();
+        AddDestinations(newDestinations);
+    }
+
+    public void AddDestinations(Transform[] newDestinations)
+    {
+        destinations.AddRange(newDestinations);
     }
 
     private void OnDisable()

@@ -11,7 +11,7 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private int[] weights;
     [SerializeField] private bool continuousSpawning = true;
 
-    void Start()
+    protected virtual void Start()
     {
         if (spawnPosition == null)
         {
@@ -48,7 +48,7 @@ public class ItemSpawner : MonoBehaviour
     /// <summary>
     /// Spawn an item from our list of items
     /// </summary>
-    public GameObject SpawnOnce()
+    public virtual GameObject SpawnOnce()
     {
         GameObject spawnMe = spawnPrefabs.GetWeightedItem(weights);
         if (spawnMe != null)
@@ -58,7 +58,7 @@ public class ItemSpawner : MonoBehaviour
         return spawnMe;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         StopAllCoroutines();
     }
