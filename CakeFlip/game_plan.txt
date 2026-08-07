@@ -4,10 +4,6 @@ CakeFlip: Xtreme Baking
 todo next (mandatory):
 ----------------------
 double check all loading screens are correct
-attempted navmesh on the main menu. it was weird and unnecessary.
-let's beef up the city level then. add some spawners and some more vehicles
-just copy paste some streets. full of pizza shops i guess.
-
 convert abstract class to IInteractable??? idk
 
 then npcs:
