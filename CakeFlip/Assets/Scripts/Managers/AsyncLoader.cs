@@ -29,7 +29,7 @@ public class AsyncLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// Load level and update progress bar. TODO maybe some minimum value so we fake a loading screen? nah
+    /// Load level and update progress bar.
     /// </summary>
     /// <returns></returns>
 

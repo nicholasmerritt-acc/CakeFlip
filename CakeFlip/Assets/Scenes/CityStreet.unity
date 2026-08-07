@@ -5692,17 +5692,17 @@ PrefabInstance:
     - target: {fileID: 5084571863445736583, guid: 21089d1d37d6fb242a19eef42f391a64,
         type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 1
+      value: 0.8867924
       objectReference: {fileID: 0}
     - target: {fileID: 5084571863445736583, guid: 21089d1d37d6fb242a19eef42f391a64,
         type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 1
+      value: 0.8380094
       objectReference: {fileID: 0}
     - target: {fileID: 5084571863445736583, guid: 21089d1d37d6fb242a19eef42f391a64,
         type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 1
+      value: 0.7211462
       objectReference: {fileID: 0}
     - target: {fileID: 6567486910300493310, guid: 21089d1d37d6fb242a19eef42f391a64,
         type: 3}
@@ -5768,6 +5768,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cameraOffsetDistance
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636788220346085088, guid: 21089d1d37d6fb242a19eef42f391a64,
+        type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

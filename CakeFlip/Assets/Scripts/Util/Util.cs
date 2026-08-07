@@ -29,7 +29,6 @@ namespace Util
                 if (currentDropChance <= sumTotal)
                 {
                     foundItem = itemArray[i];
-                    Debug.Log($"Found {foundItem} with a {dropRate} % drop rate ({sumTotal} total)");
                     break;
                 }
             }

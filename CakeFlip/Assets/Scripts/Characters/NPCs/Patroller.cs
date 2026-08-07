@@ -22,6 +22,9 @@ public class Patroller : MonoBehaviour
         DrawDestinationPath();
     }
 
+    /// <summary>
+    /// Draw gizmo path between all destinations and their neighbors
+    /// </summary>
     private void DrawDestinationPath()
     {
         if (destinations.Count < 2)
@@ -73,7 +76,6 @@ public class Patroller : MonoBehaviour
             (!agent.hasPath || agent.velocity.sqrMagnitude < minSpeed))) //3. AND we have stopped
         {
             agent.TrySetDestination(destinations[destinationIndex].position);
-            Debug.Log($"{name} set destination {destinationIndex}: {agent.destination}");
             destinationIndex = (destinationIndex + 1) % destinations.Count;
         }
     }

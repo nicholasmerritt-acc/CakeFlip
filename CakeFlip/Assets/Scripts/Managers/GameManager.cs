@@ -73,6 +73,11 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= ResetCanvas;
     }
 
+    /// <summary>
+    /// Reset Canvas so we don't try to reference it in the next scene
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <param name="mode"></param>
     private void ResetCanvas(Scene scene, LoadSceneMode mode)
     {
         canvas = null;
@@ -83,6 +88,9 @@ public class GameManager : MonoBehaviour
         FindPlayerReference();
     }
 
+    /// <summary>
+    /// Get a reference to the Player and its components
+    /// </summary>
     private void FindPlayerReference()
     {
         if (ThePauseGameHandler.isMainMenu)
@@ -98,6 +106,7 @@ public class GameManager : MonoBehaviour
         playerHealth.OnDeath += OnPlayerDeath;
     }
 
+    //TODO death screen
     private void OnPlayerDeath()
     {
         GameManager.Instance.LoadScene("MainMenu");
@@ -197,7 +206,6 @@ public class GameManager : MonoBehaviour
         ToggleCurrentItem(false);
 
         ItemCarried?.Invoke(pickup.name);
-        Debug.Log($"picked up {pickup.name}");
     }
 
     /// <summary>
@@ -230,10 +238,7 @@ public class GameManager : MonoBehaviour
 
         //"drop" the current item. aka return it to the way it was. enable gameObject and collider
         ToggleCurrentItem(true);
-
         CurrentItem.transform.position = newPosition;
-
-        Debug.Log($"Dropped {CurrentItem} at new position {newPosition}");
         ItemDropped?.Invoke(CurrentItem.name);
 
         GameObject itemToReturn = CurrentItem;
@@ -248,7 +253,6 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        Debug.Log("loading screen from gm");
         TheAsyncLoader.LoadLevelAsync(sceneName);
     }
 
