@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   SceneNameToTeleportTo: CityStreet
-  teleportDelay: 1
+  teleportDelay: 0.5
 --- !u!1001 &295310796698993567
 PrefabInstance:
   m_ObjectHideFlags: 0

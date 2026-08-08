@@ -12,15 +12,6 @@ public class PortalPedestal : InteractableEnvironmentItem
     [SerializeField] private string defaultScene;
     [SerializeField] private string interactMessage = "Put an Item here to change the teleporter's destination.";
 
-    private InputSystem_Actions inputActions;
-
-    public override string InteractMessage { get => interactMessage; set => interactMessage = value; }
-
-    private void Awake()
-    {
-        inputActions = new InputSystem_Actions();
-    }
-
     private void Start()
     {
         if (teleportArea == null)
@@ -29,15 +20,11 @@ public class PortalPedestal : InteractableEnvironmentItem
             teleportArea = FindAnyObjectByType<TeleportArea>();
         }
         defaultScene = GameManager.Instance.ItemToLevelName[ItemPickup.PickupableItemType.Undefined];
+        closeEnoughToInteractMessage = interactMessage;
     }
 
-    private void OnEnable()
-    {
-        inputActions.Player.Enable();
-        inputActions.Player.Interact.performed += OnPlayerInteraction;
-    }
 
-    private void OnPlayerInteraction(InputAction.CallbackContext context)
+    protected override void OnPlayerInteraction(InputAction.CallbackContext context)
     {
         if (CanInteract)
         {
@@ -79,11 +66,6 @@ public class PortalPedestal : InteractableEnvironmentItem
         }
     }
 
-    private void OnDisable()
-    {
-        inputActions.Player.Interact.performed -= OnPlayerInteraction;
-        inputActions.Player.Disable();
-    }
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -102,12 +84,9 @@ public class PortalPedestal : InteractableEnvironmentItem
         base.OnTriggerExit(other);
         //TODO update pedestal specific?
         //TODO hide UI thing
-    }
-
-    public override void PlayerNearby()
-    {
-        Debug.Log("pedestal is nearby the player! standing by");
-        Debug.Log(interactMessage);
-        Debug.Log(InteractMessage);
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log($"{name} deactivated");
+        }
     }
 }

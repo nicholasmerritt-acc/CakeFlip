@@ -167,18 +167,18 @@ public class PlayerController : MonoBehaviour
             health.TakeDamage(failedTrickDamage);
         }
 
-        //TODO i don't think this does anything
-        if (collision.gameObject.TryGetComponent<InteractableEnvironmentItem>(out InteractableEnvironmentItem interactable))
-        {
-            interactable.PlayerNearby();
-        }
+        ////TODO i don't think this does anything
+        //if (collision.gameObject.TryGetComponent<InteractableEnvironmentItem>(out InteractableEnvironmentItem interactable))
+        //{
+        //    interactable.PlayerNearby();
+        //}
     }
 
     /// <summary>
     /// announce that we have compelete a skateboard trick
     /// </summary>
     /// <param name="whichTrick"></param>
-    private void TrickCompleted(Trick.TrickType whichTrick)
+    private void TrickCompleted(TrickType whichTrick)
     {
         Debug.Log($"Finished a trick: {whichTrick}! nice!");
         trickInProgress = false;
