@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Trick;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static ItemPickup;
-using Trick;
 using Util;
+using static ItemPickup;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Tricks")]
     public Dictionary<TrickType, SkateboardTrick> SkateboardTrickDictionary;
-    public HashSet<TrickType> UnlockedTricks;
+    public HashSet<TrickType> Unlocks;
 
     [Header("Inventory")]
     public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
@@ -94,6 +94,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SayDialogue(string dialogue)
+    {
+        hud.DialogueText.text = dialogue;
+    }
+
     private void Start()
     {
         FindPlayerReference();
@@ -170,8 +175,8 @@ public class GameManager : MonoBehaviour
             }
         };
 
-        UnlockedTricks = new();
-        UnlockTrick(TrickType.Backflip);
+        Unlocks = new();
+        Unlock(TrickType.Backflip);
         //TODO get unlocks from playerprefs
     }
 
@@ -191,9 +196,9 @@ public class GameManager : MonoBehaviour
         };
     }
 
-    public void UnlockTrick(TrickType trickType)
+    public void Unlock(TrickType trickType)
     {
-        UnlockedTricks.Add(trickType);
+        Unlocks.Add(trickType);
         //TODO add trick to playerprefs
     }
 
@@ -258,6 +263,18 @@ public class GameManager : MonoBehaviour
         return itemToReturn;
     }
 
+    public void RemoveCurrentItem()
+    {
+        if (CurrentItem == null)
+        {
+            Debug.Log("Nothing in inventory to remove!");
+            return;
+        }
+
+        ItemDropped?.Invoke(CurrentItem.name);
+        Destroy(CurrentItem);
+    }
+
     public void SetPlayer(PlayerController playerController)
     {
         player = playerController;
@@ -275,7 +292,19 @@ public class GameManager : MonoBehaviour
     {
         foreach (TrickType trick in Enum.GetValues(typeof(TrickType)))
         {
-            UnlockedTricks.Add(trick);
+            Unlocks.Add(trick);
         }
+    }
+
+    public bool InventoryContains(PickupableItemType item)
+    {
+        if (CurrentItem != null)
+        {
+            if (CurrentItem.TryGetComponent<ItemPickup>(out ItemPickup itemPickup))
+            {
+                return itemPickup.ItemType == item;
+            }
+        }
+        return false;
     }
 }

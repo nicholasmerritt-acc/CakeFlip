@@ -10,7 +10,6 @@ public class ScientistDialogue : MonoBehaviour
     private InputSystem_Actions inputActions;
 
     [Header("Dialogue")]
-    [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private bool waiting = false;
 
     private void Awake()
@@ -28,7 +27,7 @@ public class ScientistDialogue : MonoBehaviour
     {
         if (waiting)
         {
-            dialogueText.text = "Looks like the sedative has worn off. You should be able to move around now. Please, run along and leave me to my science. I've opened a portal for you.";
+            GameManager.Instance.SayDialogue("Looks like the sedative has worn off. You should be able to move around now. Please, run along and leave me to my science. I've opened a portal for you.");
             cameraController.LookAroundEnabled = true;
             portal.SetActive(true);
         }
@@ -42,8 +41,8 @@ public class ScientistDialogue : MonoBehaviour
 
     public void InitialWakeupDialogue()
     {
+        GameManager.Instance.SayDialogue("Good, you're awake. I was worried you might not make it.");
         //when player wakes up, spotlight will fade in and then call this.
-        dialogueText.gameObject.SetActive(true);
         //we need to now pause and wait until any key is pressed
         waiting = true;
     }

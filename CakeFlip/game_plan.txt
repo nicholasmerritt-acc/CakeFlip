@@ -1,6 +1,8 @@
 CakeFlip: Xtreme Baking
 -----------------------
 
+ACTUALLY IMPLEMENT DOUBLE JUMP
+
 debugging:
 itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
 z-fighting in citystreet by billboards
@@ -160,7 +162,7 @@ race feature. race enemy cars from one waypoint to another
 	turnoff portals and Ui during race?
 then tricks. do tricks to fill combo meter. impress npcs and they will reward you with items or unlock skills. first unlock is double jump? do x backflips 
 
-
+IUnlockable
 
 
 FINAL SUBMIT CHECKLIST:

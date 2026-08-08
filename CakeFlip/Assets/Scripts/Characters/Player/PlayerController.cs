@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        bool unlocked = GameManager.Instance.UnlockedTricks.Contains(whichFlip);
+        bool unlocked = GameManager.Instance.Unlocks.Contains(whichFlip);
 
         //only attempt trick if we are an airborne skateboard, and if we've unlocked it.
         bool grounded = movement.Grounded();

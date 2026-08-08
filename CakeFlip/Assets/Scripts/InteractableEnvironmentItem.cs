@@ -40,7 +40,7 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
 
     protected virtual void OnPlayerInteraction(InputAction.CallbackContext context)
     {
-        Debug.Log($"Player interacted with {name}. Wow.");
+        Debug.Log($"You attempted to talk to {name}. Nothing happened.");
     }
 
     protected virtual void OnTriggerEnter(Collider other)

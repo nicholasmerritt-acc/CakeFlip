@@ -13,7 +13,8 @@ namespace Trick
         Frontflip,
         Backflip,
         Sideflip,
-        Treflip
+        Treflip,
+        DoubleJump
     }
 
     public class Trick
