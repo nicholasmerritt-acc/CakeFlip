@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentItem: {fileID: 0}
+  hudPrefab: {fileID: 7298694922974419005, guid: 52008ae74df92354fa6c61b23a575766,
+    type: 3}
   player: {fileID: 0}
   playerHealth: {fileID: 0}
   TheAudioManager: {fileID: 6387239266116695414}

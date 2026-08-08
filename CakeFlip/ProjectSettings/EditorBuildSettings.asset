@@ -17,6 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScientistLab.unity
     guid: 85cb6ceaf47cf77458ec97f3a33e35fb
+  - enabled: 1
+    path: Assets/Scenes/Farm.unity
+    guid: ad71015731c84094b8e34e795e41e05d
+  - enabled: 1
+    path: Assets/Scenes/Dungeon.unity
+    guid: b2e6f94a9ad7d9c448580cb1379a8ee1
+  - enabled: 1
+    path: Assets/Scenes/DessertLand.unity
+    guid: 4d7c83212dcd3a64ab28490350e92878
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 28dd5f745677f6747b3a4dfd65ccf729,
       type: 2}

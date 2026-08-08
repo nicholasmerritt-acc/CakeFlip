@@ -1,8 +1,34 @@
 CakeFlip: Xtreme Baking
 -----------------------
 
-todo next (mandatory):
+debugging:
+itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
+z-fighting in citystreet by billboards
+
+todo saturday (mandatory):
 ----------------------
+UI:	at least fix the audio. make some background music (more chill than skateboard music from main menu)
+	sfx for button click
+	sfx for some items. just hookem up ez pz
+	UI announcement for which dimension?
+THEN free for creativity.
+
+change billboards to reflect "dimensional travel"
+maybe for now, just a billboard to welcome you to each dimension.
+
+competition island and npcs that judge. judge prefab with a billboard for score. wow i love it
+"bouncers" or trampolines that momentarily increase jump force
+
+	simple save system: which item is on which teleporter? so we can have "rare" items
+		orrr just what has been unlocked. 
+		and which level we are in currently. 
+		controls? mini tutorial? idk nahhh probably not
+
+maybe science lady / doctor / idk what that npc is / asks for a pizza. first quest. earn exp. idk
+OOH unlock double jump when you give her pizza. yes. then unlock something else when you give her next item. key? idk. etc.
+
+FLOATING LEVEL above enemy mobs. as you get stronger, so do they?
+
 trees to city street scene. nice lil park
 double check all loading screens are correct
 convert abstract class to IInteractable??? idk
@@ -28,13 +54,7 @@ game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. th
 	maybe some evil level the enemies can kill you
 	maybe if you get run over by a pizza truck? idk
 	maybe if you fall off the edge in certain levels, you die instead of respawn
-rubric says:
-	need to beef up UI and navmesh agents
-UI:
-	simple save system: which item is on which teleporter? so we can have "rare" items
-		orrr just what has been unlocked. 
-		and which level we are in currently. 
-		controls? mini tutorial? idk nahhh probably not
+
 navmesh agents:
 	TODO sort of an "item pool"
 	crate island: "cop" that chases you if you blow up too many crates
@@ -99,7 +119,7 @@ ABOVE THIS LINE first. then go crazy
 	pirate ships sailing in the distance??? could be kinda fun
 	pirate ship that launches crates???? that could be cool... with water... oooh. 
 	take demo urp level??? palm trees swaying?!?!?! oooh yeah
-5. key -> olympic dimension
+5. key -> olympic dimension? dungeon? and you need key to escape?
 	competition island: do tricks for 3 judges. their scores appear in real time
 	(on billboards and also in UI)
 	countdown timer
@@ -109,9 +129,12 @@ ABOVE THIS LINE first. then go crazy
 	if you score badly you instantly lose the game. ow
 6. ice cream -> dessert dimension
 	nice leve? everything is fluffy? less gravity? idk
+	OR BOUNCINESS. INCREASE BOUNCINESS OF PHYSICS MATERIALS DO IT
+
 6. donut -> dessert dimension but different part
 	two floating islands that can see each other?
-	then we need two spawn points, and teleporter has to indicate which one
+	then we need two spawn points, and teleporter has to indicate which one. hmmmmm maybe for now just a bool in the gamemanager
+
 7. competition island so game can end
 	maybe a simple round racetrack and a trick interact big trigger collider area
 	npcs that judge. 
@@ -119,17 +142,6 @@ ABOVE THIS LINE first. then go crazy
 	
 game manager singleton to track dialogue seen or not
 	i hate that word why did i include it
-
-item pickup / inventory
-	if you are carrying an item through a teleporter, you go to that level
-	need UI annoucement on level load of which level it is
-more levels / more items to correspond
-
-wile e coyote tunnel for spawning navmesh cars!
-need tunnel prefabs and buildout blockout more
-
-sound effects / music
-audio manager
 
 scientist tutorial
 actual "baking" stuff. like combine ingreds to get to weird levels!

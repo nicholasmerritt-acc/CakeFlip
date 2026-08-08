@@ -146,6 +146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8401529828125872500}
+  - component: {fileID: 7298694922974419005}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -174,6 +175,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7298694922974419005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856196189823534114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e01d700dd45bb241b984c7e043fbb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &5033372440944548334
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7954452555680153659}
+  - component: {fileID: 4571129488258884234}
   m_Layer: 5
   m_Name: InventoryInfoTexts
   m_TagString: Untagged
@@ -211,6 +225,21 @@ RectTransform:
   m_AnchoredPosition: {x: 148, y: -253}
   m_SizeDelta: {x: 200, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4571129488258884234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033372440944548334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e79d86d107dbaf743b937ca9ad179267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryTextBoxes
+  MyInventoryText: {fileID: 3879400421993501861}
+  MyDroppedText: {fileID: 3441826021121472232}
+  fadeDroppedDelay: 2
 --- !u!1 &5874170075272680436
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +251,6 @@ GameObject:
   - component: {fileID: 4592896748918689067}
   - component: {fileID: 3589777688938091060}
   - component: {fileID: 3879400421993501861}
-  - component: {fileID: 2535498385944892059}
   m_Layer: 5
   m_Name: InventoryText
   m_TagString: Untagged
@@ -321,7 +349,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -349,19 +377,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2535498385944892059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874170075272680436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e79d86d107dbaf743b937ca9ad179267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  MyInventoryText: {fileID: 3879400421993501861}
 --- !u!1 &6936090446623110796
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +486,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

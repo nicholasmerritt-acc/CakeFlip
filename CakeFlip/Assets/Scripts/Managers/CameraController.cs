@@ -34,6 +34,11 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (target == null)
+        {
+            target = FindAnyObjectByType<PlayerController>().transform;
+        }
     }
 
     private void OnEnable()

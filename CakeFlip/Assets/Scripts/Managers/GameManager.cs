@@ -23,9 +23,15 @@ public class GameManager : MonoBehaviour
     public static event Action<string> ItemCarried;
     public static event Action<string> ItemDropped;
 
-    [Header("References")]
+    [Header("HUD")]
+    [SerializeField] private HUD hudPrefab;
+    private HUD hud;
+
+    [Header("Player")]
     [SerializeField] private PlayerController player;
     [SerializeField] private Health playerHealth;
+
+    [Header("References")]
     public AudioManager TheAudioManager;
     public PauseGameHandler ThePauseGameHandler;
     public AsyncLoader TheAsyncLoader;
@@ -65,22 +71,27 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += ResetCanvas;
+        SceneManager.sceneLoaded += ResetForNextScene;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= ResetCanvas;
+        SceneManager.sceneLoaded -= ResetForNextScene;
     }
 
     /// <summary>
-    /// Reset Canvas so we don't try to reference it in the next scene
+    /// Reset HUD and Canvas so we don't try to reference them in the next scene
     /// </summary>
-    /// <param name="scene"></param>
-    /// <param name="mode"></param>
-    private void ResetCanvas(Scene scene, LoadSceneMode mode)
+    private void ResetForNextScene(Scene scene, LoadSceneMode mode)
     {
         canvas = null;
+        hud = null;
+        //if we have a custom hud in the scene, use that. else, use our prefab
+        hud = FindAnyObjectByType<HUD>();
+        if (hud == null && !ThePauseGameHandler.isMainMenu)
+        {
+            hud = Instantiate(hudPrefab, Canvas.transform);
+        }
     }
 
     private void Start()
@@ -93,6 +104,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FindPlayerReference()
     {
+        Debug.Log("finding player reference");
         if (ThePauseGameHandler.isMainMenu)
         {
             return;
@@ -169,13 +181,13 @@ public class GameManager : MonoBehaviour
         ItemToLevelName = new Dictionary<PickupableItemType, string>
         {
             { PickupableItemType.Undefined, "CityStreet" },
-            { PickupableItemType.Egg, "CityStreet" },
-            { PickupableItemType.Donut, "ScientistLab" },
-            { PickupableItemType.Key, "ScientistLab" },
-            { PickupableItemType.Pizza, "CrateIsland" },
-            { PickupableItemType.IceCream, "CrateIsland" },
+            { PickupableItemType.Egg, "Farm" },
+            { PickupableItemType.Donut, "DessertLand" },
+            { PickupableItemType.Key, "Dungeon" },
+            { PickupableItemType.Pizza, "CityStreet" },
+            { PickupableItemType.IceCream, "DessertLand" },
             { PickupableItemType.ToyShip, "CrateIsland" },
-            { PickupableItemType.Saturn, "CrateIsland" }
+            { PickupableItemType.Saturn, "ScientistLab" }
         };
     }
 
