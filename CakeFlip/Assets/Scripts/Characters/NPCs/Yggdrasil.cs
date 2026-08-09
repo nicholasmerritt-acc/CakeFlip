@@ -14,7 +14,7 @@ public class Yggdrasil : InteractableEnvironmentItem
 
     protected override string CloseEnoughToInteractMessage
     {
-        get => "YGGDRADISL HUNGERS. BRING ME A PIZZA.";
+        get => "YGGDRADISL HUNGERS. BRING ME PIZZA.";
         set => base.CloseEnoughToInteractMessage = value;
     }
 
@@ -45,7 +45,7 @@ public class Yggdrasil : InteractableEnvironmentItem
         }
         else
         {
-            gameManager.SayDialogue("NO, NOT THIS. BRING ME A PIZZA.");
+            gameManager.SayDialogue("NO, NOT THIS. BRING ME PIZZA.");
             gameManager.TheAudioManager.PlayOneShot(questFailClip);
         }
     }
