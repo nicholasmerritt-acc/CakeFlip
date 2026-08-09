@@ -84,8 +84,7 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
             {
                 GameManager.Instance.TheAudioManager.PlayOneShot(encounterClip);
             }
-            Debug.Log(CloseEnoughToInteractMessage);
-            //TODO show UI thing
+            GameManager.Instance.HUD.InteractPromptText.text = CloseEnoughToInteractMessage;
         }
     }
 
@@ -95,7 +94,7 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
         {
             CanInteract = false;
         }
-        //TODO hide UI thing
+        GameManager.Instance.HUD.InteractPromptText.text = "";
     }
 
 }

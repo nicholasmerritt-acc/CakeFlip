@@ -61,6 +61,15 @@ MonoBehaviour:
   TheDialogueManager: {fileID: 9203185811696052013}
   ThePauseGameHandler: {fileID: 6996866326784673981}
   TheAsyncLoader: {fileID: 6371495883853535436}
+  itemPickupPrefabsForDictionary:
+  - {fileID: 0}
+  - {fileID: 355782295193057307, guid: e6b52762ba68ba14887e5d07201408cb, type: 3}
+  - {fileID: 7368518133181451468, guid: acb792e1082f7094aaa55f1fdab0d30f, type: 3}
+  - {fileID: 4834782824315400871, guid: fd3322688b8071d4cb751be021c2c025, type: 3}
+  - {fileID: 8210045525093968662, guid: 643275bead90bd64ca412012a686fd23, type: 3}
+  - {fileID: 5964613312836435032, guid: 034db0c833824ca43b720c050089b404, type: 3}
+  - {fileID: 9166020559794305832, guid: 1a51c9e94bfe4b447b939e4bffdc8d18, type: 3}
+  - {fileID: 145301127807853246, guid: f251b31ad4834b046b1ca12bf628aca1, type: 3}
 --- !u!114 &6996866326784673981
 MonoBehaviour:
   m_ObjectHideFlags: 0

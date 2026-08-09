@@ -10,17 +10,19 @@ make things private. get and set. then recheck in inspector. EVERY PUBLIC THING.
 remove TODOS
 remove debug.logs
 
-
 audiomanager singleton to stop the weird duplicating audio bug? 	
 
 make intro transition
+scientist should be interactable
+
+redo coroutine with hide the anonymouse one isn't working
+go to sleep man you're so tired
 
 game manager SayStatus for continuous effects like interactions. vs dialogue. need nother text box
 
 farm play chicken clucks randomly on a coroutine
-dialogue show UI
 
-todo saturday (mandatory):
+todo sunday onwards: (i guess i ran out of time? classic):
 ----------------------
 debugging:
 itempickup: remove dontdestroyonload? after unparented? ugh. annoying.

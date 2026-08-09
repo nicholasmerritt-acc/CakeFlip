@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     }
 
     public Dictionary<PickupableItemType, ItemPickup> SpawnableItemTable; //prefab library, for spawning items
+    [SerializeField] ItemPickup[] itemPickupPrefabsForDictionary;
     public Dictionary<PickupableItemType, string> ItemToLevelName;
     
     private void Awake()
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
 
 
         //these are initialized here because other Start() methods depend on them
-        InitializeItemDictionary();
+        InitializeItemDictionaries();
         InitializeTrickDictionaries();
         TheAudioManager = GetComponent<AudioManager>();
     }
@@ -192,7 +193,7 @@ public class GameManager : MonoBehaviour
         //TODO get unlocks from playerprefs
     }
 
-    private void InitializeItemDictionary()
+    private void InitializeItemDictionaries()
     {
         ItemToLevelName = new Dictionary<PickupableItemType, string>
         {
@@ -205,6 +206,12 @@ public class GameManager : MonoBehaviour
             { PickupableItemType.ToyShip, "Pirate" },
             { PickupableItemType.Saturn, "Science" }
         };
+
+        SpawnableItemTable = new();
+        for (int i = 0; i < itemPickupPrefabsForDictionary.Length; i++)
+        {
+            SpawnableItemTable[(PickupableItemType)i] = itemPickupPrefabsForDictionary[i];
+        }
     }
 
     public void Unlock(TrickType trickType)
