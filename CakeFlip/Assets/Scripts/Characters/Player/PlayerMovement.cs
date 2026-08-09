@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     private InputSystem_Actions inputActions;
     private InputSystem_Actions.PlayerActions playerActions;
 
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speedAnimationAdjustment = 2f;
 
     [Header("Jumping")]
+    private const float groundedCheckDistance = .5f;
     private bool hasJumpedFirstJump = false;
     private bool hasDoubleJumped = false;
     private bool hasTouchedGroundSinceDoubleJumping = true;
@@ -21,10 +23,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private LayerMask groundedCheckMask;
 
-    [Header("Debugging")]
-    [SerializeField] private Vector3 current;
-    [SerializeField] private Vector3 bigTarget;
-    [SerializeField] private Vector3 tinyTarget;
+    [Header("Audio")]
+    [SerializeField] private float skateboardRollClipTimeout = 4f;
+    [SerializeField] private float timeOfLastskateboardRollClip = 0f;
+    [SerializeField] private AudioClip skateboardRollClip;
+    [SerializeField] private AudioClip skateboardJumpClip;
 
     [Header("References")]
     [SerializeField] private Rigidbody myRigidbody;
@@ -76,22 +79,19 @@ public class PlayerMovement : MonoBehaviour
         else if (shapeshifter.IsSkateboard)
         {
             myRigidbody.AddForce(moveMe, ForceMode.Force);
+            TryPlaySkateboardRollClip();
 
             if (hasJumpedFirstJump)
             {
-                myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                DoPhysicsJumpWithSound();
                 hasJumpedFirstJump = false;
             }
             //only double jump if we're absolutely sure we can
             if (hasDoubleJumped && hasTouchedGroundSinceDoubleJumping)
             {
-                myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                DoPhysicsJumpWithSound();
                 hasDoubleJumped = false;
                 hasTouchedGroundSinceDoubleJumping = false;
-            } 
-            else if (hasDoubleJumped)
-            {
-                Debug.Log("double jumping forbidden by some arcane rules");
             }
         }
         else
@@ -108,6 +108,21 @@ public class PlayerMovement : MonoBehaviour
         if (!hasTouchedGroundSinceDoubleJumping)
         {
             hasTouchedGroundSinceDoubleJumping = Grounded();
+        }
+    }
+
+    private void DoPhysicsJumpWithSound()
+    {
+        myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        GameManager.Instance.TheAudioManager.PlayOneShot(skateboardJumpClip);
+    }
+
+    private void TryPlaySkateboardRollClip()
+    {
+        if (Time.time - timeOfLastskateboardRollClip > skateboardRollClipTimeout)
+        {
+            GameManager.Instance.TheAudioManager.PlayOneShot(skateboardJumpClip);
+            timeOfLastskateboardRollClip = Time.time;
         }
     }
 
@@ -134,7 +149,8 @@ public class PlayerMovement : MonoBehaviour
             if (DoubleJumpUnlocked())
             {
                 hasDoubleJumped = true;
-            } else
+            }
+            else
             {
                 Debug.Log("double jump not unlocked!");
             }
@@ -149,8 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Grounded()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, .5f, groundedCheckMask);
-        //TODO check ijumpable?
+        grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundedCheckDistance, groundedCheckMask);
         return grounded;
     }
 
@@ -183,11 +198,6 @@ public class PlayerMovement : MonoBehaviour
             Quaternion slerpTarget = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
             //slerp
             transform.rotation = slerpTarget;
-
-            //debug
-            current = transform.rotation.eulerAngles;
-            bigTarget = targetRotation.eulerAngles;
-            tinyTarget = slerpTarget.eulerAngles;
         }
 
         moveMe = cameraRelativeMoveDirection * moveSpeed;

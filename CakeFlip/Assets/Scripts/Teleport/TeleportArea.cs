@@ -6,7 +6,12 @@ public class TeleportArea : MonoBehaviour
 {
     public string SceneNameToTeleportTo;
     [SerializeField] private float teleportDelay;
-    //todo teleport event? that vfx can subscribe to? or just trigger here
+    [SerializeField] private string defaultScene;
+
+    private void Start()
+    {
+        defaultScene = GameManager.Instance.ItemToLevelName[ItemPickup.PickupableItemType.Undefined];
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,18 +19,24 @@ public class TeleportArea : MonoBehaviour
         {
             if (string.IsNullOrEmpty(SceneNameToTeleportTo))
             {
-                Debug.Log("Nowhere to teleport to! Staying here...");
+                if (SceneManager.GetActiveScene().name == defaultScene)
+                {
+                    //don't teleport in tutorial / home base
+                    return;
+                } 
+                else
+                {
+                    SceneNameToTeleportTo = defaultScene;
+                }
             } 
-            else
-            {
-                Debug.Log("Begin Teleport... hold on to your hat...");
-                StartCoroutine(nameof(DoTeleport));
-            }
+
+            GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue("TELEPORT INITIATED... Hold on to your hat...");
+            StartCoroutine(nameof(DoTeleport));
         }
     }
 
     /// <summary>
-    /// teleport player after delay. load a new scene and keep track of what we are holding
+    /// Teleport player after delay, aka load a new scene
     /// </summary>
     /// <returns></returns>
     private IEnumerator DoTeleport()
@@ -33,18 +44,4 @@ public class TeleportArea : MonoBehaviour
         yield return new WaitForSeconds(teleportDelay);
         GameManager.Instance.LoadScene(SceneNameToTeleportTo);
     }
-
-    //TODO teleport loading bar
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        //add to bar
-
-    //        //teleport
-
-    //        //if string empty, go to lab? or dont teleport
-    //        //need item as activator!
-    //    }
-    //}
 }

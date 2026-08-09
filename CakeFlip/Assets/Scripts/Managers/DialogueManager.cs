@@ -18,6 +18,10 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.Instance.ThePauseGameHandler.isMainMenu)
+        {
+            return;
+        }
         dialogueText = GameManager.Instance.HUD.DialogueText;
     }
 

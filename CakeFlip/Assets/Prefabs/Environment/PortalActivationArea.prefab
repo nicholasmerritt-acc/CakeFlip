@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed567a9d8329d2c4f849fc60e4b7949e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  encounterClip: {fileID: 0}
+  playClipOnEncounter: 1
   CanInteract: 0
   itemOnPedestal: {fileID: 0}
   itemOnPortal: {fileID: 0}
@@ -401,7 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1f36d286a001040a83f320509acbc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  SceneNameToTeleportTo: CityStreet
+  SceneNameToTeleportTo: 
   teleportDelay: 0.5
 --- !u!1001 &295310796698993567
 PrefabInstance:

@@ -51,9 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a754e93d5b1a943b50c043c96de1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentItem: {fileID: 0}
   hudPrefab: {fileID: 7298694922974419005, guid: 52008ae74df92354fa6c61b23a575766,
     type: 3}
+  HUD: {fileID: 0}
   player: {fileID: 0}
   playerHealth: {fileID: 0}
   TheAudioManager: {fileID: 6387239266116695414}
@@ -94,9 +94,20 @@ MonoBehaviour:
   SfxSource: {fileID: 2299114051217894082}
   buttonPressClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
   explosionClip: {fileID: 0}
-  skateboardRollClip: {fileID: 0}
-  skateboardJumpClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
-  audienceSFX: []
+  audienceSFX:
+  - {fileID: 8300000, guid: af8e4fd48873a3441b08d61bfc05274b, type: 3}
+  - {fileID: 8300000, guid: 2fbf185f1a27cab45a0daa3c78ebb53f, type: 3}
+  - {fileID: 8300000, guid: 446c49a0040a7de45af6f98fb8686653, type: 3}
+  - {fileID: 8300000, guid: 85285e7907b12a248b9607e49bf0c378, type: 3}
+  - {fileID: 8300000, guid: b0bec72710aa1ef42bf638c6b485d897, type: 3}
+  - {fileID: 8300000, guid: 79f9af7d6a38e23409b88e9029e8db75, type: 3}
+  - {fileID: 8300000, guid: e96043aa64784a74d9e247ea87f348aa, type: 3}
+  skateboardRollClips:
+  - {fileID: 8300000, guid: 3844d4dd30d7720478c6f2e612b630a9, type: 3}
+  - {fileID: 8300000, guid: 34e3d7fa99369174eab94b73d3c9a719, type: 3}
+  - {fileID: 8300000, guid: 6db7258ac5e29af4cb0983b24f6b69fd, type: 3}
+  - {fileID: 8300000, guid: 3ae5b27e8b27cf945bc54ec4f5c2d7f6, type: 3}
+  - {fileID: 8300000, guid: 26b7f6f58905dfd469ab87b51009bcdc, type: 3}
 --- !u!82 &3395457560910156439
 AudioSource:
   m_ObjectHideFlags: 0
@@ -319,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5950bf9c947d7064888361244cdc2a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  currentItem: {fileID: 0}
 --- !u!114 &9203185811696052013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,3 +343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33ac081c3479f94ea8e963b058e4301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
+  blocking: 0
+  dialogueFadeDelay: 4
+  dialogueText: {fileID: 0}

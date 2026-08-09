@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HUD hudPrefab;
     public HUD HUD;
 
-
     [Header("Player")]
     [SerializeField] private PlayerController player;
     [SerializeField] private Health playerHealth;
@@ -92,16 +91,17 @@ public class GameManager : MonoBehaviour
             HUD = Instantiate(hudPrefab, Canvas.transform);
         }
         ThePauseGameHandler.UnpauseGame();
-        if (!ThePauseGameHandler.isMainMenu)
-        {
-            TheDialogueManager.SayNonBlockingDialogue($"NOW ENTERING: The {SceneManager.GetActiveScene().name} dimension");
-        }
     }
 
 
     private void Start()
     {
         FindPlayerReference();
+
+        if (!ThePauseGameHandler.isMainMenu)
+        {
+            TheDialogueManager.SayNonBlockingDialogue($"NOW ENTERING: The {SceneManager.GetActiveScene().name} dimension");
+        }
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
     //TODO death screen
     private void OnPlayerDeath()
     {
-        LoadScene("MainMenu");
+        LoadScene("Science");
     }
 
     private void InitializeTrickDictionaries()
@@ -181,17 +181,16 @@ public class GameManager : MonoBehaviour
 
     private void InitializeItemDictionary()
     {
-        //TODO constants
         ItemToLevelName = new Dictionary<PickupableItemType, string>
         {
-            { PickupableItemType.Undefined, "CityStreet" },
+            { PickupableItemType.Undefined, "Science" },
             { PickupableItemType.Egg, "Farm" },
-            { PickupableItemType.Donut, "DessertLand" },
+            { PickupableItemType.Donut, "Dessert" },
             { PickupableItemType.Key, "Dungeon" },
-            { PickupableItemType.Pizza, "CityStreet" },
-            { PickupableItemType.IceCream, "DessertLand" },
-            { PickupableItemType.ToyShip, "CrateIsland" },
-            { PickupableItemType.Saturn, "ScientistLab" }
+            { PickupableItemType.Pizza, "Pizza" },
+            { PickupableItemType.IceCream, "Dessert" },
+            { PickupableItemType.ToyShip, "Pirate" },
+            { PickupableItemType.Saturn, "Science" }
         };
     }
 

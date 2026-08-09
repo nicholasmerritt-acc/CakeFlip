@@ -11,9 +11,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource SfxSource;
     [SerializeField] private AudioClip buttonPressClip;
     [SerializeField] private AudioClip explosionClip;
-    [SerializeField] private AudioClip skateboardRollClip;
-    [SerializeField] private AudioClip skateboardJumpClip;
     [SerializeField] private AudioClip[] audienceSFX;
+    [SerializeField] private AudioClip[] skateboardRollClips;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +34,15 @@ public class AudioManager : MonoBehaviour
         if (audienceSFX.Length > 0)
         {
             SfxSource.PlayOneShot(audienceSFX.GetRandomItem());
+        }
+    }
+
+    public void PlaySkateboardRollClip()
+    {
+        //choose one of our random skateboard rolling clips
+        if (skateboardRollClips.Length > 0)
+        {
+            SfxSource.PlayOneShot(skateboardRollClips.GetRandomItem());
         }
     }
 

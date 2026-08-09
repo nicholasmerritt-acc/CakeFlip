@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class ScientistSpotlight : MonoBehaviour
 {
-    [Header("Spotlight")]
-    [SerializeField] private Light spotlight;
-    [SerializeField] private float maxSpotlightIntensity = 110f;
-    [SerializeField] private bool spotlightEnabled = false;
+    [Header("Spotlights")]
+    [SerializeField] private Light scientistSpotlight;
+    [SerializeField] private Light[] hallwaySpotlightPairs;
+    [SerializeField] private float maxSmallSpotlightIntensity = 110f;
+    [SerializeField] private float maxBigSpotlightIntensity = 1000f;
     [SerializeField] private float spotlightDelay = .5f;
+    [SerializeField] private float scientistSpotlightFadeSpeed = 40f;
+    [SerializeField] private float frontSpotlightFadeSpeed = 7f;
+    [SerializeField] private float bigSpotlightFadeSpeed = 100f;
 
     [Header("Dialogue")]
     [SerializeField] private float dialogueDelay = 1f;
@@ -15,23 +19,31 @@ public class ScientistSpotlight : MonoBehaviour
 
     private void Start()
     {
-        //fade in the spotlight
         StartCoroutine(nameof(EnableSpotlight));
     }
 
     private IEnumerator EnableSpotlight()
     {
+        //fade in first spotlight, to illuminate our doctor / scientist / whoever she is
         yield return new WaitForSeconds(spotlightDelay);
-        spotlightEnabled = true;
+        while (scientistSpotlight.intensity < maxSmallSpotlightIntensity)
+        {
+            scientistSpotlight.intensity += scientistSpotlightFadeSpeed * Time.deltaTime;
+            yield return null;
+        }
         yield return new WaitForSeconds(dialogueDelay);
         GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue("Welcome back.", welcomeBackClip);
-    }
 
-    private void Update()
-    {
-        if (spotlightEnabled && spotlight != null)
+        //now, trigger the hallway lights one by one
+        for (int spotlightIndexEveryOther = 0; spotlightIndexEveryOther < hallwaySpotlightPairs.Length; spotlightIndexEveryOther += 2)
         {
-            spotlight.intensity = Mathf.Lerp(spotlight.intensity, maxSpotlightIntensity, Time.deltaTime);
+            while (hallwaySpotlightPairs[spotlightIndexEveryOther].intensity < maxBigSpotlightIntensity)
+            {
+                hallwaySpotlightPairs[spotlightIndexEveryOther].intensity += bigSpotlightFadeSpeed * Time.deltaTime;
+                hallwaySpotlightPairs[spotlightIndexEveryOther + 1].intensity += frontSpotlightFadeSpeed * Time.deltaTime;
+                yield return null;
+            }
         }
+
     }
 }
