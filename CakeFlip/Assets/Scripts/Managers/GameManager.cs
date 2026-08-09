@@ -100,11 +100,17 @@ public class GameManager : MonoBehaviour
         HUD = null;
         ThePauseGameHandler.UnpauseGame();
 
-        if (!ThePauseGameHandler.isMainMenu)
+        if (ThePauseGameHandler.IsMainMenu() || ThePauseGameHandler.IsIntroScreen())
+        {
+            return;
+        } 
+        else
         {
             //save current scene and inventory to player prefs, so we can save our progress
             PlayerPrefs.SetString("CurrentScene", SceneManager.GetActiveScene().name);
+            HUD.Initialize();
         }
+
     }
 
 
@@ -112,7 +118,7 @@ public class GameManager : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        if (ThePauseGameHandler.isMainMenu || sceneName == "MainMenu")
+        if (ThePauseGameHandler.IsMainMenu() || ThePauseGameHandler.IsIntroScreen())
         {
             return;
         }

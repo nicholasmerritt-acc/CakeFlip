@@ -83,6 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseGameHandler
   IsPaused: 0
   isMainMenu: 0
+  isIntro: 0
   pauseMenuPrefab: {fileID: 8666202204513798994, guid: 0394e436a8e1ad149abdbe9e774b3b3c,
     type: 3}
 --- !u!114 &6387239266116695414
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   MusicSource: {fileID: 3395457560910156439}
   backgroundMusic: {fileID: 8300000, guid: 570c1d49dd1dc65408c4cd6ffca5c612, type: 3}
+  musicClip: {fileID: 8300000, guid: 570c1d49dd1dc65408c4cd6ffca5c612, type: 3}
   introVoiceover: {fileID: 8300000, guid: 6d139d0e1b598c44e9940c55cafff78c, type: 3}
   introDelay: 2
   SfxSource: {fileID: 2299114051217894082}

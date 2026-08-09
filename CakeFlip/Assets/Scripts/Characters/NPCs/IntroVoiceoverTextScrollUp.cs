@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -5,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class IntroVoiceoverTextScrollUp : MonoBehaviour
 {
     private InputSystem_Actions inputActions;
+    [SerializeField] private TMP_Text scrollText;
     private int confirmCount = 0;
 
     private void Awake()
@@ -32,14 +34,16 @@ public class IntroVoiceoverTextScrollUp : MonoBehaviour
 
     private void GoMainMenu(InputAction.CallbackContext context)
     {
-        if (confirmCount > 1)
+        if (confirmCount > 0)
         {
+            GameManager.Instance.TheAudioManager.StopMusic();
             //we don't want to use the async loader / loading screen here. just go straight to the main menu for this transition only
             SceneManager.LoadScene("MainMenu");
         } 
         else
         {
             confirmCount++;
+            scrollText.text += "\n<press again to confirm...>";
         }
     }
 

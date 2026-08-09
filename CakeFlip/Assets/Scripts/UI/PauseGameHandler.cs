@@ -13,6 +13,7 @@ public class PauseGameHandler : MonoBehaviour
     [Header("Game State")]
     public bool IsPaused = false;
     public bool isMainMenu = false;
+    public bool isIntro = false;
 
     [Header("References")]
     [SerializeField] private GameObject pauseMenuPrefab;
@@ -54,7 +55,17 @@ public class PauseGameHandler : MonoBehaviour
 
     private void SetupMainMenu(Scene scene, LoadSceneMode mode)
     {
-        isMainMenu = scene.buildIndex == 0;
+        isMainMenu = scene.buildIndex == 1;
+    }
+
+    public bool IsMainMenu()
+    {
+        return (SceneManager.GetActiveScene().buildIndex == 1) || SceneManager.GetActiveScene().name == "MainMenu";
+    }
+
+    public bool IsIntroScreen()
+    {
+        return (SceneManager.GetActiveScene().buildIndex == 0) || SceneManager.GetActiveScene().name == "StarWarsScroll";
     }
 
     private void OnEnable()

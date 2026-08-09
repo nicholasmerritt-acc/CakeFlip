@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     [Header("Music")]
     public AudioSource MusicSource;
     [SerializeField] private AudioClip backgroundMusic;
+    [SerializeField] private AudioClip musicClip;
     [SerializeField] private AudioClip introVoiceover;
     [SerializeField] private float introDelay = 3f;
 
@@ -19,6 +20,14 @@ public class AudioManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (GameManager.Instance.ThePauseGameHandler.IsIntroScreen())
+        {
+            backgroundMusic = introVoiceover;
+        }
+        else
+        {
+            backgroundMusic = musicClip;
+        }
         if (backgroundMusic != null)
         {
             PlayBackgroundMusic();
@@ -72,5 +81,10 @@ public class AudioManager : MonoBehaviour
         MusicSource.Stop();
         MusicSource.clip = introVoiceover;
         MusicSource.PlayDelayed(introDelay);
+    }
+
+    public void StopMusic()
+    {
+        MusicSource.Stop();
     }
 }
