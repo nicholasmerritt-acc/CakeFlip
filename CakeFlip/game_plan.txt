@@ -1,8 +1,5 @@
 CakeFlip: Xtreme Baking
 -----------------------
-    public InventoryManager TheInventoryManager;
-    public DialogueManager TheDialogueManager;
-
 savesystem: scenename
 current item
 unlocks
@@ -16,22 +13,17 @@ add tutorial billboards in science lab
 prevent movement too until awake
 boolean for first time
 
-
-debugging:
-itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
-z-fighting in citystreet by billboards
-
-
 split out inventory manager from gm
 game manager SayStatus for continuous effects like interactions. vs dialogue. need nother text box
 
+farm play chicken clucks randomly on a coroutine
 
 todo saturday (mandatory):
 ----------------------
-UI:	at least fix the audio. make some background music (more chill than skateboard music from main menu)
-	sfx for button click
-	sfx for some items. just hookem up ez pz
-	UI announcement for which dimension?
+debugging:
+itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
+z-fighting in citystreet by billboards
+UI:	UI announcement for which dimension?
 THEN free for creativity.
 
 change billboards to reflect "dimensional travel"
