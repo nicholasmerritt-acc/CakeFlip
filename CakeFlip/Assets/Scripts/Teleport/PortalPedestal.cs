@@ -26,17 +26,14 @@ public class PortalPedestal : InteractableEnvironmentItem
     {
         if (itemOnPedestal == null)
         {
-            Debug.Log("putting item on pedestal");
             //take current item out of inventory (drop it) and put on pedestal
             GameObject dropped = GameManager.Instance.TheInventoryManager.DropCurrentItem(pedestalHoverPoint.position);
             if (dropped == null)
             {
-                Debug.Log("nothing in inventory! so nothing to put on pedestal!");
                 return;
             }
             dropped.SetActive(true);
             dropped.TrySetEnabledCollider(false);
-            //TODO extension method for enable/disable collider
 
             itemOnPedestal = dropped.GetComponent<ItemPickup>();
 
@@ -47,7 +44,6 @@ public class PortalPedestal : InteractableEnvironmentItem
         } 
         else
         {
-            Debug.Log("swapping item on pedestal");
             //take item off pedestal.
             GameManager.Instance.TheInventoryManager.PickupItem(itemOnPedestal);
             itemOnPedestal = null;
@@ -58,19 +54,6 @@ public class PortalPedestal : InteractableEnvironmentItem
 
             //set portal target back to default
             teleportArea.SceneNameToTeleportTo = defaultScene;
-        }
-    }
-
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-        if (itemOnPedestal == null)
-        {
-            //TODO show UI thing that says "press F to place item on pedestal"
-        } 
-        else
-        {
-            //TODO show UI thing that says "press F to take item from pedestal"
         }
     }
 }

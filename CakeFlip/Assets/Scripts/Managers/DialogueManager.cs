@@ -22,7 +22,10 @@ public class DialogueManager : MonoBehaviour
         {
             return;
         }
-        dialogueText = GameManager.Instance.HUD.DialogueText;
+        if (GameManager.Instance.HUD != null)
+        {
+            dialogueText = GameManager.Instance.HUD.DialogueText;
+        }
     }
 
     private void OnEnable()
@@ -35,6 +38,7 @@ public class DialogueManager : MonoBehaviour
     {
         inputActions.Player.DialogueNext.performed -= DialogueNextPressed;
         inputActions.Player.Disable();
+        StopAllCoroutines();
     }
 
     /// <summary>
@@ -59,7 +63,10 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void SayNonBlockingDialogue(string dialogue, AudioClip clip = null)
     {
-        dialogueText.text = dialogue;
+        if (dialogueText != null)
+        {
+            dialogueText.text = dialogue;
+        }
         if (clip != null)
         {
             GameManager.Instance.TheAudioManager.PlayOneShot(clip);
@@ -87,6 +94,9 @@ public class DialogueManager : MonoBehaviour
 
     public void HideDialogue()
     {
-        dialogueText.text = "";
+        if (dialogueText != null)
+        {
+            dialogueText.text = "";
+        }
     }
 }

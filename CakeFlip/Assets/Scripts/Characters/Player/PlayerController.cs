@@ -104,7 +104,6 @@ public class PlayerController : MonoBehaviour
     {
         if (trickInProgress)
         {
-            Debug.Log("already doing a trick!");
             return;
         }
 
@@ -116,7 +115,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!unlocked)
             {
-                Debug.Log("you haven't learned that trick yet!");
+                GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue("You haven't learned that trick yet!");
             }
             return;
         }
@@ -154,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddPoints(int points)
     {
-        Debug.Log($"got {points} points");
+        GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue($"{points} points!");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -163,7 +162,6 @@ public class PlayerController : MonoBehaviour
         {
             trickInProgress = false;
             shapeshifter.SetAnimationTrigger("trickCanceled");
-            Debug.Log("trick failed! oops!");
             health.TakeDamage(failedTrickDamage);
         }
     }
@@ -174,7 +172,6 @@ public class PlayerController : MonoBehaviour
     /// <param name="whichTrick"></param>
     private void TrickCompleted(TrickType whichTrick)
     {
-        Debug.Log($"Finished a trick: {whichTrick}! nice!");
         trickInProgress = false;
         AddPoints(GameManager.Instance.SkateboardTrickDictionary[whichTrick].Points);
         GameManager.Instance.TheAudioManager.PlayAudienceClip();

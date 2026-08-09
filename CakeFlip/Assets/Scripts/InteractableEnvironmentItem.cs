@@ -54,7 +54,7 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
 
     protected virtual void DoPlayerInteraction()
     {
-        Debug.Log($"You attempted to talk to {name}. Nothing happened.");
+        GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue($"You attempted to talk to {name}. Nothing happened."));
     }
 
     protected virtual void OnTriggerEnter(Collider other)

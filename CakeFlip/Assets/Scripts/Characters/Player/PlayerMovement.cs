@@ -150,10 +150,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 hasDoubleJumped = true;
             }
-            else
-            {
-                Debug.Log("double jump not unlocked!");
-            }
         }
     }
 

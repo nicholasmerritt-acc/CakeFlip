@@ -8,7 +8,6 @@ public class TagEater : MonoBehaviour
     {
         if (other.gameObject.CompareTag(eatThisTag))
         {
-            Debug.Log("ate a " + eatThisTag);
             Destroy(other.gameObject);
         }
     }

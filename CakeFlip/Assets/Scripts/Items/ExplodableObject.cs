@@ -42,7 +42,6 @@ public class ExplodableObject : MonoBehaviour
                     }
                 }
 
-                //for now, we just do this for the player. TODO for npcs too? so they can say "ow" and potentially be blown up? idk
                 collision.gameObject.GetComponent<Health>().TakeDamage(explosionDamage);
                 Destroy(gameObject);
             }

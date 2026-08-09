@@ -13,6 +13,7 @@ public class NPC : InteractableEnvironmentItem
     [SerializeField] protected string[] greetings = { "Hello there!", "Hi.", "What's up, skater?", "Oh, I didn't see you there." };
     [SerializeField] protected string definiteName;
     [SerializeField] private string[] names = { "Fred", "Martha", "Mystery Man", "Mystery Woman", "Blargo", "Brunhilde", "Marg", "Bratti", "Surya", "Cletus" };
+    [SerializeField] private GameObject[] forms;
 
     private void Start()
     {
@@ -28,6 +29,21 @@ public class NPC : InteractableEnvironmentItem
         if (health == null)
         {
             health = GetComponent<Health>();
+        }
+
+        if (forms.Length > 2)
+        {
+            int foundIndex = Random.Range(0, forms.Length);
+            for (int i = 0; i < forms.Length; i++)
+            {
+                if (i == foundIndex)
+                {
+                    forms[i].SetActive(true);
+                } else
+                {
+                    forms[i].SetActive(false);
+                }
+            }
         }
     }
 
@@ -46,7 +62,7 @@ public class NPC : InteractableEnvironmentItem
         } 
         else
         {
-            SayForever("I cannot die. Nice try.");
+            Say("I cannot die. Nice try.");
             health.HealToFull();
         }
     }
@@ -64,27 +80,20 @@ public class NPC : InteractableEnvironmentItem
         Say("Ouch!");
     }
 
-    protected void SayForever(string dialogue)
-    {
-        Say(dialogue, Mathf.Infinity);
-    }
-
-    public void Say(string dialogue, float timeout = 0)
+    /// <summary>
+    /// Display some dialogue over our NPC's head.
+    /// </summary>
+    public void Say(string dialogue)
     {
         StopAllCoroutines();
-        if (timeout <= 0) {
-            timeout = defaultDialogueTimer;
-        }
         floatingText.text = dialogue;
-        if (timeout != Mathf.Infinity)
-        {
-            IEnumerator HideDialogueTimed()
-            {
-                yield return new WaitForSeconds(timeout);
-                HideDialogue();
-            }
-            StartCoroutine(nameof(HideDialogueTimed));
-        }
+        StartCoroutine(nameof(HideDialogueTimed));
+    }
+
+    private IEnumerator HideDialogueTimed()
+    {
+        yield return new WaitForSeconds(defaultDialogueTimer);
+        HideDialogue();
     }
 
     public void HideDialogue()

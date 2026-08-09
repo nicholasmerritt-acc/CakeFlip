@@ -36,12 +36,18 @@ public class PauseMenuButtons : MonoBehaviour
     }
 
     /// <summary>
-    /// Quit the game. TODO Need to add alternate version if we ever want to build the game, since this will only work in the Editor
+    /// Quit the game, with alternate version if we ever want to build the game
     /// </summary>
     public void QuitGameOnClick()
     {
         audioManager.PlayButtonPressClip();
+#if UNITY_STANDALONE
+        Application.Quit();
+#endif
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     /// <summary>

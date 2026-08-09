@@ -60,7 +60,6 @@ public class InventoryManager: MonoBehaviour
     {
         if (currentItem == null)
         {
-            Debug.Log("Nothing in inventory to remove!");
             return;
         }
 
@@ -72,7 +71,6 @@ public class InventoryManager: MonoBehaviour
     {
         if (currentItem == null)
         {
-            Debug.Log("Trying to drop a null item!");
             return null;
         }
 
@@ -121,8 +119,6 @@ public class InventoryManager: MonoBehaviour
         {
             //reparent the transform
             currentItem.transform.SetParent(player.transform.parent);
-
-            //TODO remove permanent dontdestroyonload powers... somehow...
         }
         else
         {

@@ -136,7 +136,6 @@ public class PlayerShapeshift : MonoBehaviour
 
     public void SetAnimationFloat(string animationFloat, float value)
     {
-        //TODO both forms
         guyAnimator.SetFloat("Speed_f", value);
     }
 }

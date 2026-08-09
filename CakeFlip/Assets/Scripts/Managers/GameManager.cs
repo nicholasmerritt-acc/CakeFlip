@@ -16,7 +16,20 @@ public class GameManager : MonoBehaviour
 
     [Header("HUD")]
     [SerializeField] private HUD hudPrefab;
-    public HUD HUD;
+    private HUD hud;
+    public HUD HUD
+    {
+        get
+        {
+            if (hud == null)
+            {
+                hud = Instantiate(hudPrefab, Canvas.transform);
+            }
+            return hud;
+        }
+
+        set => hud = value;
+    }
 
     [Header("Player")]
     [SerializeField] private PlayerController player;
@@ -85,12 +98,6 @@ public class GameManager : MonoBehaviour
         //Reset HUD and Canvas so we don't try to reference them in the next scene
         canvas = null;
         HUD = null;
-        //if we have a custom hud in the scene, use that. else, use our prefab
-        HUD = FindAnyObjectByType<HUD>();
-        if (HUD == null && !ThePauseGameHandler.isMainMenu)
-        {
-            HUD = Instantiate(hudPrefab, Canvas.transform);
-        }
         ThePauseGameHandler.UnpauseGame();
 
         if (!ThePauseGameHandler.isMainMenu)
@@ -190,7 +197,6 @@ public class GameManager : MonoBehaviour
 
         Unlocks = new();
         Unlock(TrickType.Backflip);
-        //TODO get unlocks from playerprefs
     }
 
     private void InitializeItemDictionaries()
