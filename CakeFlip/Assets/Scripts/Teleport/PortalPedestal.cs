@@ -28,7 +28,7 @@ public class PortalPedestal : InteractableEnvironmentItem
         {
             Debug.Log("putting item on pedestal");
             //take current item out of inventory (drop it) and put on pedestal
-            GameObject dropped = GameManager.Instance.DropCurrentItem(pedestalHoverPoint.position);
+            GameObject dropped = GameManager.Instance.TheInventoryManager.DropCurrentItem(pedestalHoverPoint.position);
             if (dropped == null)
             {
                 Debug.Log("nothing in inventory! so nothing to put on pedestal!");
@@ -49,7 +49,7 @@ public class PortalPedestal : InteractableEnvironmentItem
         {
             Debug.Log("swapping item on pedestal");
             //take item off pedestal.
-            GameManager.Instance.PickupItem(itemOnPedestal);
+            GameManager.Instance.TheInventoryManager.PickupItem(itemOnPedestal);
             itemOnPedestal = null;
 
             //should be removed from pedestal. now remove from portal.

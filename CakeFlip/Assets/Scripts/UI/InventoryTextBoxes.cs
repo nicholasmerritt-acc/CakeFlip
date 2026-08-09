@@ -11,14 +11,14 @@ public class InventoryTextBoxes : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.UpdateUIForCarriedItem += UpdateCarryingText;
-        GameManager.ItemDropped += UpdateDroppedText;
+        InventoryManager.UpdateUIForCarriedItem += UpdateCarryingText;
+        InventoryManager.ItemDropped += UpdateDroppedText;
     }
 
     private void OnDisable()
     {
-        GameManager.UpdateUIForCarriedItem -= UpdateCarryingText;
-        GameManager.ItemDropped -= UpdateDroppedText;
+        InventoryManager.UpdateUIForCarriedItem -= UpdateCarryingText;
+        InventoryManager.ItemDropped -= UpdateDroppedText;
     }
 
     private void UpdateCarryingText(string newItemName)

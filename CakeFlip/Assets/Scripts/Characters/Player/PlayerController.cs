@@ -166,12 +166,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("trick failed! oops!");
             health.TakeDamage(failedTrickDamage);
         }
-
-        ////TODO i don't think this does anything
-        //if (collision.gameObject.TryGetComponent<InteractableEnvironmentItem>(out InteractableEnvironmentItem interactable))
-        //{
-        //    interactable.PlayerNearby();
-        //}
     }
 
     /// <summary>
@@ -183,5 +177,6 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"Finished a trick: {whichTrick}! nice!");
         trickInProgress = false;
         AddPoints(GameManager.Instance.SkateboardTrickDictionary[whichTrick].Points);
+        GameManager.Instance.TheAudioManager.PlayAudienceClip();
     }
 }

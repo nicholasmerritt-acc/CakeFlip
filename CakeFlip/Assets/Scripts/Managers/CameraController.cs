@@ -60,6 +60,10 @@ public class CameraController : MonoBehaviour
 
     private void CaptureMouse()
     {
+        if (GameManager.Instance.ThePauseGameHandler.isMainMenu)
+        {
+            return;
+        }
         LookAroundEnabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

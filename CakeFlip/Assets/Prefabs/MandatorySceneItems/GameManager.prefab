@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 3395457560910156439}
   - component: {fileID: 2299114051217894082}
   - component: {fileID: 6371495883853535436}
+  - component: {fileID: 2084536493159464738}
+  - component: {fileID: 9203185811696052013}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -55,6 +57,8 @@ MonoBehaviour:
   player: {fileID: 0}
   playerHealth: {fileID: 0}
   TheAudioManager: {fileID: 6387239266116695414}
+  TheInventoryManager: {fileID: 2084536493159464738}
+  TheDialogueManager: {fileID: 9203185811696052013}
   ThePauseGameHandler: {fileID: 6996866326784673981}
   TheAsyncLoader: {fileID: 6371495883853535436}
 --- !u!114 &6996866326784673981
@@ -92,6 +96,7 @@ MonoBehaviour:
   explosionClip: {fileID: 0}
   skateboardRollClip: {fileID: 0}
   skateboardJumpClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
+  audienceSFX: []
 --- !u!82 &3395457560910156439
 AudioSource:
   m_ObjectHideFlags: 0
@@ -302,3 +307,27 @@ MonoBehaviour:
   loadingScreenPrefab: {fileID: 4614393032447525400, guid: 05ecbd60ad50d29459e0b4d0fcc539d7,
     type: 3}
   loadingScreen: {fileID: 0}
+--- !u!114 &2084536493159464738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669660502533661132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5950bf9c947d7064888361244cdc2a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+--- !u!114 &9203185811696052013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669660502533661132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33ac081c3479f94ea8e963b058e4301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager

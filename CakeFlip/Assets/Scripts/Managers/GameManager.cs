@@ -4,7 +4,6 @@ using Trick;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using Util;
 using static ItemPickup;
 
 public class GameManager : MonoBehaviour
@@ -16,13 +15,6 @@ public class GameManager : MonoBehaviour
     public Dictionary<TrickType, SkateboardTrick> SkateboardTrickDictionary;
     public HashSet<TrickType> Unlocks;
 
-    [Header("Inventory")]
-    public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
-    public Dictionary<PickupableItemType, string> ItemToLevelName;
-    public GameObject CurrentItem;
-    private float itemDropOffset = -3f;
-    public static event Action<string> UpdateUIForCarriedItem;
-    public static event Action<string> ItemDropped;
 
     [Header("HUD")]
     [SerializeField] private HUD hudPrefab;
@@ -38,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public AudioManager TheAudioManager;
+    public InventoryManager TheInventoryManager;
+    public DialogueManager TheDialogueManager;
     public PauseGameHandler ThePauseGameHandler;
     public AsyncLoader TheAsyncLoader;
     private Canvas canvas;
@@ -55,6 +49,9 @@ public class GameManager : MonoBehaviour
         set => canvas = value;
     }
 
+    public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
+    public Dictionary<PickupableItemType, string> ItemToLevelName;
+    
     private void Awake()
     {
         //singleton
@@ -80,40 +77,19 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += ResetForNextScene;
-        if (inputActions != null)
-        {
-            inputActions.Player.Enable();
-        }
+        inputActions?.Player.Enable();
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= ResetForNextScene;
-        if (inputActions != null)
-        {
-            inputActions.Player.Disable();
-        }
+        inputActions?.Player.Disable();
     }
 
     /// <summary>
     /// Reset references and object states when the scene changes
     /// </summary>
     private void ResetForNextScene(Scene scene, LoadSceneMode mode)
-    {
-        UpdateReferencesOnSceneChange();
-        UpdateGameStateOnSceneChange();
-    }
-
-    private void UpdateGameStateOnSceneChange()
-    {
-        ThePauseGameHandler.UnpauseGame();
-        if (CurrentItem != null)
-        {
-            UpdateUIForCarriedItem?.Invoke(CurrentItem.GetComponent<ItemPickup>().name);
-        }
-    }
-
-    private void UpdateReferencesOnSceneChange()
     {
         //Reset HUD and Canvas so we don't try to reference them in the next scene
         canvas = null;
@@ -124,6 +100,7 @@ public class GameManager : MonoBehaviour
         {
             hud = Instantiate(hudPrefab, Canvas.transform);
         }
+        ThePauseGameHandler.UnpauseGame();
     }
 
     public void SayDialogue(string dialogue, AudioClip clip = null)
@@ -159,7 +136,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FindPlayerReference()
     {
-        Debug.Log("finding player reference");
         if (ThePauseGameHandler.isMainMenu)
         {
             return;
@@ -176,7 +152,7 @@ public class GameManager : MonoBehaviour
     //TODO death screen
     private void OnPlayerDeath()
     {
-        GameManager.Instance.LoadScene("MainMenu");
+        LoadScene("MainMenu");
     }
 
     private void InitializeTrickDictionaries()
@@ -252,79 +228,6 @@ public class GameManager : MonoBehaviour
         //TODO add trick to playerprefs
     }
 
-    /// <summary>
-    /// we can only hold one item at a time, so if we pick something up, we must drop something
-    /// </summary>
-    /// <param name="pickup"></param>
-    public void PickupItem(ItemPickup pickup)
-    {
-        if (CurrentItem != null)
-        {
-            //make new position a certain amount behind us
-            Vector3 newPosition = player.transform.position + player.transform.forward * itemDropOffset;
-            //newPosition.y = CurrentItem.transform.position.y;
-            DropCurrentItem(newPosition);
-        }
-
-        //set current item to the item we just picked up
-        CurrentItem = pickup.gameObject;
-
-        //"pick up" item, aka parent it to the GameManager, and disable it
-        ToggleCurrentItem(false);
-
-        UpdateUIForCarriedItem?.Invoke(pickup.name);
-    }
-
-    /// <summary>
-    /// Change the transfrom from an inactive child of the game manager to a real active item in the world, and vice versa
-    /// </summary>
-    /// <param name="dropping"></param>
-    private void ToggleCurrentItem(bool dropping)
-    {
-        CurrentItem.TrySetEnabledCollider(dropping);
-        CurrentItem.SetActive(dropping);
-
-        if (dropping)
-        {
-            //reparent the transform, so it now doesn't gain permanent dontdestroyonload powers
-            CurrentItem.transform.parent = player.transform.parent;
-        } 
-        else
-        {
-            CurrentItem.transform.parent = transform;
-        }
-    }
-
-    public GameObject DropCurrentItem(Vector3 newPosition)
-    {
-        if (CurrentItem == null)
-        {
-            Debug.Log("Trying to drop a null item!");
-            return null;
-        }
-
-        //"drop" the current item. aka return it to the way it was. enable gameObject and collider
-        ToggleCurrentItem(true);
-        CurrentItem.transform.position = newPosition;
-        ItemDropped?.Invoke(CurrentItem.name);
-
-        GameObject itemToReturn = CurrentItem;
-        CurrentItem = null;
-        return itemToReturn;
-    }
-
-    public void RemoveCurrentItem()
-    {
-        if (CurrentItem == null)
-        {
-            Debug.Log("Nothing in inventory to remove!");
-            return;
-        }
-
-        ItemDropped?.Invoke(CurrentItem.name);
-        Destroy(CurrentItem);
-    }
-
     public void SetPlayer(PlayerController playerController)
     {
         player = playerController;
@@ -344,17 +247,5 @@ public class GameManager : MonoBehaviour
         {
             Unlocks.Add(trick);
         }
-    }
-
-    public bool InventoryContains(PickupableItemType item)
-    {
-        if (CurrentItem != null)
-        {
-            if (CurrentItem.TryGetComponent<ItemPickup>(out ItemPickup itemPickup))
-            {
-                return itemPickup.ItemType == item;
-            }
-        }
-        return false;
     }
 }

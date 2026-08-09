@@ -35,9 +35,9 @@ public class Yggdrasil : InteractableEnvironmentItem
     protected override void DoPlayerInteraction()
     {
         //if player has a pizza, remove it and unlock doublejump
-        if (GameManager.Instance.InventoryContains(ItemPickup.PickupableItemType.Pizza))
+        if (gameManager.TheInventoryManager.InventoryContains(ItemPickup.PickupableItemType.Pizza))
         {
-            gameManager.RemoveCurrentItem();
+            gameManager.TheInventoryManager.RemoveCurrentItem();
             gameManager.Unlock(Trick.TrickType.DoubleJump);
             gameManager.SayDialogue("EXCELLENT. I HAVE HUNGERED FOR A THOUSAND YEARS FOR THIS PIZZA.");
             gameManager.TheAudioManager.PlayOneShot(questCompleteClip);
