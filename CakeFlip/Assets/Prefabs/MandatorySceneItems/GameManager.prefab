@@ -53,7 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hudPrefab: {fileID: 7298694922974419005, guid: 52008ae74df92354fa6c61b23a575766,
     type: 3}
-  HUD: {fileID: 0}
   player: {fileID: 0}
   playerHealth: {fileID: 0}
   TheAudioManager: {fileID: 6387239266116695414}
@@ -100,6 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   MusicSource: {fileID: 3395457560910156439}
   backgroundMusic: {fileID: 8300000, guid: 570c1d49dd1dc65408c4cd6ffca5c612, type: 3}
+  introVoiceover: {fileID: 8300000, guid: 6d139d0e1b598c44e9940c55cafff78c, type: 3}
+  introDelay: 2
   SfxSource: {fileID: 2299114051217894082}
   buttonPressClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
   explosionClip: {fileID: 0}

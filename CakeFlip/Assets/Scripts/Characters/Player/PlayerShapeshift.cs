@@ -44,8 +44,6 @@ public class PlayerShapeshift : MonoBehaviour
     private void Start()
     {
         SetupReferences();
-
-        //you must be swift as a raging river
         BecomeMan();
     }
 
@@ -61,7 +59,6 @@ public class PlayerShapeshift : MonoBehaviour
         }
         if (skateboard == null)
         {
-            //can't leave home without me trusty skateboard
             skateboard = FindAnyObjectByType<Skateboard>();
         }
         if (mySkateboard == null)
@@ -100,6 +97,10 @@ public class PlayerShapeshift : MonoBehaviour
         Shapeshift(!IsSkateboard);
     }
 
+    /// <summary>
+    /// Change form, which entails changing the collider size since humans and skateboards are different sizes.
+    /// </summary>
+    /// <param name="toSkateboard"></param>
     public void Shapeshift(bool toSkateboard)
     {
         IsSkateboard = toSkateboard;

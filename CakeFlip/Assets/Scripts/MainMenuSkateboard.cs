@@ -21,7 +21,6 @@ public class MainMenuSkateboard : MonoBehaviour
         direction.y = 0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Vector3.Distance(transform.position, endPoint.position) < stoppingDistance)

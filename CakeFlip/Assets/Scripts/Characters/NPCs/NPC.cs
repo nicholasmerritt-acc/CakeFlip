@@ -6,11 +6,14 @@ using Util;
 [RequireComponent(typeof(Health))]
 public class NPC : InteractableEnvironmentItem
 {
-    [SerializeField] private TMP_Text floatingText;
+
     [SerializeField] private Health health;
     [SerializeField] private bool canDie = false;
+    [Header("Dialogue")]
     [SerializeField] private float defaultDialogueTimer = 5f;
     [SerializeField] protected string[] greetings = { "Hello there!", "Hi.", "What's up, skater?", "Oh, I didn't see you there." };
+    [SerializeField] private TMP_Text floatingText;
+    [Header("Names")]
     [SerializeField] protected string definiteName;
     [SerializeField] private string[] names = { "Fred", "Martha", "Mystery Man", "Mystery Woman", "Blargo", "Brunhilde", "Marg", "Bratti", "Surya", "Cletus" };
     [SerializeField] private GameObject[] forms;

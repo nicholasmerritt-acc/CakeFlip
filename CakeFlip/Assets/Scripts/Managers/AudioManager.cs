@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
     [Header("Music")]
     public AudioSource MusicSource;
     [SerializeField] private AudioClip backgroundMusic;
+    [SerializeField] private AudioClip introVoiceover;
+    [SerializeField] private float introDelay = 3f;
 
     [Header("SFX")]
     public AudioSource SfxSource;
@@ -64,4 +66,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayIntroVoiceoverClip()
+    {
+        MusicSource.loop = false;
+        MusicSource.Stop();
+        MusicSource.clip = introVoiceover;
+        MusicSource.PlayDelayed(introDelay);
+    }
 }

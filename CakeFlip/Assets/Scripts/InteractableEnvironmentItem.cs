@@ -43,7 +43,10 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
         inputActions.Player.Disable();
     }
 
-
+    /// <summary>
+    /// Test if we are actually close enough to the player to interact.
+    /// </summary>
+    /// <param name="context"></param>
     private void AttemptPlayerInteraction(InputAction.CallbackContext context)
     {
         if (CanInteract)
@@ -52,6 +55,9 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Actually perform the interaction with the player, now that we know we are allowed to.
+    /// </summary>
     protected virtual void DoPlayerInteraction()
     {
         GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue($"You attempted to talk to {name}. Nothing happened.");

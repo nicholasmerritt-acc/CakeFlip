@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StarWarsScroll.unity
+    guid: 69ce14d510ee3f44590e6b2752055555
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 4b3c19a4c23e4d44f991a1a271ceb66a
   - enabled: 1

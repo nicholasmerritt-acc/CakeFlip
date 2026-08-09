@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.SetPlayer(this);
     }
 
+    /// <summary>
+    /// Get references only if not setup in inspector.
+    /// </summary>
     private void SetupReferences()
     {
         respawnPosition = transform.position;
@@ -100,6 +103,10 @@ public class PlayerController : MonoBehaviour
         DoTrick(TrickType.Sideflip);
     }
 
+    /// <summary>
+    /// Perform a skateboard trick, which sets an animation and can earn the player points
+    /// </summary>
+    /// <param name="whichFlip"></param>
     private void DoTrick(TrickType whichFlip)
     {
         if (trickInProgress)
@@ -153,7 +160,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddPoints(int points)
     {
-        GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue($"{points} points!");
+        GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue($"{points} points! nice!");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -167,7 +174,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// announce that we have compelete a skateboard trick
+    /// announce that we have compeleted a skateboard trick
     /// </summary>
     /// <param name="whichTrick"></param>
     private void TrickCompleted(TrickType whichTrick)

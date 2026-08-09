@@ -142,10 +142,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            //if we are in the air, can only jump if double jump enabled
-            //so either:
-            //1. we are grounded. then we can always jump
-            //2. not grounded. then we can only jump if double jump enabled and we haven't already double jumped
+            //if we are in the air, can only jump if double jump unlocked
             if (DoubleJumpUnlocked())
             {
                 hasDoubleJumped = true;
@@ -165,7 +162,9 @@ public class PlayerMovement : MonoBehaviour
         return grounded;
     }
 
-
+    /// <summary>
+    /// 3rd person camera movement control. We poll constantly for input.
+    /// </summary>
     private void HandleMovement()
     {
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
@@ -189,10 +188,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (cameraRelativeMoveDirection.sqrMagnitude > .001f && !stopping)
         {
-            //get target rotation
+            //get target rotation and move smoothly to it
             Quaternion targetRotation = Quaternion.LookRotation(cameraRelativeMoveDirection);
             Quaternion slerpTarget = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            //slerp
             transform.rotation = slerpTarget;
         }
 
