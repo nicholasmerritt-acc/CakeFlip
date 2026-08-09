@@ -101,19 +101,31 @@ public class PauseGameHandler : MonoBehaviour
     {
         if (IsPaused)
         {
-            //unpause
-            IsPaused = false;
-            Time.timeScale = 1.0f;
-            GameUnpaused?.Invoke();
+            return UnpauseGame();
         }
         else
         {
-            IsPaused = true;
-            Time.timeScale = 0.0f;
-            GamePaused?.Invoke();
+            return PauseGame();
         }
+    }
 
-        PauseMenu.SetActive(IsPaused);
-        return IsPaused;
+    public bool PauseGame()
+    {
+        Debug.Log("pausing");
+        IsPaused = true;
+        Time.timeScale = 0.0f;
+        GamePaused?.Invoke();
+        PauseMenu.SetActive(true);
+        return true;
+    }
+
+    public bool UnpauseGame()
+    {
+        Debug.Log("unpausing");
+        IsPaused = false;
+        Time.timeScale = 1.0f;
+        GameUnpaused?.Invoke();
+        PauseMenu.SetActive(false);
+        return false;
     }
 }

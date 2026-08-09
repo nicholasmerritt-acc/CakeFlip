@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Trick;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Util;
 using static ItemPickup;
@@ -26,6 +27,10 @@ public class GameManager : MonoBehaviour
     [Header("HUD")]
     [SerializeField] private HUD hudPrefab;
     private HUD hud;
+    private const string CONTINUE_DIALOGUE = "Press any key to continue...";
+
+    [Header("Input")]
+    private InputSystem_Actions inputActions;
 
     [Header("Player")]
     [SerializeField] private PlayerController player;
@@ -63,6 +68,9 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        //input
+        inputActions = new InputSystem_Actions();
+
         //these are initialized here because other Start() methods depend on them
         InitializeItemDictionary();
         InitializeTrickDictionaries();
@@ -72,11 +80,19 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += ResetForNextScene;
+        if (inputActions != null)
+        {
+            inputActions.Player.Enable();
+        }
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= ResetForNextScene;
+        if (inputActions != null)
+        {
+            inputActions.Player.Disable();
+        }
     }
 
     /// <summary>
@@ -92,11 +108,25 @@ public class GameManager : MonoBehaviour
         {
             hud = Instantiate(hudPrefab, Canvas.transform);
         }
+        ThePauseGameHandler.UnpauseGame();
     }
 
     public void SayDialogue(string dialogue)
     {
-        hud.DialogueText.text = dialogue;
+        hud.DialogueText.text = $"\"{dialogue}\"\n{CONTINUE_DIALOGUE}";
+
+        inputActions.Player.DialogueNext.performed += DialogueNextPressed;
+    }
+
+    private void DialogueNextPressed(InputAction.CallbackContext context)
+    {
+        HideDialogue();
+    }
+
+    public void HideDialogue()
+    {
+        hud.DialogueText.text = "";
+        inputActions.Player.DialogueNext.performed -= DialogueNextPressed;
     }
 
     private void Start()

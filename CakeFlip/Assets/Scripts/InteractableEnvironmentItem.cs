@@ -29,16 +29,24 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
     protected virtual void OnEnable()
     {
         inputActions.Player.Enable();
-        inputActions.Player.Interact.performed += OnPlayerInteraction;
+        inputActions.Player.Interact.performed += AttemptPlayerInteraction;
     }
     protected virtual void OnDisable()
     {
-        inputActions.Player.Interact.performed -= OnPlayerInteraction;
+        inputActions.Player.Interact.performed -= AttemptPlayerInteraction;
         inputActions.Player.Disable();
     }
 
 
-    protected virtual void OnPlayerInteraction(InputAction.CallbackContext context)
+    private void AttemptPlayerInteraction(InputAction.CallbackContext context)
+    {
+        if (CanInteract)
+        {
+            DoPlayerInteraction();
+        }
+    }
+
+    protected virtual void DoPlayerInteraction()
     {
         Debug.Log($"You attempted to talk to {name}. Nothing happened.");
     }

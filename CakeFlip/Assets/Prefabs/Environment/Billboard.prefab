@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6380918950833856189}
   - component: {fileID: 2121017563724393877}
   - component: {fileID: 2634163955991374707}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TextHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8334899423139724410}
-  m_Layer: 0
+  - component: {fileID: 1704679991317448113}
+  m_Layer: 12
   m_Name: Billboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,6 +217,18 @@ Transform:
   - {fileID: 6971744058703965873}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1704679991317448113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3125059027992872578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b2aece90643c04eb9fbb4e9c46e43c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacle
 --- !u!1 &4249639181475382814
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +241,7 @@ GameObject:
   - component: {fileID: 1353984959414401684}
   - component: {fileID: 238722570704382906}
   - component: {fileID: 768096506448662824}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +354,7 @@ GameObject:
   - component: {fileID: 1854184092002246278}
   - component: {fileID: 8304552969069646557}
   - component: {fileID: 5306021588027751513}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +466,7 @@ GameObject:
   - component: {fileID: 4796568044666751486}
   - component: {fileID: 5022586195316533485}
   - component: {fileID: 7917990025517377601}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}

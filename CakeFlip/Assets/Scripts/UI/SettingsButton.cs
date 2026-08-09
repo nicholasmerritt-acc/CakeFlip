@@ -6,6 +6,7 @@ public class SettingsButton : MonoBehaviour
 
     public void OnClick()
     {
+        GameManager.Instance.TheAudioManager.PlayButtonPressClip();
         settingsPanel.SetActive(true);
     }
 }

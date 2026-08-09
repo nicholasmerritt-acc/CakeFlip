@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1421461910031320166}
   - component: {fileID: 5656998913281152539}
   - component: {fileID: 3132524930500836330}
+  - component: {fileID: 4045432778508852248}
   m_Layer: 6
   m_Name: Road4Lane_Straight_04
   m_TagString: Ground
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8, y: 0.16270962, z: 26.602446}
   m_Center: {x: 4, y: -0.08135046, z: 13.301223}
+--- !u!114 &4045432778508852248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980676959002650810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ccb72d7fb20a14994b678988f9ff14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground

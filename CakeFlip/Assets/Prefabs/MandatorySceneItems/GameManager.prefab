@@ -88,10 +88,10 @@ MonoBehaviour:
   MusicSource: {fileID: 3395457560910156439}
   backgroundMusic: {fileID: 0}
   SfxSource: {fileID: 2299114051217894082}
-  buttonPressClip: {fileID: 0}
+  buttonPressClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
   explosionClip: {fileID: 0}
   skateboardRollClip: {fileID: 0}
-  skateboardJumpClip: {fileID: 0}
+  skateboardJumpClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
 --- !u!82 &3395457560910156439
 AudioSource:
   m_ObjectHideFlags: 0

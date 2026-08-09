@@ -14,9 +14,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speedAnimationAdjustment = 2f;
 
     [Header("Jumping")]
-    private bool hasJumped = false;
+    private bool hasJumpedFirstJump = false;
+    private bool hasDoubleJumped = false;
+    private bool hasTouchedGroundSinceDoubleJumping = true;
     [SerializeField] private bool grounded;
-    [SerializeField] private float jumpForce = 27f;
+    [SerializeField] private float jumpForce = 7f;
     [SerializeField] private LayerMask groundedCheckMask;
 
     [Header("Debugging")]
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (stopping)
         {
-            hasJumped = false;
+            hasJumpedFirstJump = false;
             myRigidbody.linearVelocity = Vector3.up * myRigidbody.linearVelocity.y; //super hard stop. zero out everything but the y
             myRigidbody.angularVelocity = Vector3.zero;
             stopping = false;
@@ -75,40 +77,80 @@ public class PlayerMovement : MonoBehaviour
         {
             myRigidbody.AddForce(moveMe, ForceMode.Force);
 
-            if (hasJumped)
+            if (hasJumpedFirstJump)
             {
                 myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                hasJumped = false;
+                hasJumpedFirstJump = false;
+            }
+            //only double jump if we're absolutely sure we can
+            if (hasDoubleJumped && hasTouchedGroundSinceDoubleJumping)
+            {
+                myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                hasDoubleJumped = false;
+                hasTouchedGroundSinceDoubleJumping = false;
+            } 
+            else if (hasDoubleJumped)
+            {
+                Debug.Log("double jumping forbidden by some arcane rules");
             }
         }
         else
         {
-            hasJumped = false;
+            hasJumpedFirstJump = false;
+            hasDoubleJumped = false;
             shapeshifter.SetAnimationFloat("Speed_f", moveMe.sqrMagnitude * speedAnimationAdjustment);
 
             Vector3 newMove = new Vector3(moveMe.x, myRigidbody.linearVelocity.y, moveMe.z);
             myRigidbody.linearVelocity = newMove;
         }
+
+        //only do grounded check if we are wanting to reset after double jumping. don't want to do it every frame.
+        if (!hasTouchedGroundSinceDoubleJumping)
+        {
+            hasTouchedGroundSinceDoubleJumping = Grounded();
+        }
     }
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (shapeshifter.IsSkateboard && Grounded())
+        //we can only jump in skateboard form.
+        //also, two jumps maximum. if we've hit that, don't do anything more.
+        if (!shapeshifter.IsSkateboard)
         {
-            hasJumped = true;
+            hasJumpedFirstJump = false;
+            hasDoubleJumped = false;
+            return;
         }
+        if (Grounded())
+        {
+            hasJumpedFirstJump = true;
+        }
+        else
+        {
+            //if we are in the air, can only jump if double jump enabled
+            //so either:
+            //1. we are grounded. then we can always jump
+            //2. not grounded. then we can only jump if double jump enabled and we haven't already double jumped
+            if (DoubleJumpUnlocked())
+            {
+                hasDoubleJumped = true;
+            } else
+            {
+                Debug.Log("double jump not unlocked!");
+            }
+        }
+    }
+
+    private bool DoubleJumpUnlocked()
+    {
+        return GameManager.Instance.Unlocks.Contains(Trick.TrickType.DoubleJump);
     }
 
 
     public bool Grounded()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, .5f, groundedCheckMask);
-
-        if (grounded && !hit.collider.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("hit not ground: " + hit.collider.gameObject.name);
-            grounded = false;
-        }
+        //TODO check ijumpable?
         return grounded;
     }
 

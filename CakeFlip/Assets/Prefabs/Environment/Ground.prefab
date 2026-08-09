@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3967633415878028222}
   - component: {fileID: 3287279799089172044}
   - component: {fileID: 4012055615124295363}
+  - component: {fileID: 2299014986107411160}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Ground
@@ -113,3 +114,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2299014986107411160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9083420259667577188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ccb72d7fb20a14994b678988f9ff14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground

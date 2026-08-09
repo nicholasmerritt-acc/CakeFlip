@@ -326,7 +326,7 @@ PrefabInstance:
     - target: {fileID: 729890460621720179, guid: 52008ae74df92354fa6c61b23a575766,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 856196189823534114, guid: 52008ae74df92354fa6c61b23a575766,
         type: 3}
@@ -336,10 +336,7 @@ PrefabInstance:
     - target: {fileID: 4287194202160399104, guid: 52008ae74df92354fa6c61b23a575766,
         type: 3}
       propertyPath: m_text
-      value: '"Oh good... you''re awake."
-
-
-        (Press any key to continue)'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8401529828125872500, guid: 52008ae74df92354fa6c61b23a575766,
         type: 3}

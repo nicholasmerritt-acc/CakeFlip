@@ -49,6 +49,7 @@ public class PauseMenuButtons : MonoBehaviour
     /// </summary>
     public void DEBUG_UnlockAll()
     {
+        audioManager.PlayButtonPressClip();
         GameManager.Instance.DEBUG_UnlockAll();
     }
 }

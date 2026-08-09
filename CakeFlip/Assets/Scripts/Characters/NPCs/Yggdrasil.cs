@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class Yggdrasil : InteractableEnvironmentItem
 {
     protected override string CloseEnoughToInteractMessage
@@ -22,7 +19,7 @@ public class Yggdrasil : InteractableEnvironmentItem
         CloseEnoughToInteractMessage = "YGGDRASIL IS CONTENTEDLY EATING HIS PIZZA. YUMMM.";
     }
 
-    protected override void OnPlayerInteraction(InputAction.CallbackContext context)
+    protected override void DoPlayerInteraction()
     {
         //if player has a pizza, remove it and unlock doublejump
         if (GameManager.Instance.InventoryContains(ItemPickup.PickupableItemType.Pizza))
@@ -36,8 +33,5 @@ public class Yggdrasil : InteractableEnvironmentItem
         {
             GameManager.Instance.SayDialogue("NO, BRING ME A PIZZA.");
         }
-
-
-
     }
 }

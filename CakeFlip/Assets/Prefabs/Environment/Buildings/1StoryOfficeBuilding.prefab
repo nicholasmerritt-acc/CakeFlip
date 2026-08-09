@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5246621692969663922}
   - component: {fileID: 9080913789846326045}
   - component: {fileID: 1347442694607311156}
+  - component: {fileID: 3606917563433609721}
   m_Layer: 8
   m_Name: 1StoryOfficeBuilding
   m_TagString: Ground
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3606917563433609721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6190626356686482719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d09a7620a16f3f44a10eddf6d948989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Building

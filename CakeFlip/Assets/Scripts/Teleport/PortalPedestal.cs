@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Util;
 
 public class PortalPedestal : InteractableEnvironmentItem
@@ -23,49 +22,44 @@ public class PortalPedestal : InteractableEnvironmentItem
         closeEnoughToInteractMessage = interactMessage;
     }
 
-
-    protected override void OnPlayerInteraction(InputAction.CallbackContext context)
+    protected override void DoPlayerInteraction()
     {
-        if (CanInteract)
+        if (itemOnPedestal == null)
         {
-            if (itemOnPedestal == null)
+            Debug.Log("putting item on pedestal");
+            //take current item out of inventory (drop it) and put on pedestal
+            GameObject dropped = GameManager.Instance.DropCurrentItem(pedestalHoverPoint.position);
+            if (dropped == null)
             {
-                Debug.Log("putting item on pedestal");
-                //take current item out of inventory (drop it) and put on pedestal
-                GameObject dropped = GameManager.Instance.DropCurrentItem(pedestalHoverPoint.position);
-                if (dropped == null)
-                {
-                    Debug.Log("nothing in inventory! so nothing to put on pedestal!");
-                    return;
-                }
-                dropped.SetActive(true);
-                dropped.TrySetEnabledCollider(false);
-                //TODO extension method for enable/disable collider
-
-                itemOnPedestal = dropped.GetComponent<ItemPickup>();
-
-                //update portal item and which dimension we're traveling to
-                itemOnPortal = Instantiate(dropped, portalHoverPoint.position, dropped.transform.rotation);
-                //lookup which dimension we should travel to aka the name of the scene to load
-                teleportArea.SceneNameToTeleportTo = GameManager.Instance.ItemToLevelName[itemOnPedestal.ItemType];
-            } 
-            else
-            {
-                Debug.Log("swapping item on pedestal");
-                //take item off pedestal.
-                GameManager.Instance.PickupItem(itemOnPedestal);
-                itemOnPedestal = null;
-
-                //should be removed from pedestal. now remove from portal.
-                Destroy(itemOnPortal);
-                itemOnPortal = null;
-
-                //set portal target back to default
-                teleportArea.SceneNameToTeleportTo = defaultScene;
+                Debug.Log("nothing in inventory! so nothing to put on pedestal!");
+                return;
             }
+            dropped.SetActive(true);
+            dropped.TrySetEnabledCollider(false);
+            //TODO extension method for enable/disable collider
+
+            itemOnPedestal = dropped.GetComponent<ItemPickup>();
+
+            //update portal item and which dimension we're traveling to
+            itemOnPortal = Instantiate(dropped, portalHoverPoint.position, dropped.transform.rotation);
+            //lookup which dimension we should travel to aka the name of the scene to load
+            teleportArea.SceneNameToTeleportTo = GameManager.Instance.ItemToLevelName[itemOnPedestal.ItemType];
+        } 
+        else
+        {
+            Debug.Log("swapping item on pedestal");
+            //take item off pedestal.
+            GameManager.Instance.PickupItem(itemOnPedestal);
+            itemOnPedestal = null;
+
+            //should be removed from pedestal. now remove from portal.
+            Destroy(itemOnPortal);
+            itemOnPortal = null;
+
+            //set portal target back to default
+            teleportArea.SceneNameToTeleportTo = defaultScene;
         }
     }
-
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -76,17 +70,6 @@ public class PortalPedestal : InteractableEnvironmentItem
         } else
         {
             //TODO show UI thing that says "press F to take item from pedestal"
-        }
-    }
-
-    protected override void OnTriggerExit(Collider other)
-    {
-        base.OnTriggerExit(other);
-        //TODO update pedestal specific?
-        //TODO hide UI thing
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log($"{name} deactivated");
         }
     }
 }

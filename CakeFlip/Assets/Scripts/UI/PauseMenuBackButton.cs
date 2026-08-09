@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PauseMenuBackButton : MonoBehaviour
 {
-    public void OnBackClick()
+    public void OnResumeClick()
     {
-        GameManager.Instance.ThePauseGameHandler.TogglePause();
+        GameManager.Instance.TheAudioManager.PlayButtonPressClip();
+        GameManager.Instance.ThePauseGameHandler.UnpauseGame();
     }
 }

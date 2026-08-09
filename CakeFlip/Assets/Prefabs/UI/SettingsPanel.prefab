@@ -599,9 +599,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PauseGameHandler, Assembly-CSharp
-        m_MethodName: TogglePauseMenu
+      - m_Target: {fileID: 5320969653572135497}
+        m_TargetAssemblyTypeName: PanelBackButton, Assembly-CSharp
+        m_MethodName: BackButtonOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

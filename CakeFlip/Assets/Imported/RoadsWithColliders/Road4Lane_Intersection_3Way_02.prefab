@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8386710001486678583}
   - component: {fileID: 1510522750855623592}
   - component: {fileID: 1821399302011428604}
+  - component: {fileID: 7562933868666053924}
   m_Layer: 6
   m_Name: Road4Lane_Intersection_3Way_02
   m_TagString: Ground
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 43.00001, y: 0.16271313, z: 35.144276}
   m_Center: {x: 21.500002, y: -0.081349544, z: 17.572138}
+--- !u!114 &7562933868666053924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7111853526557565743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ccb72d7fb20a14994b678988f9ff14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
