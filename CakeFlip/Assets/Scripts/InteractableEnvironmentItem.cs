@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public abstract class InteractableEnvironmentItem : MonoBehaviour
 {
+    [SerializeField] private AudioClip encounterClip;
+    [SerializeField] protected bool playClipOnEncounter = true;
+
     /// <summary>
     /// The player is near enough to press the interact button on this object. Show them this message.
     /// </summary>
@@ -56,6 +59,10 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanInteract = true;
+            if (encounterClip != null && playClipOnEncounter)
+            {
+                GameManager.Instance.TheAudioManager.PlayOneShot(encounterClip);
+            }
             Debug.Log(CloseEnoughToInteractMessage);
             //TODO show UI thing
         }

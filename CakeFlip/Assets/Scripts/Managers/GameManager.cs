@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<PickupableItemType, string> ItemToLevelName;
     public GameObject CurrentItem;
     private float itemDropOffset = -3f;
-    public static event Action<string> ItemCarried;
+    public static event Action<string> UpdateUIForCarriedItem;
     public static event Action<string> ItemDropped;
 
     [Header("HUD")]
@@ -96,10 +96,26 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Reset HUD and Canvas so we don't try to reference them in the next scene
+    /// Reset references and object states when the scene changes
     /// </summary>
     private void ResetForNextScene(Scene scene, LoadSceneMode mode)
     {
+        UpdateReferencesOnSceneChange();
+        UpdateGameStateOnSceneChange();
+    }
+
+    private void UpdateGameStateOnSceneChange()
+    {
+        ThePauseGameHandler.UnpauseGame();
+        if (CurrentItem != null)
+        {
+            UpdateUIForCarriedItem?.Invoke(CurrentItem.GetComponent<ItemPickup>().name);
+        }
+    }
+
+    private void UpdateReferencesOnSceneChange()
+    {
+        //Reset HUD and Canvas so we don't try to reference them in the next scene
         canvas = null;
         hud = null;
         //if we have a custom hud in the scene, use that. else, use our prefab
@@ -108,14 +124,18 @@ public class GameManager : MonoBehaviour
         {
             hud = Instantiate(hudPrefab, Canvas.transform);
         }
-        ThePauseGameHandler.UnpauseGame();
     }
 
-    public void SayDialogue(string dialogue)
+    public void SayDialogue(string dialogue, AudioClip clip = null)
     {
         hud.DialogueText.text = $"\"{dialogue}\"\n{CONTINUE_DIALOGUE}";
-
+        //setup our "press any key to continue" handler
         inputActions.Player.DialogueNext.performed += DialogueNextPressed;
+
+        if (clip != null)
+        {
+            TheAudioManager.PlayOneShot(clip);
+        }
     }
 
     private void DialogueNextPressed(InputAction.CallbackContext context)
@@ -252,7 +272,7 @@ public class GameManager : MonoBehaviour
         //"pick up" item, aka parent it to the GameManager, and disable it
         ToggleCurrentItem(false);
 
-        ItemCarried?.Invoke(pickup.name);
+        UpdateUIForCarriedItem?.Invoke(pickup.name);
     }
 
     /// <summary>

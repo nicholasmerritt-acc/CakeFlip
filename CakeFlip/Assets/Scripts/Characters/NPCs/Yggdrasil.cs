@@ -1,5 +1,17 @@
+using UnityEngine;
+
 public class Yggdrasil : InteractableEnvironmentItem
 {
+    [SerializeField] private AudioClip questCompleteClip;
+    [SerializeField] private AudioClip questFailClip;
+    private GameManager gameManager;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        gameManager = GameManager.Instance;
+    }
+
     protected override string CloseEnoughToInteractMessage
     {
         get => "YGGDRADISL HUNGERS. BRING ME A PIZZA.";
@@ -8,14 +20,15 @@ public class Yggdrasil : InteractableEnvironmentItem
 
     private void Start()
     {
-        if (GameManager.Instance.Unlocks.Contains(Trick.TrickType.DoubleJump))
+        if (gameManager.Unlocks.Contains(Trick.TrickType.DoubleJump))
         {
-            ChangeMessageAfterQuestComplete();
+            PostQuestComplete();
         }
     }
 
-    private void ChangeMessageAfterQuestComplete()
+    private void PostQuestComplete()
     {
+        playClipOnEncounter = false;
         CloseEnoughToInteractMessage = "YGGDRASIL IS CONTENTEDLY EATING HIS PIZZA. YUMMM.";
     }
 
@@ -24,14 +37,16 @@ public class Yggdrasil : InteractableEnvironmentItem
         //if player has a pizza, remove it and unlock doublejump
         if (GameManager.Instance.InventoryContains(ItemPickup.PickupableItemType.Pizza))
         {
-            GameManager.Instance.RemoveCurrentItem();
-            GameManager.Instance.Unlock(Trick.TrickType.DoubleJump);
-            GameManager.Instance.SayDialogue("EXCELLENT. I HAVE HUNGERED FOR A THOUSAND YEARS FOR THIS PIZZA.");
-            ChangeMessageAfterQuestComplete();
+            gameManager.RemoveCurrentItem();
+            gameManager.Unlock(Trick.TrickType.DoubleJump);
+            gameManager.SayDialogue("EXCELLENT. I HAVE HUNGERED FOR A THOUSAND YEARS FOR THIS PIZZA.");
+            gameManager.TheAudioManager.PlayOneShot(questCompleteClip);
+            PostQuestComplete();
         }
         else
         {
-            GameManager.Instance.SayDialogue("NO, BRING ME A PIZZA.");
+            gameManager.SayDialogue("NO, NOT THIS. BRING ME A PIZZA.");
+            gameManager.TheAudioManager.PlayOneShot(questFailClip);
         }
     }
 }

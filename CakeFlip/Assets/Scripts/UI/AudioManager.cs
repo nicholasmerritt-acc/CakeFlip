@@ -1,4 +1,5 @@
 using UnityEngine;
+using Util;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip explosionClip;
     [SerializeField] private AudioClip skateboardRollClip;
     [SerializeField] private AudioClip skateboardJumpClip;
+    [SerializeField] private AudioClip[] audienceSFX;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,6 +27,15 @@ public class AudioManager : MonoBehaviour
     public void PlayButtonPressClip()
     {
         SfxSource.PlayOneShot(buttonPressClip);
+    }
+
+    public void PlayAudienceClip()
+    {
+        //choose one of our random audience "ooh and ahh" clips
+        if (audienceSFX.Length > 0)
+        {
+            SfxSource.PlayOneShot(audienceSFX.GetRandomItem());
+        }
     }
 
     private void PlayBackgroundMusic()

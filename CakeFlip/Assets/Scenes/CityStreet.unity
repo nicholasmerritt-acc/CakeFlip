@@ -5900,6 +5900,46 @@ PrefabInstance:
       propertyPath: backgroundMusic
       value: 
       objectReference: {fileID: 8300000, guid: 570c1d49dd1dc65408c4cd6ffca5c612, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: audienceJumpSFX.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: af8e4fd48873a3441b08d61bfc05274b, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2fbf185f1a27cab45a0daa3c78ebb53f, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 446c49a0040a7de45af6f98fb8686653, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 85285e7907b12a248b9607e49bf0c378, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b0bec72710aa1ef42bf638c6b485d897, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 79f9af7d6a38e23409b88e9029e8db75, type: 3}
+    - target: {fileID: 6387239266116695414, guid: 47e28d6e557037144869ff7922653189,
+        type: 3}
+      propertyPath: 'audienceJumpSFX.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e96043aa64784a74d9e247ea87f348aa, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14048,7 +14088,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffe11ce377f40945a881cb4cddc5b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  encounterClip: {fileID: 8300000, guid: cc1d9ba74d31e4a4995ce44e12fa9ebd, type: 3}
+  playClipOnEncounter: 1
   CanInteract: 0
+  questCompleteClip: {fileID: 8300000, guid: cae5008c839d69b41ba90b568a2158d4, type: 3}
+  questFailClip: {fileID: 8300000, guid: 72b471a1045de6e49a531ce7eab8b7bb, type: 3}
 --- !u!1 &2066916672
 GameObject:
   m_ObjectHideFlags: 0

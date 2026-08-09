@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   MusicSource: {fileID: 3395457560910156439}
-  backgroundMusic: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: 570c1d49dd1dc65408c4cd6ffca5c612, type: 3}
   SfxSource: {fileID: 2299114051217894082}
   buttonPressClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
   explosionClip: {fileID: 0}

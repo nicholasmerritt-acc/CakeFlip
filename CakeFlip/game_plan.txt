@@ -1,21 +1,12 @@
 CakeFlip: Xtreme Baking
 -----------------------
-GROUNDED CHECK
-
+    public InventoryManager TheInventoryManager;
+    public DialogueManager TheDialogueManager;
 
 savesystem: scenename
 current item
 unlocks
 tutorial complete bool
-
-split out inventory manager from gm
-game manager SayStatus for continuous effects like interactions. vs dialogue. need nother text box
-
-
-voice lines:
-ygg
-doctor
-intro voiceover
 
 make intro transition
 
@@ -29,6 +20,11 @@ boolean for first time
 debugging:
 itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
 z-fighting in citystreet by billboards
+
+
+split out inventory manager from gm
+game manager SayStatus for continuous effects like interactions. vs dialogue. need nother text box
+
 
 todo saturday (mandatory):
 ----------------------
