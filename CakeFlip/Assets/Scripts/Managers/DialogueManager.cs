@@ -59,7 +59,6 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void SayNonBlockingDialogue(string dialogue, AudioClip clip = null)
     {
-        Debug.Log(dialogue);
         dialogueText.text = dialogue;
         if (clip != null)
         {
