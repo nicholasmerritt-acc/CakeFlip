@@ -404,7 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   SceneNameToTeleportTo: 
-  teleportDelay: 0.5
+  teleportDelay: 1
+  defaultScene: 
 --- !u!1001 &295310796698993567
 PrefabInstance:
   m_ObjectHideFlags: 0

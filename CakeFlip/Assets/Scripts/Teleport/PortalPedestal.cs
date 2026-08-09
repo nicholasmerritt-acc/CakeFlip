@@ -67,7 +67,8 @@ public class PortalPedestal : InteractableEnvironmentItem
         if (itemOnPedestal == null)
         {
             //TODO show UI thing that says "press F to place item on pedestal"
-        } else
+        } 
+        else
         {
             //TODO show UI thing that says "press F to take item from pedestal"
         }

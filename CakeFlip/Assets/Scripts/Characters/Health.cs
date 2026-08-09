@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
 
     public event Action OnDeath;
+    public event Action OnTakeDamage;
 
     public void TakeDamage(int damage)
     {
@@ -15,6 +16,7 @@ public class Health : MonoBehaviour
         {
             OnDeath?.Invoke();
         }
+        OnTakeDamage?.Invoke();
     }
 
     public void Heal(int amount)
@@ -24,5 +26,10 @@ public class Health : MonoBehaviour
         {
             health = maxHealth;
         }
+    }
+
+    public void HealToFull()
+    {
+        health = maxHealth;
     }
 }

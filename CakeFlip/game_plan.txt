@@ -1,33 +1,31 @@
 CakeFlip: Xtreme Baking
 -----------------------
-savesystem: scenename
-current item
-unlocks
-tutorial complete bool
+
+FINAL SUBMIT CHECKLIST:
+----------------------------
+
+start and update need cleanups
+make things private. get and set. then recheck in inspector. EVERY PUBLIC THING. do it.
+
+remove TODOS
+remove debug.logs
+
+
+audiomanager singleton to stop the weird duplicating audio bug? 	
 
 make intro transition
 
-add SK-8 game name to title screen
-
-add tutorial billboards in science lab
-prevent movement too until awake
-boolean for first time
-
-split out inventory manager from gm
 game manager SayStatus for continuous effects like interactions. vs dialogue. need nother text box
 
 farm play chicken clucks randomly on a coroutine
+dialogue show UI
 
 todo saturday (mandatory):
 ----------------------
 debugging:
 itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
 z-fighting in citystreet by billboards
-UI:	UI announcement for which dimension?
 THEN free for creativity.
-
-change billboards to reflect "dimensional travel"
-maybe for now, just a billboard to welcome you to each dimension.
 
 competition island and npcs that judge. judge prefab with a billboard for score. wow i love it
 "bouncers" or trampolines that momentarily increase jump force
@@ -42,21 +40,10 @@ OOH unlock double jump when you give her pizza. yes. then unlock something else 
 
 FLOATING LEVEL above enemy mobs. as you get stronger, so do they?
 
-trees to city street scene. nice lil park
-double check all loading screens are correct
 convert abstract class to IInteractable??? idk
 
 then npcs:
-	just use billboards. scrap the dialogue. too hard.
-	announce "dimension blah" or vice versa when entering a level. 
-	could also be nav mesh agents and wander around slowly
 	quest exclamation mark could be good though !!!
-	interact area with large trigger collider
-
-help message on portal
-	long hallway with glass
-	fiiiilled with ovens. very creepy vibe.
-	scientist is falling through the floor??
 
 game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. the wise doctor offers you a choice:
 	two buttons are: 
@@ -71,7 +58,6 @@ game over scene. has two buttons, like Fate. hahahaha. good memories. anyway. th
 navmesh agents:
 	TODO sort of an "item pool"
 	crate island: "cop" that chases you if you blow up too many crates
-
 
 different music every level? that'd be cool
 
@@ -96,9 +82,6 @@ some sort of flame effect at max combo!
 
 scientist should disable movement as well as looking!
 	or maybe just scrap. idk. or have 1 second timeout
-
-ladders, to make the human form useful
-	interactable item that just transports you upwards
 
 8 levels is the stretch goal! have 3. 3 is good enough for now. polish a bit, then build out additional levels. do stuff
 ABOVE THIS LINE first. then go crazy
@@ -176,11 +159,7 @@ then tricks. do tricks to fill combo meter. impress npcs and they will reward yo
 IUnlockable
 
 
-FINAL SUBMIT CHECKLIST:
-----------------------------
 
-start and update need cleanups
-make things private. get and set. then recheck in inspector. EVERY PUBLIC THING. do it.
 
 
 

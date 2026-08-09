@@ -35,6 +35,8 @@ public class InventoryManager: MonoBehaviour
 
     private void ResetOnSceneChange(Scene scene, LoadSceneMode mode)
     {
+        player = FindAnyObjectByType<PlayerController>();
+
         if (currentItem != null)
         {
             UpdateUIForCarriedItem?.Invoke(currentItem.GetComponent<ItemPickup>().name);
@@ -65,6 +67,7 @@ public class InventoryManager: MonoBehaviour
         ItemDropped?.Invoke(currentItem.name);
         Destroy(currentItem);
     }
+
     public GameObject DropCurrentItem(Vector3 newPosition)
     {
         if (currentItem == null)
@@ -124,6 +127,18 @@ public class InventoryManager: MonoBehaviour
         else
         {
             currentItem.transform.SetParent(transform);
+        }
+    }
+
+    public PickupableItemType PeekCurrentItem()
+    {
+        if (currentItem == null)
+        {
+            return PickupableItemType.Undefined;
+        }
+        else
+        {
+            return currentItem.GetComponent<ItemPickup>().ItemType;
         }
     }
 }

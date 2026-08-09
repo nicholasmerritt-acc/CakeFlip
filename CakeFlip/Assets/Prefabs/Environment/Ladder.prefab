@@ -1055,6 +1055,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   encounterClip: {fileID: 0}
   playClipOnEncounter: 1
+  skateboardOnly: 0
+  humanOnly: 0
   CanInteract: 0
   otherLadderArea: {fileID: 5058656694068253551}
 --- !u!65 &1074080960696707424
@@ -2536,6 +2538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   encounterClip: {fileID: 0}
   playClipOnEncounter: 1
+  skateboardOnly: 0
+  humanOnly: 1
   CanInteract: 0
   otherLadderArea: {fileID: 6005973482377706374}
 --- !u!65 &2042273565720569485

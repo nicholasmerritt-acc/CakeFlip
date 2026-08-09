@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         set => canvas = value;
     }
 
-    public Dictionary<PickupableItemType, GameObject> SpawnableItemTable; //prefab library, for spawning items
+    public Dictionary<PickupableItemType, ItemPickup> SpawnableItemTable; //prefab library, for spawning items
     public Dictionary<PickupableItemType, string> ItemToLevelName;
     
     private void Awake()
@@ -91,17 +91,26 @@ public class GameManager : MonoBehaviour
             HUD = Instantiate(hudPrefab, Canvas.transform);
         }
         ThePauseGameHandler.UnpauseGame();
+
+        if (!ThePauseGameHandler.isMainMenu)
+        {
+            //save current scene and inventory to player prefs, so we can save our progress
+            PlayerPrefs.SetString("CurrentScene", SceneManager.GetActiveScene().name);
+        }
     }
 
 
     private void Start()
     {
-        FindPlayerReference();
+        string sceneName = SceneManager.GetActiveScene().name;
 
-        if (!ThePauseGameHandler.isMainMenu)
+        if (ThePauseGameHandler.isMainMenu || sceneName == "MainMenu")
         {
-            TheDialogueManager.SayNonBlockingDialogue($"NOW ENTERING: The {SceneManager.GetActiveScene().name} dimension");
+            return;
         }
+        
+        FindPlayerReference();
+        TheDialogueManager.SayNonBlockingDialogue($"NOW ENTERING: The {sceneName} dimension");
     }
 
     /// <summary>
@@ -122,9 +131,13 @@ public class GameManager : MonoBehaviour
         playerHealth.OnDeath += OnPlayerDeath;
     }
 
-    //TODO death screen
+    /// <summary>
+    /// For now, the power of science can infinitely respawn you. You do lose your item, though.
+    /// </summary>
     private void OnPlayerDeath()
     {
+        TheInventoryManager.DropCurrentItem(transform.position);
+        playerHealth.HealToFull();
         LoadScene("Science");
     }
 
@@ -197,7 +210,7 @@ public class GameManager : MonoBehaviour
     public void Unlock(TrickType trickType)
     {
         Unlocks.Add(trickType);
-        //TODO add trick to playerprefs
+        PlayerPrefs.SetInt($"TrickUnlocked{trickType}", 1);
     }
 
     public void SetPlayer(PlayerController playerController)
@@ -219,5 +232,35 @@ public class GameManager : MonoBehaviour
         {
             Unlocks.Add(trick);
         }
+    }
+
+    /// <summary>
+    /// Get our saved progress from the PlayerPrefs.
+    /// </summary>
+    public void RestoreProgress()
+    {
+        foreach (TrickType trick in Enum.GetValues(typeof(TrickType)))
+        {
+            if (PlayerPrefs.GetInt($"TrickUnlocked{trick}", 0) == 1)
+            {
+                Unlocks.Add(trick);
+            }
+        }
+        PickupableItemType typeToRestore = (PickupableItemType)PlayerPrefs.GetInt("CurrentItem", 0);
+        if (typeToRestore != PickupableItemType.Undefined)
+        {
+            GameObject restoredInventoryItem = Instantiate(SpawnableItemTable[typeToRestore].gameObject);
+            TheInventoryManager.PickupItem(restoredInventoryItem.GetComponent<ItemPickup>());
+        }
+    }
+
+    /// <summary>
+    /// Save our progress to playerprefs when we quit the application, so we can resume later.
+    /// </summary>
+    public void SaveProgress()
+    {
+        //we don't need to save unlocks, because those are saved when we unlock them.
+        //however, we do need to save inventory
+        PlayerPrefs.SetInt("CurrentItem", (int)TheInventoryManager.PeekCurrentItem());
     }
 }

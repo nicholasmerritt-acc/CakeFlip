@@ -5,6 +5,8 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
 {
     [SerializeField] private AudioClip encounterClip;
     [SerializeField] protected bool playClipOnEncounter = true;
+    [SerializeField] protected bool skateboardOnly = false;
+    [SerializeField] protected bool humanOnly = false;
     protected PlayerController player;
 
     /// <summary>
@@ -63,7 +65,21 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
             {
                 player = other.GetComponent<PlayerController>();
             }
-            CanInteract = true;
+
+            bool isSkateboard = other.GetComponent<PlayerShapeshift>().IsSkateboard;
+            if (skateboardOnly)
+            {
+                CanInteract = isSkateboard;
+            } 
+            else if (humanOnly)
+            {
+                CanInteract = !isSkateboard;
+            }
+            else
+            {
+                CanInteract = true;
+            }
+
             if (encounterClip != null && playClipOnEncounter)
             {
                 GameManager.Instance.TheAudioManager.PlayOneShot(encounterClip);
