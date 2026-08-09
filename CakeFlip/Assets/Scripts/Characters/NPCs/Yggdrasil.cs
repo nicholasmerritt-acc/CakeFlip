@@ -39,14 +39,12 @@ public class Yggdrasil : InteractableEnvironmentItem
         {
             gameManager.TheInventoryManager.RemoveCurrentItem();
             gameManager.Unlock(Trick.TrickType.DoubleJump);
-            gameManager.SayDialogue("EXCELLENT. I HAVE HUNGERED FOR A THOUSAND YEARS FOR THIS PIZZA.");
-            gameManager.TheAudioManager.PlayOneShot(questCompleteClip);
+            gameManager.TheDialogueManager.SayNonBlockingDialogue("EXCELLENT. I HAVE HUNGERED FOR A THOUSAND YEARS FOR THIS PIZZA.", questCompleteClip);
             PostQuestComplete();
         }
         else
         {
-            gameManager.SayDialogue("NO, NOT THIS. BRING ME PIZZA.");
-            gameManager.TheAudioManager.PlayOneShot(questFailClip);
+            gameManager.TheDialogueManager.SayNonBlockingDialogue("NO, NOT THIS. BRING ME PIZZA.", questFailClip);
         }
     }
 }

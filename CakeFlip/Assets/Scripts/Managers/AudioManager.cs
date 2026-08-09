@@ -42,7 +42,10 @@ public class AudioManager : MonoBehaviour
     {
         MusicSource.clip = backgroundMusic;
         MusicSource.loop = true;
-        MusicSource.Play();
+        if (!MusicSource.isPlaying)
+        {
+            MusicSource.Play();
+        }
     }
 
     public void PlayOneShot(AudioClip clip)

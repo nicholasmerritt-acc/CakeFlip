@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Trick;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using static ItemPickup;
 
@@ -15,14 +14,10 @@ public class GameManager : MonoBehaviour
     public Dictionary<TrickType, SkateboardTrick> SkateboardTrickDictionary;
     public HashSet<TrickType> Unlocks;
 
-
     [Header("HUD")]
     [SerializeField] private HUD hudPrefab;
-    private HUD hud;
-    private const string CONTINUE_DIALOGUE = "Press any key to continue...";
+    public HUD HUD;
 
-    [Header("Input")]
-    private InputSystem_Actions inputActions;
 
     [Header("Player")]
     [SerializeField] private PlayerController player;
@@ -65,8 +60,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        //input
-        inputActions = new InputSystem_Actions();
 
         //these are initialized here because other Start() methods depend on them
         InitializeItemDictionary();
@@ -77,13 +70,11 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += ResetForNextScene;
-        inputActions?.Player.Enable();
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= ResetForNextScene;
-        inputActions?.Player.Disable();
     }
 
     /// <summary>
@@ -93,38 +84,20 @@ public class GameManager : MonoBehaviour
     {
         //Reset HUD and Canvas so we don't try to reference them in the next scene
         canvas = null;
-        hud = null;
+        HUD = null;
         //if we have a custom hud in the scene, use that. else, use our prefab
-        hud = FindAnyObjectByType<HUD>();
-        if (hud == null && !ThePauseGameHandler.isMainMenu)
+        HUD = FindAnyObjectByType<HUD>();
+        if (HUD == null && !ThePauseGameHandler.isMainMenu)
         {
-            hud = Instantiate(hudPrefab, Canvas.transform);
+            HUD = Instantiate(hudPrefab, Canvas.transform);
         }
         ThePauseGameHandler.UnpauseGame();
-    }
-
-    public void SayDialogue(string dialogue, AudioClip clip = null)
-    {
-        hud.DialogueText.text = $"\"{dialogue}\"\n{CONTINUE_DIALOGUE}";
-        //setup our "press any key to continue" handler
-        inputActions.Player.DialogueNext.performed += DialogueNextPressed;
-
-        if (clip != null)
+        if (!ThePauseGameHandler.isMainMenu)
         {
-            TheAudioManager.PlayOneShot(clip);
+            TheDialogueManager.SayNonBlockingDialogue($"NOW ENTERING: The {SceneManager.GetActiveScene().name} dimension");
         }
     }
 
-    private void DialogueNextPressed(InputAction.CallbackContext context)
-    {
-        HideDialogue();
-    }
-
-    public void HideDialogue()
-    {
-        hud.DialogueText.text = "";
-        inputActions.Player.DialogueNext.performed -= DialogueNextPressed;
-    }
 
     private void Start()
     {

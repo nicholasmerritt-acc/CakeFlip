@@ -111,7 +111,6 @@ public class PauseGameHandler : MonoBehaviour
 
     public bool PauseGame()
     {
-        Debug.Log("pausing");
         IsPaused = true;
         Time.timeScale = 0.0f;
         GamePaused?.Invoke();
@@ -121,7 +120,6 @@ public class PauseGameHandler : MonoBehaviour
 
     public bool UnpauseGame()
     {
-        Debug.Log("unpausing");
         IsPaused = false;
         Time.timeScale = 1.0f;
         GameUnpaused?.Invoke();
