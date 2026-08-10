@@ -161,8 +161,24 @@ public class GameManager : MonoBehaviour
     {
         TheInventoryManager.DropCurrentItem(transform.position);
         playerHealth.HealToFull();
-        LoadScene("Science");
+        LoadScene("GameOver");
     }
+
+    /// <summary>
+    /// Reset all unlocks and start a brand new game.
+    /// </summary>
+    public void StartNewGame()
+    {
+        PlayerPrefs.SetString("CurrentScene", "Science");
+        foreach (TrickType trick in Enum.GetValues(typeof(TrickType)))
+        {
+            PlayerPrefs.SetInt($"TrickUnlocked{trick}", 0);
+            Unlocks.Remove(trick);
+        }
+        PlayerPrefs.SetInt("CurrentItem", 0);
+        Instance.LoadScene("MainMenu");
+    }
+
 
     /// <summary>
     /// Setup dictionaries of tricks and unlocks for future reference
@@ -309,4 +325,5 @@ public class GameManager : MonoBehaviour
         //however, we do need to save inventory
         PlayerPrefs.SetInt("CurrentItem", (int)TheInventoryManager.PeekCurrentItem());
     }
+
 }

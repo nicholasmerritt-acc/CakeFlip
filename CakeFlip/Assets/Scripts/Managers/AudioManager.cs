@@ -23,13 +23,9 @@ public class AudioManager : MonoBehaviour
     {
         if (GameManager.Instance.ThePauseGameHandler.IsIntroStarWarsScrollScene())
         {
-            backgroundMusic = introVoiceover;
+            PlayIntroVoiceoverClip();
         }
-        else
-        {
-            backgroundMusic = musicClip;
-        }
-        if (backgroundMusic != null)
+        else if (backgroundMusic != null)
         {
             PlayBackgroundMusic();
         }
@@ -51,6 +47,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayExplosionClip()
+    {
+        SfxSource.PlayOneShot(explosionClip);
+    }
+
     /// <summary>
     /// Choose one of our random skateboard rolling clips
     /// </summary>
@@ -69,10 +70,7 @@ public class AudioManager : MonoBehaviour
     {
         MusicSource.clip = backgroundMusic;
         MusicSource.loop = true;
-        if (!MusicSource.isPlaying)
-        {
-            MusicSource.Play();
-        }
+        MusicSource.Play();
     }
 
     /// <summary>

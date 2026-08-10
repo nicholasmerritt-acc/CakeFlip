@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawner
   spawnInterval: 5
+  maxSpawns: 10
+  numSpawns: 0
   initialSpawnDelay: 1
   spawnPosition: {fileID: 6986138457810777712}
   spawnPrefabs:

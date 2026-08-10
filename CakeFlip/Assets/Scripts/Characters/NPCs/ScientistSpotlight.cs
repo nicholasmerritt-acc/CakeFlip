@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// This nonsense is a little bit out of control. I should probably just delete it.
+/// This nonsense is a little bit out of control. I should probably just delete it and make scientist a subclass of NPC.
 /// However, it was one of the first parts of the game I worked on, and I'm feeling sentimental.
 /// I'll delete it tomorrow.
 /// </summary>
@@ -38,6 +38,11 @@ public class ScientistSpotlight : MonoBehaviour
         }
         yield return new WaitForSeconds(dialogueDelay);
         GameManager.Instance.TheDialogueManager.SayBlockingDialogue("Welcome back.", welcomeBackClip);
+
+        if (hallwaySpotlightPairs == null || hallwaySpotlightPairs.Length == 0)
+        {
+            yield break;
+        }
 
         //now, trigger the hallway lights one by one
         for (int spotlightIndexEveryOther = 0; spotlightIndexEveryOther < hallwaySpotlightPairs.Length; spotlightIndexEveryOther += 2)

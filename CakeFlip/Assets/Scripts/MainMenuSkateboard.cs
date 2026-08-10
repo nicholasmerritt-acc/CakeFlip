@@ -17,6 +17,9 @@ public class MainMenuSkateboard : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         direction = (endPoint.position - transform.position).normalized;
         direction.y = 0f;
     }

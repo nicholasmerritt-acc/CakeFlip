@@ -82,8 +82,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseGameHandler
   IsPaused: 0
-  isMainMenu: 0
-  isIntro: 0
   pauseMenuPrefab: {fileID: 8666202204513798994, guid: 0394e436a8e1ad149abdbe9e774b3b3c,
     type: 3}
 --- !u!114 &6387239266116695414
@@ -105,7 +103,7 @@ MonoBehaviour:
   introDelay: 2
   SfxSource: {fileID: 2299114051217894082}
   buttonPressClip: {fileID: 8300000, guid: b7c6e6624c25a094c830d4989da2953a, type: 3}
-  explosionClip: {fileID: 0}
+  explosionClip: {fileID: 8300000, guid: 79a403e3e0cce364aa780a81347d691b, type: 3}
   audienceSFX:
   - {fileID: 8300000, guid: af8e4fd48873a3441b08d61bfc05274b, type: 3}
   - {fileID: 8300000, guid: 2fbf185f1a27cab45a0daa3c78ebb53f, type: 3}
@@ -342,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5950bf9c947d7064888361244cdc2a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
-  currentItem: {fileID: 0}
+  currentItem: 0
 --- !u!114 &9203185811696052013
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,13 +1,26 @@
-CakeFlip: Xtreme Baking
+SK8: the search for the nuclear... something... idk still need a good title or tagline or whatever
 -----------------------
 
 FINAL SUBMIT CHECKLIST:
 ----------------------------
-f10 to pause tutorial. or add esc? idk
-spawn restrictions???
+DONE
 
-todo sunday onwards: (i guess i ran out of time? classic):
+phew. what an adventure. it's far from perfect. but it's done. for now.
+
+
+
+
+
+
+
+
+
+
+
+TODO at a later date:
 ----------------------
+maybe one of the tricks shoots projectiles? so you can actually win? hmm interesting idea.
+
 better item pooling
 	
 scientist should be interactable

@@ -45,6 +45,7 @@ public class ExplodableObject : MonoBehaviour
                             health.TakeDamage(explosionDamage);
                         }
                     }
+                    GameManager.Instance.TheAudioManager.PlayExplosionClip();
                 }
 
                 collision.gameObject.GetComponent<Health>().TakeDamage(explosionDamage);

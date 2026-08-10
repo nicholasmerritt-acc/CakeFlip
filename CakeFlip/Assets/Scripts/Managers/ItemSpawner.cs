@@ -5,6 +5,8 @@ using Util;
 public class ItemSpawner : MonoBehaviour
 {
     [SerializeField] private float spawnInterval;
+    [SerializeField] private int maxSpawns = 10000;
+    [SerializeField] private int numSpawns = 0;
     [SerializeField] private float initialSpawnDelay;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private GameObject[] spawnPrefabs;
@@ -38,7 +40,7 @@ public class ItemSpawner : MonoBehaviour
 
         yield return new WaitForSeconds(initialSpawnDelay);
 
-        while (true)
+        while (numSpawns++ < maxSpawns)
         {
             yield return new WaitForSeconds(spawnInterval);
             SpawnOnce();
