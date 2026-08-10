@@ -13,7 +13,7 @@ public class LinkedLadderArea : InteractableEnvironmentItem
         {
             if (player == null)
             {
-                Debug.LogError("failed to set player in the interactable item trigger");
+                Debug.LogError("Failed to set Player reference in the InteractableEnvironmentItem trigger");
             } 
             else
             {

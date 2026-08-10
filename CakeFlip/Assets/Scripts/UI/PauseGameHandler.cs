@@ -12,8 +12,6 @@ public class PauseGameHandler : MonoBehaviour
 
     [Header("Game State")]
     public bool IsPaused = false;
-    public bool isMainMenu = false;
-    public bool isIntro = false;
 
     [Header("References")]
     [SerializeField] private GameObject pauseMenuPrefab;
@@ -50,12 +48,15 @@ public class PauseGameHandler : MonoBehaviour
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
-        SceneManager.sceneLoaded += SetupMainMenu;
     }
 
-    private void SetupMainMenu(Scene scene, LoadSceneMode mode)
+    /// <summary>
+    /// There are certain tutorial scenes in which we want to skip setting up UI items
+    /// </summary>
+    /// <returns></returns>
+    public bool IsIntroScene()
     {
-        isMainMenu = scene.buildIndex == 1;
+        return IsMainMenu() || IsIntroStarWarsScrollScene();
     }
 
     public bool IsMainMenu()
@@ -63,9 +64,14 @@ public class PauseGameHandler : MonoBehaviour
         return (SceneManager.GetActiveScene().buildIndex == 1) || SceneManager.GetActiveScene().name == "MainMenu";
     }
 
-    public bool IsIntroScreen()
+    public bool IsIntroStarWarsScrollScene()
     {
         return (SceneManager.GetActiveScene().buildIndex == 0) || SceneManager.GetActiveScene().name == "StarWarsScroll";
+    }
+
+    public bool IsScienceScene()
+    {
+        return (SceneManager.GetActiveScene().buildIndex == 2) || SceneManager.GetActiveScene().name == "Science";
     }
 
     private void OnEnable()
@@ -78,12 +84,15 @@ public class PauseGameHandler : MonoBehaviour
     {
         inputActions.Player.PauseGame.performed -= OnPause;
         inputActions.Player.Disable();
-        SceneManager.sceneLoaded -= SetupMainMenu;
     }
 
+    /// <summary>
+    /// Pause button has been triggered. Let's decide if we are toggling a pause, or just hiding a submenu
+    /// </summary>
+    /// <param name="context"></param>
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (isMainMenu)
+        if (IsIntroScene())
         {
             return;
         }
@@ -120,6 +129,13 @@ public class PauseGameHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Pause the game.
+    /// 
+    /// PauseGame and UnpauseGame could be combined into one method, to save lines of code. 
+    /// However, that is honestly kind of pointless, and it makes debugging so much harder. 
+    /// This is much, much more readable. I learned the hard way.
+    /// </summary>
     public bool PauseGame()
     {
         IsPaused = true;
@@ -129,6 +145,9 @@ public class PauseGameHandler : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Unpause the game.
+    /// </summary>
     public bool UnpauseGame()
     {
         IsPaused = false;

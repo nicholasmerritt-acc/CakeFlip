@@ -6,9 +6,13 @@ using Util;
 [RequireComponent(typeof(Health))]
 public class NPC : InteractableEnvironmentItem
 {
-
+    [SerializeField] private Rigidbody rb;
+    [Header("Health")]
     [SerializeField] private Health health;
     [SerializeField] private bool canDie = false;
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private float speedAnimationAdjustment = 1f;
     [Header("Dialogue")]
     [SerializeField] private float defaultDialogueTimer = 5f;
     [SerializeField] protected string[] greetings = { "Hello there!", "Hi.", "What's up, skater?", "Oh, I didn't see you there." };
@@ -18,11 +22,17 @@ public class NPC : InteractableEnvironmentItem
     [SerializeField] private string[] names = { "Fred", "Martha", "Mystery Man", "Mystery Woman", "Blargo", "Brunhilde", "Marg", "Bratti", "Surya", "Cletus" };
     [SerializeField] private GameObject[] forms;
 
+    protected override string CloseEnoughToInteractMessage 
+    { 
+        get => $"Press F to greet {name}"; 
+        set => base.CloseEnoughToInteractMessage = value;
+    }
+
     private void Start()
     {
         if (string.IsNullOrEmpty(definiteName))
         {
-            name = names.GetRandomItem();
+            name = names.GetRandomItem() + " (NPC)";
         } 
         else
         {
@@ -32,6 +42,14 @@ public class NPC : InteractableEnvironmentItem
         if (health == null)
         {
             health = GetComponent<Health>();
+        }
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
         }
 
         if (forms.Length > 2)
@@ -107,5 +125,13 @@ public class NPC : InteractableEnvironmentItem
     protected override void DoPlayerInteraction()
     {
         Say(greetings.GetRandomItem());
+    }
+
+    private void FixedUpdate()
+    {
+        if (animator != null && rb != null)
+        {
+            animator.SetFloat("Speed_f", rb.linearVelocity.sqrMagnitude * speedAnimationAdjustment);
+        }
     }
 }

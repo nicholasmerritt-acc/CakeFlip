@@ -1,3 +1,4 @@
+using Pickup;
 using UnityEngine;
 using Util;
 
@@ -18,7 +19,7 @@ public class PortalPedestal : InteractableEnvironmentItem
             Debug.LogWarning("teleport area not setup correctly");
             teleportArea = FindAnyObjectByType<TeleportArea>();
         }
-        defaultScene = GameManager.Instance.ItemToLevelName[ItemPickup.PickupableItemType.Undefined];
+        defaultScene = GameManager.Instance.ItemToLevelNameTable[PickupableItemType.Undefined];
         closeEnoughToInteractMessage = interactMessage;
     }
 
@@ -40,7 +41,7 @@ public class PortalPedestal : InteractableEnvironmentItem
             //update portal item and which dimension we're traveling to
             itemOnPortal = Instantiate(dropped, portalHoverPoint.position, dropped.transform.rotation);
             //lookup which dimension we should travel to aka the name of the scene to load
-            teleportArea.SceneNameToTeleportTo = GameManager.Instance.ItemToLevelName[itemOnPedestal.ItemType];
+            teleportArea.SceneNameToTeleportTo = GameManager.Instance.ItemToLevelNameTable[itemOnPedestal.ItemType];
         } 
         else
         {

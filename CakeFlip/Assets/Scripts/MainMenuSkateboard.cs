@@ -34,6 +34,7 @@ public class MainMenuSkateboard : MonoBehaviour
     /// <summary>
     /// Replace the item currently held (if there is one) with an item from the pool.
     /// Instead of destroying and instantiating, we just move them to a holding zone offscreen.
+    /// This could probably be an abstract ItemPool class or something in the future.
     /// </summary>
     private void HoldNextItem()
     {

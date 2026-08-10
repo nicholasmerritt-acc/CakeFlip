@@ -21,6 +21,9 @@ public class InventoryTextBoxes : MonoBehaviour
         InventoryManager.ItemDropped -= UpdateDroppedText;
     }
 
+    /// <summary>
+    /// Update the UI text that tells us what is in our inventory.
+    /// </summary>
     private void UpdateCarryingText(string newItemName)
     {
         string newText = "";
@@ -36,6 +39,9 @@ public class InventoryTextBoxes : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Update the UI text that tells us what item we most recently dropped.
+    /// </summary>
     private void UpdateDroppedText(string droppedText) {
         //ignore previous text fade
         StopAllCoroutines();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+namespace Pickup
 {
     [System.Serializable]
     public enum PickupableItemType
@@ -15,14 +15,17 @@ public class ItemPickup : MonoBehaviour
         Saturn
     }
 
-    public PickupableItemType ItemType;
-
-    private void OnTriggerEnter(Collider other)
+    public class ItemPickup : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        public PickupableItemType ItemType;
+
+        private void OnTriggerEnter(Collider other)
         {
-            GameManager.Instance.TheInventoryManager.PickupItem(this);
-            gameObject.SetActive(false);
+            if (other.CompareTag("Player"))
+            {
+                GameManager.Instance.TheInventoryManager.PickupItem(this);
+                gameObject.SetActive(false);
+            }
         }
     }
 }

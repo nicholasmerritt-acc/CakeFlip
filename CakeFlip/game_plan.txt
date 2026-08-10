@@ -3,27 +3,19 @@ CakeFlip: Xtreme Baking
 
 FINAL SUBMIT CHECKLIST:
 ----------------------------
-
-start and update need cleanups
-make things private. get and set. then recheck in inspector. EVERY PUBLIC THING. do it.
-
-remove TODOS
-remove debug.logs
-
-audiomanager singleton to stop the weird duplicating audio bug? 	
-
-make intro transition
-scientist should be interactable
-
-redo coroutine with hide the anonymouse one isn't working
-go to sleep man you're so tired
-
-game manager SayStatus for continuous effects like interactions. vs dialogue. need nother text box
-
-farm play chicken clucks randomly on a coroutine
+f10 to pause tutorial. or add esc? idk
+spawn restrictions???
 
 todo sunday onwards: (i guess i ran out of time? classic):
 ----------------------
+better item pooling
+	
+scientist should be interactable
+
+farm play chicken clucks randomly on a coroutine
+
+shapeshift animate both forms
+remove permanent dontdestroyonload powers... somehow...
 debugging:
 itempickup: remove dontdestroyonload? after unparented? ugh. annoying.
 z-fighting in citystreet by billboards
@@ -38,7 +30,7 @@ competition island and npcs that judge. judge prefab with a billboard for score.
 		controls? mini tutorial? idk nahhh probably not
 
 maybe science lady / doctor / idk what that npc is / asks for a pizza. first quest. earn exp. idk
-OOH unlock double jump when you give her pizza. yes. then unlock something else when you give her next item. key? idk. etc.
+then unlock something else when you give her next item. key? idk. etc.
 
 FLOATING LEVEL above enemy mobs. as you get stronger, so do they?
 

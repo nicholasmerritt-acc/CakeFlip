@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Util;
 
 public class AudioManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class AudioManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (GameManager.Instance.ThePauseGameHandler.IsIntroScreen())
+        if (GameManager.Instance.ThePauseGameHandler.IsIntroStarWarsScrollScene())
         {
             backgroundMusic = introVoiceover;
         }
@@ -39,24 +40,31 @@ public class AudioManager : MonoBehaviour
         SfxSource.PlayOneShot(buttonPressClip);
     }
 
+    /// <summary>
+    /// Choose one of our random audience "ooh and ahh" clips
+    /// </summary>
     public void PlayAudienceClip()
     {
-        //choose one of our random audience "ooh and ahh" clips
         if (audienceSFX.Length > 0)
         {
             SfxSource.PlayOneShot(audienceSFX.GetRandomItem());
         }
     }
 
+    /// <summary>
+    /// Choose one of our random skateboard rolling clips
+    /// </summary>
     public void PlaySkateboardRollClip()
     {
-        //choose one of our random skateboard rolling clips
         if (skateboardRollClips.Length > 0)
         {
             SfxSource.PlayOneShot(skateboardRollClips.GetRandomItem());
         }
     }
 
+    /// <summary>
+    /// Start the ever-present, much-too-loud background music, on loop.
+    /// </summary>
     private void PlayBackgroundMusic()
     {
         MusicSource.clip = backgroundMusic;
@@ -67,6 +75,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Play an audioclip once.
+    /// </summary>
     public void PlayOneShot(AudioClip clip)
     {
         if (clip != null)
@@ -75,6 +86,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Play our famous voice actress' recounting of the events that took place leading up to this game's story...
+    /// </summary>
     public void PlayIntroVoiceoverClip()
     {
         MusicSource.loop = false;
@@ -86,5 +100,28 @@ public class AudioManager : MonoBehaviour
     public void StopMusic()
     {
         MusicSource.Stop();
+    }
+
+    private void OnEnable()
+    {
+        MusicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        SfxSource.volume = PlayerPrefs.GetFloat("SfxVolume", 1f);
+        SceneManager.activeSceneChanged += ResetForNewScene;
+    }
+
+    /// <summary>
+    /// Don't let SFX persist between scenes. We should, however, let background music persist.
+    /// </summary>
+    private void ResetForNewScene(Scene arg0, Scene arg1)
+    {
+        SfxSource.Stop();
+    }
+
+    private void OnDisable()
+    {
+        // Make sure we save the volume settings to playerprefs so we don't rupture our eardrums everytime. just the first time.
+        PlayerPrefs.SetFloat("MusicVolume", MusicSource.volume);
+        PlayerPrefs.SetFloat("SfxVolume", SfxSource.volume);
+        SceneManager.activeSceneChanged -= ResetForNewScene;
     }
 }

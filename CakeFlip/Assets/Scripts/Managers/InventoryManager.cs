@@ -1,13 +1,12 @@
 using System;
+using Pickup;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Util;
-using static ItemPickup;
 
 public class InventoryManager: MonoBehaviour
 {
     private PlayerController player;
-    [SerializeField] private GameObject currentItem;
+    [SerializeField] private PickupableItemType currentItem;
     private float itemDropOffset = -3f;
     
     public static event Action<string> UpdateUIForCarriedItem;
@@ -32,56 +31,57 @@ public class InventoryManager: MonoBehaviour
         SceneManager.sceneLoaded -= ResetOnSceneChange;
     }
 
-
+    /// <summary>
+    /// Get player reference and make sure UI updates 
+    /// </summary>
     private void ResetOnSceneChange(Scene scene, LoadSceneMode mode)
     {
         player = FindAnyObjectByType<PlayerController>();
 
-        if (currentItem != null)
+        if (currentItem != PickupableItemType.Undefined)
         {
-            UpdateUIForCarriedItem?.Invoke(currentItem.GetComponent<ItemPickup>().name);
+            UpdateUIForCarriedItem?.Invoke(currentItem.ToString());
         }
     }
 
+    /// <summary>
+    /// are we currently holding this item?
+    /// </summary>
     public bool InventoryContains(PickupableItemType item)
     {
-        if (currentItem != null)
-        {
-            if (currentItem.TryGetComponent<ItemPickup>(out ItemPickup itemPickup))
-            {
-                return itemPickup.ItemType == item;
-            }
-        }
-        return false;
+        return currentItem == item;
     }
 
-
+    /// <summary>
+    /// get rid of our current item without "dropping" aka instantiating it
+    /// </summary>
     public void RemoveCurrentItem()
     {
-        if (currentItem == null)
+        if (currentItem == PickupableItemType.Undefined)
         {
             return;
         }
 
-        ItemDropped?.Invoke(currentItem.name);
-        Destroy(currentItem);
+        ItemDropped?.Invoke(currentItem.ToString());
     }
 
+    /// <summary>
+    /// Since we do not store the gameObject, but rather an enum value of its type, we need to instantiate it
+    /// </summary>
+    /// <param name="newPosition"></param>
+    /// <returns></returns>
     public GameObject DropCurrentItem(Vector3 newPosition)
     {
-        if (currentItem == null)
+        if (currentItem == PickupableItemType.Undefined)
         {
             return null;
         }
+        GameObject prefab = GameManager.Instance.ItemTypeToPrefabTable[currentItem].gameObject;
+        GameObject dropped = Instantiate(prefab, newPosition, prefab.transform.rotation);
+        ItemDropped?.Invoke(currentItem.ToString());
 
-        //"drop" the current item. aka return it to the way it was. enable gameObject and collider
-        ToggleCurrentItem(true);
-        currentItem.transform.position = newPosition;
-        ItemDropped?.Invoke(currentItem.name);
-
-        GameObject itemToReturn = currentItem;
-        currentItem = null;
-        return itemToReturn;
+        currentItem = PickupableItemType.Undefined;
+        return dropped;
     }
     /// <summary>
     /// we can only hold one item at a time, so if we pick something up, we must drop something
@@ -89,52 +89,23 @@ public class InventoryManager: MonoBehaviour
     /// <param name="pickup"></param>
     public void PickupItem(ItemPickup pickup)
     {
-        if (currentItem != null)
+        if (currentItem != PickupableItemType.Undefined)
         {
             //make new position a certain amount behind us
             Vector3 newPosition = player.transform.position + player.transform.forward * itemDropOffset;
-            //newPosition.y = CurrentItem.transform.position.y;
             DropCurrentItem(newPosition);
         }
 
         //set current item to the item we just picked up
-        currentItem = pickup.gameObject;
-
-        //"pick up" item, aka parent it to the GameManager, and disable it
-        ToggleCurrentItem(false);
-
-        UpdateUIForCarriedItem?.Invoke(pickup.name);
+        currentItem = pickup.ItemType;
+        UpdateUIForCarriedItem?.Invoke(currentItem.ToString());
     }
 
     /// <summary>
-    /// Change the transfrom from an inactive child of the game manager to a real active item in the world, and vice versa
+    /// See what item we are holding without modifying it
     /// </summary>
-    /// <param name="dropping"></param>
-    private void ToggleCurrentItem(bool dropping)
-    {
-        currentItem.TrySetEnabledCollider(dropping);
-        currentItem.SetActive(dropping);
-
-        if (dropping)
-        {
-            //reparent the transform
-            currentItem.transform.SetParent(player.transform.parent);
-        }
-        else
-        {
-            currentItem.transform.SetParent(transform);
-        }
-    }
-
     public PickupableItemType PeekCurrentItem()
     {
-        if (currentItem == null)
-        {
-            return PickupableItemType.Undefined;
-        }
-        else
-        {
-            return currentItem.GetComponent<ItemPickup>().ItemType;
-        }
+        return currentItem;
     }
 }

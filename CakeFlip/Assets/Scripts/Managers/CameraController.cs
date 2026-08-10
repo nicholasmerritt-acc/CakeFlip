@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviour
 
     private void CaptureMouse()
     {
-        if (GameManager.Instance.ThePauseGameHandler.isMainMenu)
+        if (GameManager.Instance.ThePauseGameHandler.IsMainMenu())
         {
             return;
         }

@@ -63,6 +63,9 @@ namespace Util
             return succeeded;
         }
 
+        /// <summary>
+        /// Reenable the collider on an object. E.g. if we have in inventory, disabled attached to a gamemanager or something
+        /// </summary>
         public static void TrySetEnabledCollider(this GameObject obj, bool enable)
         {
             if (obj.TryGetComponent<Collider>(out Collider collider))

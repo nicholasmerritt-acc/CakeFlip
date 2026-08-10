@@ -30,6 +30,6 @@ public class Health : MonoBehaviour
 
     public void HealToFull()
     {
-        health = maxHealth;
+        Heal(maxHealth);
     }
 }

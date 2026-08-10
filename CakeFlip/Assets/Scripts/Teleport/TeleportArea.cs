@@ -1,4 +1,5 @@
 using System.Collections;
+using Pickup;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,7 @@ public class TeleportArea : MonoBehaviour
 
     private void Start()
     {
-        defaultScene = GameManager.Instance.ItemToLevelName[ItemPickup.PickupableItemType.Undefined];
+        defaultScene = GameManager.Instance.ItemToLevelNameTable[PickupableItemType.Undefined];
     }
 
     private void OnTriggerEnter(Collider other)

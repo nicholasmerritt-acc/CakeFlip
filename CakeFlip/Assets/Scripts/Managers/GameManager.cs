@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Pickup;
 using Trick;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static ItemPickup;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,16 +56,27 @@ public class GameManager : MonoBehaviour
         set => canvas = value;
     }
 
-    public Dictionary<PickupableItemType, ItemPickup> SpawnableItemTable; //prefab library, for spawning items
+    /// <summary>
+    ///  Prefab library, for spawning pickupable items
+    /// </summary>
+    public Dictionary<PickupableItemType, ItemPickup> ItemTypeToPrefabTable;
+
+    /// <summary>
+    /// Since we can't serialize a dictionary, use this array to initialize. Indices should correspond to the PickupableitemType enum.
+    /// </summary>
     [SerializeField] ItemPickup[] itemPickupPrefabsForDictionary;
-    public Dictionary<PickupableItemType, string> ItemToLevelName;
+
+    /// <summary>
+    /// Matches item name to the level it will teleport you to
+    /// </summary>
+    public Dictionary<PickupableItemType, string> ItemToLevelNameTable;
     
     private void Awake()
     {
         //singleton
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -95,12 +106,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ResetForNextScene(Scene scene, LoadSceneMode mode)
     {
-        //Reset HUD and Canvas so we don't try to reference them in the next scene
+        //Reset Canvas, since every scene should have its own
         canvas = null;
-        HUD = null;
         ThePauseGameHandler.UnpauseGame();
 
-        if (ThePauseGameHandler.IsMainMenu() || ThePauseGameHandler.IsIntroScreen())
+        if (ThePauseGameHandler.IsMainMenu() || ThePauseGameHandler.IsIntroStarWarsScrollScene())
         {
             return;
         } 
@@ -113,12 +123,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     private void Start()
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        if (ThePauseGameHandler.IsMainMenu() || ThePauseGameHandler.IsIntroScreen())
+        if (ThePauseGameHandler.IsMainMenu() || ThePauseGameHandler.IsIntroStarWarsScrollScene())
         {
             return;
         }
@@ -132,7 +141,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FindPlayerReference()
     {
-        if (ThePauseGameHandler.isMainMenu)
+        if (ThePauseGameHandler.IsIntroScene())
         {
             return;
         }
@@ -155,6 +164,9 @@ public class GameManager : MonoBehaviour
         LoadScene("Science");
     }
 
+    /// <summary>
+    /// Setup dictionaries of tricks and unlocks for future reference
+    /// </summary>
     private void InitializeTrickDictionaries()
     {
         SkateboardTrickDictionary = new()
@@ -184,7 +196,7 @@ public class GameManager : MonoBehaviour
                 new SkateboardTrick
                 {
                     WhichTrick = TrickType.Treflip,
-                    Points = 10,
+                    Points = 100,
                     AnimationTrigger = "treflipTrigger",
                     Unlocked = false
                 }
@@ -205,9 +217,12 @@ public class GameManager : MonoBehaviour
         Unlock(TrickType.Backflip);
     }
 
+    /// <summary>
+    /// Initialize our very useful dictionaries. Note that we have to reconstruct the ItemTypeToPrefabTable very carefully based on index.
+    /// </summary>
     private void InitializeItemDictionaries()
     {
-        ItemToLevelName = new Dictionary<PickupableItemType, string>
+        ItemToLevelNameTable = new Dictionary<PickupableItemType, string>
         {
             { PickupableItemType.Undefined, "Science" },
             { PickupableItemType.Egg, "Farm" },
@@ -219,31 +234,43 @@ public class GameManager : MonoBehaviour
             { PickupableItemType.Saturn, "Science" }
         };
 
-        SpawnableItemTable = new();
+        ItemTypeToPrefabTable = new();
         for (int i = 0; i < itemPickupPrefabsForDictionary.Length; i++)
         {
-            SpawnableItemTable[(PickupableItemType)i] = itemPickupPrefabsForDictionary[i];
+            ItemTypeToPrefabTable[(PickupableItemType)i] = itemPickupPrefabsForDictionary[i];
         }
     }
 
+    /// <summary>
+    /// We can now perform this trick while in the air in skateboard form. Hooray!
+    /// </summary>
+    /// <param name="trickType"></param>
     public void Unlock(TrickType trickType)
     {
         Unlocks.Add(trickType);
         PlayerPrefs.SetInt($"TrickUnlocked{trickType}", 1);
     }
 
+    /// <summary>
+    /// Get a reference to the player
+    /// </summary>
+    /// <param name="playerController"></param>
     public void SetPlayer(PlayerController playerController)
     {
         player = playerController;
     }
 
+    /// <summary>
+    /// Bring up the loading screen and load the next level asynchronously
+    /// </summary>
+    /// <param name="sceneName"></param>
     public void LoadScene(string sceneName)
     {
         TheAsyncLoader.LoadLevelAsync(sceneName);
     }
 
     /// <summary>
-    /// For debug use only. Unlock all the tricks in the game.
+    /// For debug (Utsab) use only. Unlock all the tricks in the game.
     /// </summary>
     public void DEBUG_UnlockAll()
     {
@@ -268,7 +295,7 @@ public class GameManager : MonoBehaviour
         PickupableItemType typeToRestore = (PickupableItemType)PlayerPrefs.GetInt("CurrentItem", 0);
         if (typeToRestore != PickupableItemType.Undefined)
         {
-            GameObject restoredInventoryItem = Instantiate(SpawnableItemTable[typeToRestore].gameObject);
+            GameObject restoredInventoryItem = Instantiate(ItemTypeToPrefabTable[typeToRestore].gameObject);
             TheInventoryManager.PickupItem(restoredInventoryItem.GetComponent<ItemPickup>());
         }
     }

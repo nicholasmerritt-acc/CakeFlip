@@ -39,6 +39,11 @@ public class ExplodableObject : MonoBehaviour
                         {
                             rb.AddExplosionForce(explosionForce, explosionPosition, explosionRadius, upwardsModifier);
                         }
+                        if (collider.TryGetComponent<Health>(out Health health))
+                        {
+                            //if big explosion, player takes damage twice. be careful!
+                            health.TakeDamage(explosionDamage);
+                        }
                     }
                 }
 

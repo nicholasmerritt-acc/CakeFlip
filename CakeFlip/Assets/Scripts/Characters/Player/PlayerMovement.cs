@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private float skateboardRollClipTimeout = 4f;
     [SerializeField] private float timeOfLastskateboardRollClip = 0f;
-    [SerializeField] private AudioClip skateboardRollClip;
     [SerializeField] private AudioClip skateboardJumpClip;
 
     [Header("References")]
@@ -111,21 +110,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Perform a skateboard jump (the cool kids call it an ollie) and play a sound effect.
+    /// </summary>
     private void DoPhysicsJumpWithSound()
     {
         myRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         GameManager.Instance.TheAudioManager.PlayOneShot(skateboardJumpClip);
     }
 
+    /// <summary>
+    /// Play the sound of a skateboard rolling on by, on a timeout so we don't get constant noises.
+    /// </summary>
     private void TryPlaySkateboardRollClip()
     {
         if (Time.time - timeOfLastskateboardRollClip > skateboardRollClipTimeout)
         {
-            GameManager.Instance.TheAudioManager.PlayOneShot(skateboardJumpClip);
+            GameManager.Instance.TheAudioManager.PlaySkateboardRollClip();
             timeOfLastskateboardRollClip = Time.time;
         }
     }
 
+    /// <summary>
+    /// Set the jump flags. The actual physics jumping should all be done in FixedUpdate
+    /// </summary>
     private void Jump(InputAction.CallbackContext context)
     {
         //we can only jump in skateboard form.
@@ -150,12 +158,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Have we completed a quest and earned the double jump power?
+    /// </summary>
+    /// <returns></returns>
     private bool DoubleJumpUnlocked()
     {
         return GameManager.Instance.Unlocks.Contains(Trick.TrickType.DoubleJump);
     }
 
-
+    /// <summary>
+    /// Are we touching the "ground", that is, a solid object we can jump off of?
+    /// </summary>
+    /// <returns></returns>
     public bool Grounded()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundedCheckDistance, groundedCheckMask);

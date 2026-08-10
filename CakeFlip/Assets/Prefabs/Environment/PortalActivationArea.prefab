@@ -149,6 +149,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   encounterClip: {fileID: 0}
   playClipOnEncounter: 1
+  skateboardOnly: 0
+  humanOnly: 0
   CanInteract: 0
   itemOnPedestal: {fileID: 0}
   itemOnPortal: {fileID: 0}
@@ -217,7 +219,7 @@ Light:
   serializedVersion: 13
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 60
+  m_Intensity: 120
   m_Range: 100
   m_SpotAngle: 119.46031
   m_InnerSpotAngle: 21.80208
@@ -260,7 +262,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 2555
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0

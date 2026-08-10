@@ -1165,6 +1165,7 @@ GameObject:
   - component: {fileID: 4683085210200372936}
   - component: {fileID: 6269127696857402511}
   - component: {fileID: 7180691254365199532}
+  - component: {fileID: 6734824021880157992}
   m_Layer: 0
   m_Name: GenericNPC
   m_TagString: Untagged
@@ -1248,8 +1249,11 @@ MonoBehaviour:
   skateboardOnly: 0
   humanOnly: 0
   CanInteract: 0
+  rb: {fileID: 6269127696857402511}
   health: {fileID: 8748845574195023146}
   canDie: 0
+  animator: {fileID: 1564716005860480528}
+  speedAnimationAdjustment: 1
   defaultDialogueTimer: 5
   greetings:
   - Hello there!
@@ -1295,7 +1299,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: -0.25
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4683085210200372936
@@ -1380,7 +1384,28 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 1.42, z: 0}
+--- !u!65 &6734824021880157992
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5941103823482114798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 3, z: 6}
+  m_Center: {x: 0, y: 1.4, z: 0}
 --- !u!1 &6749581988575019718
 GameObject:
   m_ObjectHideFlags: 0

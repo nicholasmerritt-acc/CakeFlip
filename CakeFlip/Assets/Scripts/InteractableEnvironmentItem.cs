@@ -67,6 +67,7 @@ public abstract class InteractableEnvironmentItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //setup player reference only when we need it
             if (player == null)
             {
                 player = other.GetComponent<PlayerController>();

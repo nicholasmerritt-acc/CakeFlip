@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Trick;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("Positioning")]
     [SerializeField] private Vector3 respawnPosition;
     [SerializeField] private int yBoundary = -30;
+    [SerializeField] private float boundaryCheckInterval = 1f;
 
     private void Awake()
     {
@@ -34,6 +36,19 @@ public class PlayerController : MonoBehaviour
     {
         SetupReferences();
         SetPlayer();
+        StartCoroutine(nameof(CheckBoundary));
+    }
+
+    private IEnumerator CheckBoundary()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(boundaryCheckInterval);
+            if (transform.position.y < yBoundary)
+            {
+                Respawn();
+            }
+        }
     }
 
     private void SetPlayer()
@@ -88,6 +103,8 @@ public class PlayerController : MonoBehaviour
         playerActions.Disable();
 
         Skateboard.TrickCompleted -= TrickCompleted;
+
+        StopAllCoroutines();
     }
 
     private void DoTrick1(InputAction.CallbackContext context)
@@ -118,12 +135,13 @@ public class PlayerController : MonoBehaviour
 
         //only attempt trick if we are an airborne skateboard, and if we've unlocked it.
         bool grounded = movement.Grounded();
-        if (!shapeshifter.IsSkateboard || !unlocked || grounded)
+        if (!shapeshifter.IsSkateboard || grounded)
         {
-            if (!unlocked)
-            {
-                GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue("You haven't learned that trick yet!");
-            }
+            return;
+        }
+        if (!unlocked)
+        {
+            GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue("You haven't learned that trick yet!");
             return;
         }
 
@@ -133,19 +151,12 @@ public class PlayerController : MonoBehaviour
         shapeshifter.SetAnimationTrigger(whichTrick.AnimationTrigger);
     }
 
+    /// <summary>
+    /// Set the player back at the level start point, because they asked to or they need some help
+    /// </summary>
     private void ResetPlayer(InputAction.CallbackContext value)
     {
         Respawn();
-    }
-
-    void Update()
-    {
-
-        if (transform.position.y < yBoundary)
-        {
-            Respawn();
-            return;
-        }
     }
 
     /// <summary>
@@ -165,11 +176,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (trickInProgress && shapeshifter.IsSkateboard && collision.gameObject.CompareTag("Ground"))
+        if (trickInProgress && shapeshifter.IsSkateboard)
         {
-            trickInProgress = false;
-            shapeshifter.SetAnimationTrigger("trickCanceled");
-            health.TakeDamage(failedTrickDamage);
+            //if we hit an IJumpable, fail the trick
+            if (collision.gameObject.TryGetComponent<IJumpable>(out IJumpable jumpable))
+            {
+                trickInProgress = false;
+                shapeshifter.SetAnimationTrigger("trickCanceled");
+                health.TakeDamage(failedTrickDamage);
+                GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue($"Trick failed! Oof!");
+            }
         }
     }
 

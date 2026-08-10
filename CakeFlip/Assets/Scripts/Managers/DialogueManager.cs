@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.ThePauseGameHandler.isMainMenu)
+        if (GameManager.Instance.ThePauseGameHandler.IsIntroScene())
         {
             return;
         }
@@ -48,9 +48,11 @@ public class DialogueManager : MonoBehaviour
     /// <param name="clip"></param>
     public void SayBlockingDialogue(string dialogue, AudioClip clip = null)
     {
-        dialogueText.text = $"\"{dialogue}\"\n{CONTINUE_DIALOGUE}";
-        blocking = true;
-        
+        if (dialogueText != null)
+        {
+            dialogueText.text = $"\"{dialogue}\"\n{CONTINUE_DIALOGUE}";
+            blocking = true;
+        }
 
         if (clip != null)
         {

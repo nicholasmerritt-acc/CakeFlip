@@ -1,12 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// This nonsense is a little bit out of control. I should probably just delete it.
+/// However, it was one of the first parts of the game I worked on, and I'm feeling sentimental.
+/// I'll delete it tomorrow.
+/// </summary>
 public class ScientistSpotlight : MonoBehaviour
 {
     [Header("Spotlights")]
     [SerializeField] private Light scientistSpotlight;
     [SerializeField] private Light[] hallwaySpotlightPairs;
-    [SerializeField] private float maxSmallSpotlightIntensity = 110f;
+    [SerializeField] private float scientistSpotlightIntensity = 110f;
     [SerializeField] private float maxBigSpotlightIntensity = 1000f;
     [SerializeField] private float spotlightDelay = .5f;
     [SerializeField] private float scientistSpotlightFadeSpeed = 40f;
@@ -24,15 +29,15 @@ public class ScientistSpotlight : MonoBehaviour
 
     private IEnumerator EnableSpotlight()
     {
-        //fade in first spotlight, to illuminate our doctor / scientist / whoever she is
+        //fade in first spotlight, to illuminate Dr. Science
         yield return new WaitForSeconds(spotlightDelay);
-        while (scientistSpotlight.intensity < maxSmallSpotlightIntensity)
+        while (scientistSpotlight.intensity < scientistSpotlightIntensity)
         {
             scientistSpotlight.intensity += scientistSpotlightFadeSpeed * Time.deltaTime;
             yield return null;
         }
         yield return new WaitForSeconds(dialogueDelay);
-        GameManager.Instance.TheDialogueManager.SayNonBlockingDialogue("Welcome back.", welcomeBackClip);
+        GameManager.Instance.TheDialogueManager.SayBlockingDialogue("Welcome back.", welcomeBackClip);
 
         //now, trigger the hallway lights one by one
         for (int spotlightIndexEveryOther = 0; spotlightIndexEveryOther < hallwaySpotlightPairs.Length; spotlightIndexEveryOther += 2)

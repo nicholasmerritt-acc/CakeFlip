@@ -1,4 +1,5 @@
 using Util;
+using Pickup;
 
 public class FarmerJenkins : NPC
 {
@@ -25,7 +26,7 @@ public class FarmerJenkins : NPC
     protected override void DoPlayerInteraction()
     {
         //if player has an ice cream, remove it and unlock treflip
-        if (gameManager.TheInventoryManager.InventoryContains(ItemPickup.PickupableItemType.IceCream))
+        if (gameManager.TheInventoryManager.InventoryContains(PickupableItemType.IceCream))
         {
             gameManager.TheInventoryManager.RemoveCurrentItem();
             gameManager.Unlock(Trick.TrickType.Treflip);
